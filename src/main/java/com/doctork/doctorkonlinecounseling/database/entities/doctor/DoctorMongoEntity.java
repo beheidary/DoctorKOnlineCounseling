@@ -18,7 +18,7 @@ public class DoctorMongoEntity {
         return "DoctorMongoEntity{" +
                 "_id=" + _id +
                 ", id=" + id +
-                ", full_name='" + full_name + '\'' +
+                ", full_name='" + name + '\'' +
                 ", activeCount=" + activeCount +
                 ", sites='" + sites + '\'' +
                 ", nezam='" + nezam + '\'' +
@@ -30,8 +30,8 @@ public class DoctorMongoEntity {
     private org.bson.types.ObjectId _id;
 
     private Long id;
-
-    private String full_name;
+    @Field(name = "full_name")
+    private String name;
 
     @Field(name = "active_count")
     private int activeCount;
@@ -67,20 +67,20 @@ public class DoctorMongoEntity {
         this.activeCount = activeCount;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getName() {
+        return name;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getActivecount() {
         return activeCount;
     }
 
-    public void setActive_count(int active_count) {
-        this.activeCount = activeCount;
+    public void setActivecount(int activeCount) {
+        this.activeCount = this.activeCount;
     }
 
     public String getSites() {

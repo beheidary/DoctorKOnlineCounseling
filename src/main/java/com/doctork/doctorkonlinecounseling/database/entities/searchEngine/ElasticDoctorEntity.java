@@ -2,37 +2,30 @@ package com.doctork.doctorkonlinecounseling.database.entities.searchEngine;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 @Document(indexName = "doctorlibrary")
 public class ElasticDoctorEntity {
-    @Id
-    private Long id;
 
-    private String full_name;
+    @Id
+    private String _idT;
+
+    private String name;
 
     private String sites;
 
-    private int nezam_code;
-
-    private int active_count;
+    private String nezam;
 
     private String speciality;
 
 
-    public Long getId() {
-        return id;
+
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFull_name() {
-        return full_name;
-    }
-
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSites() {
@@ -43,20 +36,12 @@ public class ElasticDoctorEntity {
         this.sites = sites;
     }
 
-    public int getNezam_code() {
-        return nezam_code;
+    public String getNezam() {
+        return nezam;
     }
 
-    public void setNezam_code(int nezam_code) {
-        this.nezam_code = nezam_code;
-    }
-
-    public int getActive_count() {
-        return active_count;
-    }
-
-    public void setActive_count(int active_count) {
-        this.active_count = active_count;
+    public void setNezam(String nezam) {
+        this.nezam = nezam;
     }
 
     public String getSpeciality() {
@@ -65,5 +50,25 @@ public class ElasticDoctorEntity {
 
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
+    }
+
+
+    public String get_idT() {
+        return _idT;
+    }
+
+    public void set_idT(String _idT) {
+        this._idT = _idT;
+    }
+
+    @Override
+    public String toString() {
+        return "ElasticDoctorEntity{" +
+                "_id=" + _idT +
+                ", full_name='" + name + '\'' +
+                ", sites='" + sites + '\'' +
+                ", nezam=" + nezam +
+                ", speciality='" + speciality + '\'' +
+                '}';
     }
 }

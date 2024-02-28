@@ -12,15 +12,27 @@ public class Doctor {
     private UUID userId;
     private String userName;
 
-    public Doctor(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, UUID userId, String userName) {
+    private String speciality;
+
+
+
+    public Doctor(String speciality, Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, UUID userId, String userName) {
         this.id = id;
         this.name = name;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
         this.userId = userId;
         this.userName = userName;
+        this.speciality = speciality;
     }
 
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
 
     public Long getId() {
         return id;

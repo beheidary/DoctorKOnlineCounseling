@@ -18,5 +18,7 @@ public interface DoctorMongoRepository extends MongoRepository<DoctorMongoEntity
 
     List <DoctorMongoEntity> findAllByActiveCount(int count);
 
+    List<DoctorMongoEntity> findAll();
+
 }
 

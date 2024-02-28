@@ -12,8 +12,11 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ElasticEntityMapper {
 
+
     ElasticDoctorEntity mongoToElasticMapper(DoctorMongoEntity doctor);
 
     Doctor ElasticToDomainMapper(ElasticDoctorEntity doctor);
+
+    List<Doctor> ElasticToDomainMapper(List<ElasticDoctorEntity> doctors);
 
 }
