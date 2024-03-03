@@ -16,6 +16,8 @@ public interface ElasticService {
 
     List<Doctor> search(String queryString);
 
+    Doctor addDoctor(Doctor doctor);
+
     ElasticDoctorEntity editDoctor(String id , ElasticDoctorEntity doctor);
 
 

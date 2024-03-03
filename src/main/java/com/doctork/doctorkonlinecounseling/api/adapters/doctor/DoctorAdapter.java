@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface DoctorAdapter {
 
 
-    DoctorOutputDTO addDoctor(DoctorInputDTO donorInputDTO, UUID userId);
+    DoctorOutputDTO addDoctor(DoctorInputDTO doctorInputDTO, UUID userId);
 
 
 

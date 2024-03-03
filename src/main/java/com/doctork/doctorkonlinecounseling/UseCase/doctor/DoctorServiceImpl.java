@@ -18,6 +18,7 @@ import java.util.UUID;
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
+
     private final DoctorMiscellaneousServiceImpl doctorMiscellaneousService;
 
     private final DoctorMongoRepository doctorMongoRepository;
@@ -38,6 +39,8 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setSaveDateTime (LocalDateTime.now());
         doctor = doctorRepository.addDoctor(doctor);
+        elasticService.addDoctor(doctor);
+
 
         return doctor;
 

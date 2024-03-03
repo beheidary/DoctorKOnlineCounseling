@@ -10,6 +10,8 @@ public class Doctor {
     private LocalDateTime saveDateTime;
     private LocalDateTime updateDateTime;
     private UUID userId;
+
+
     private String userName;
 
     private String speciality;

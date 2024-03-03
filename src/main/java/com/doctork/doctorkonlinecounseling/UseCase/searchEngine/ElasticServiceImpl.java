@@ -72,6 +72,16 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
     @Override
+    public Doctor addDoctor(Doctor doctor) {
+        if(doctor == null)
+            throw new IdInputException();
+
+        return elasticRepository.addDoctor(doctor);
+
+
+    }
+
+    @Override
     public ElasticDoctorEntity editDoctor(String id, ElasticDoctorEntity doctor) {
         if(id == null)
             throw new IdInputException();

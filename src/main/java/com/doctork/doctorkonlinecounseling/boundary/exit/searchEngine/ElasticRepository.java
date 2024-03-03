@@ -14,6 +14,8 @@ public interface ElasticRepository {
 
     Doctor syncDoctor(DoctorMongoEntity doctor);
 
+    Doctor addDoctor(Doctor doctor);
+
     ElasticDoctorEntity deleteDoctor(String id);
 
     <T> SearchHits<T> search(Query query, Class<T> clazz) ;

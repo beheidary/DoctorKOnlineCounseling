@@ -19,4 +19,6 @@ public interface ElasticEntityMapper {
 
     List<Doctor> ElasticToDomainMapper(List<ElasticDoctorEntity> doctors);
 
+    ElasticDoctorEntity DomainToElsticMapper(Doctor doctor);
+
 }
