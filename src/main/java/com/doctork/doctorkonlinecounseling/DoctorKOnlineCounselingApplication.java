@@ -11,13 +11,13 @@ public class DoctorKOnlineCounselingApplication {
 
     public static void main(String[] args) {
 
-//          SpringApplication.run(DoctorKOnlineCounselingApplication.class, args);
+          SpringApplication.run(DoctorKOnlineCounselingApplication.class, args);
 
-        ApplicationContext Apctx = SpringApplication.run(DoctorKOnlineCounselingApplication.class, args);
+//        ApplicationContext Apctx = SpringApplication.run(DoctorKOnlineCounselingApplication.class, args);
 
-        DoctorService doctorService =  Apctx.getBean(DoctorService.class);
+//        DoctorService doctorService =  Apctx.getBean(DoctorService.class);
 
-        doctorService.getDoctorsForSync();
+//        doctorService.getDoctorsForSync();
 
 
     }

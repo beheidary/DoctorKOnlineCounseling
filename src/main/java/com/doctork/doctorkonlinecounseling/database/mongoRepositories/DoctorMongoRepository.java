@@ -3,8 +3,6 @@ package com.doctork.doctorkonlinecounseling.database.mongoRepositories;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 

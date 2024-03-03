@@ -67,33 +67,6 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     @Override
     public List<Doctor> getDoctorsForSync() {
 
-//        try {
-
-
-//            DoctorEntity doctorEntity = doctorEntityMapper.modelToEntity(doctor);
-//
-//            doctorEntity = doctorSqlRepository.save(doctorEntity);
-//
-//            return doctorEntityMapper.entityToModel(doctorEntity);
-//
-//        }catch (QueryTimeoutException ex){
-//
-//            throw new DatabaseTimeOutException();
-//
-//        }
-//        catch (DataIntegrityViolationException ex){
-//
-//            throw new InvalidDataException();
-//
-//        }
-//        catch (Exception ex){
-//
-//            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-//
-//        }
-
-//        }
-
         return null;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "CopyDoctorK")
+@Document(collection = "DoctorK")
 
 public class DoctorMongoEntity {
     @Override
