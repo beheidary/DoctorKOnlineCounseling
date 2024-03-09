@@ -1,46 +1,30 @@
-package com.doctork.doctorkonlinecounseling.domain.doctor;
+package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor;
 
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
+import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
-public class Expertise {
+public class ExpertiseInputDTO {
 
 
     private Long id;
 
-
     private String name;
 
-
     private Long Expertise;
-
     private LocalDateTime saveDateTime;
-
     private LocalDateTime updateDateTime;
-
     private ExpertiseLatinNames latinName;
 
-    private Set<Doctor> doctors = new HashSet<>();
 
-    public Expertise(Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<Doctor> doctors) {
+    public ExpertiseInputDTO(Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName) {
         this.id = id;
         this.name = name;
         Expertise = expertise;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
         this.latinName = latinName;
-        this.doctors = doctors;
     }
-
-    public Expertise() {
-
-    }
-
 
     public Long getId() {
         return id;
@@ -90,11 +74,4 @@ public class Expertise {
         this.latinName = latinName;
     }
 
-    public Set<Doctor> getDoctors() {
-        return doctors;
-    }
-
-    public void setDoctors(Set<Doctor> doctors) {
-        this.doctors = doctors;
-    }
 }

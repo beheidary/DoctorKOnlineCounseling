@@ -1,13 +1,12 @@
 package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.AddressOutputDTO;
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "Doctors",indexes =
@@ -16,10 +15,13 @@ import java.util.UUID;
                 @Index(name = "national_code_index", columnList = "nationalCode", unique = true),
                 @Index(name = "national_id_index", columnList = "nationalId", unique = true),
                 @Index(name = "mobile_number_index", columnList = "mobileNumber", unique = false),
-                @Index(name = "user_id_index", columnList = "userId", unique = false)
+//                @Index(name = "user_id_index", columnList = "userId", unique = false)
         })
 
 public class DoctorEntity {
+
+
+
 
 
 
@@ -56,7 +58,7 @@ public class DoctorEntity {
     @Column(name = "educationLevel",nullable = false)
     private EducationLevel educationLevel;
 
-    @Column(name = "registerDateTime",nullable = false)
+    @Column(name = "registerDateTime",nullable = true)
     private LocalDateTime registerDateTime;
 
 
@@ -64,12 +66,19 @@ public class DoctorEntity {
     private LocalDateTime updateDateTime;
 
 
-    @ManyToMany(mappedBy = "doctors", fetch = FetchType.EAGER)
-    private List<ExpertiseEntity> Expertises;
+    @ManyToMany(cascade = {  }, fetch = FetchType.LAZY)
+    @JoinTable(name = "doctor_expertise", joinColumns = @JoinColumn(name = "doctor_id"), inverseJoinColumns = @JoinColumn(name = "expertise_id"))
+    private Set<ExpertiseEntity> expertises = new HashSet<>();
 
 
-    @Column(name = "userId", nullable = false)
-    private UUID userId;
+//    @Column(name = "userId", nullable = true)
+//    private UUID userId;
+
+
+
+    @Column(name = "physicianSystemCode", nullable = false)
+    private String physicianSystemCode;
+
 
 
     // Todo complete Addresses and Service Entities
@@ -83,8 +92,9 @@ public class DoctorEntity {
 //
 
 
-    public DoctorEntity(Long id, String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, List<ExpertiseEntity> expertises, UUID userId) {
+    public DoctorEntity(Long id, String firstName,String physicianSystemCode, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, Set<ExpertiseEntity> expertises, UUID userId) {
         this.id = id;
+        this.physicianSystemCode =physicianSystemCode;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -94,12 +104,19 @@ public class DoctorEntity {
         this.educationLevel = educationLevel;
         this.registerDateTime = registerDateTime;
         this.updateDateTime = updateDateTime;
-        Expertises = expertises;
-        this.userId = userId;
+        this.expertises = expertises;
+//        this.userId = userId;
     }
 
     public DoctorEntity() {
 
+    }
+    public String getPhysicianSystemCode() {
+        return physicianSystemCode;
+    }
+
+    public void setPhysicianSystemCode(String physicianSystemCode) {
+        this.physicianSystemCode = physicianSystemCode;
     }
 
     public Long getId() {
@@ -182,21 +199,21 @@ public class DoctorEntity {
         this.updateDateTime = updateDateTime;
     }
 
-    public List<ExpertiseEntity> getExpertises() {
-        return Expertises;
+    public Set<ExpertiseEntity> getExpertises() {
+        return expertises;
     }
 
-    public void setExpertises(List<ExpertiseEntity> expertises) {
-        Expertises = expertises;
+    public void setExpertises(Set<ExpertiseEntity> expertises) {
+        this.expertises = expertises;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
+//    public UUID getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(UUID userId) {
+//        this.userId = userId;
+//    }
 
     @Override
     public boolean equals(Object o) {

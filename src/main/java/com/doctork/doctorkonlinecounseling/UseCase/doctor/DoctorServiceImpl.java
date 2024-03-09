@@ -5,19 +5,21 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.doctor.DoctorRepository
 import com.doctork.doctorkonlinecounseling.boundary.in.doctor.DoctorService;
 import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.jpaRepositories.DoctorMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.DoctorMongoRepository;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
+
 
     private final DoctorMiscellaneousServiceImpl doctorMiscellaneousService;
 
@@ -26,18 +28,17 @@ public class DoctorServiceImpl implements DoctorService {
     private final ElasticService elasticService;
 
 
-    public DoctorServiceImpl(DoctorMiscellaneousServiceImpl doctorMiscellaneousService, ElasticService elasticService, DoctorRepository doctorRepository,DoctorMongoRepository doctorMongoRepository) {
+    public DoctorServiceImpl(DoctorMiscellaneousServiceImpl doctorMiscellaneousService,DoctorMySqlRepository doctorMySqlRepository, ElasticService elasticService, DoctorRepository doctorRepository,DoctorMongoRepository doctorMongoRepository) {
         this.doctorRepository = doctorRepository;
         this.doctorMiscellaneousService = doctorMiscellaneousService;
         this.doctorMongoRepository = doctorMongoRepository;
         this.elasticService = elasticService;
-
     }
 
     @Override
-    public Doctor addDoctor(UUID userId, Doctor doctor) {
+    public Doctor addDoctor(Doctor doctor) {
 
-        doctor.setSaveDateTime (LocalDateTime.now());
+        doctor.setRegisterDateTime(LocalDateTime.now());
         doctor = doctorRepository.addDoctor(doctor);
         elasticService.addDoctor(doctor);
 
@@ -68,6 +69,18 @@ public class DoctorServiceImpl implements DoctorService {
         }
         return domaindoctors;
 
+    }
+
+    @Override
+    public Doctor fetchDoctor(String pSCode) {
+
+        return doctorRepository.fetchDoctor(pSCode);
+
+    }
+
+    @Override
+    public Expertise addDoctorExpertise(String pSCode, Expertise expertise) {
+        return doctorRepository.addDoctorExpertise(pSCode,expertise);
     }
 
 

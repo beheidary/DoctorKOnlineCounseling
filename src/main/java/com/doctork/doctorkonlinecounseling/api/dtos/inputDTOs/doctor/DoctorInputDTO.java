@@ -3,11 +3,9 @@ package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor;
 import java.time.LocalDate;
 
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Positive;
 
 
 public class DoctorInputDTO {
@@ -39,14 +37,12 @@ public class DoctorInputDTO {
 
     @NotNull
     private EducationLevel educationLevel;
-    @NotNull
-    private Expertise expertise;
 
     @NotNull
     private String physicianSystemCode;
 
 
-    public DoctorInputDTO(String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, Expertise expertise, String physicianSystemCode) {
+    public DoctorInputDTO(String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, String physicianSystemCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -54,7 +50,6 @@ public class DoctorInputDTO {
         this.nationalId = nationalId;
         this.mobileNumber = mobileNumber;
         this.educationLevel = educationLevel;
-        this.expertise = expertise;
         this.physicianSystemCode = physicianSystemCode;
     }
 
@@ -113,14 +108,6 @@ public class DoctorInputDTO {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
-    }
-
-    public Expertise getExpertise() {
-        return expertise;
-    }
-
-    public void setExpertise(Expertise expertise) {
-        this.expertise = expertise;
     }
 
     public String getPhysicianSystemCode() {

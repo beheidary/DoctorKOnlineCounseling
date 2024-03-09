@@ -14,7 +14,7 @@ import java.util.List;
 
 //@Api(value = "doctorK Index Controller",produces = "Application/json")
 @Controller
-@RequestMapping("/api/doctors")
+@RequestMapping("/elastic/doctor")
 public class ElasticSearchController {
 
 

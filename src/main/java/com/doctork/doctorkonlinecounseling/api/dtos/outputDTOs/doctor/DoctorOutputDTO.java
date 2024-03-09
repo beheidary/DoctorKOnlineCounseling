@@ -8,40 +8,29 @@ import java.util.UUID;
 
 public class DoctorOutputDTO {
 
-
-
-
-
     private String firstName;
     private String lastName;
     private EducationLevel educationLevel;
     private LocalDateTime registerDateTime;
-
     private String physicianSystemCode;
     private LocalDateTime updateDateTime;
-    private List<AddressOutputDTO> addresses;
-    private UUID userId;
+//    private List<AddressOutputDTO> addresses;
+//    private UUID userId;
     private Long id;
 
-    public DoctorOutputDTO(Long id, String firstName, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDTO> addresses, UUID userId) {
-        this.id = id;
+
+    public DoctorOutputDTO(String firstName, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDTO> addresses, UUID userId, Long id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.educationLevel = educationLevel;
         this.registerDateTime = registerDateTime;
         this.physicianSystemCode = physicianSystemCode;
         this.updateDateTime = updateDateTime;
-        this.addresses = addresses;
-        this.userId = userId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+//        this.addresses = addresses;
+//        this.userId = userId;
         this.id = id;
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -91,21 +80,27 @@ public class DoctorOutputDTO {
         this.updateDateTime = updateDateTime;
     }
 
-    public List<AddressOutputDTO> getAddresses() {
-        return addresses;
+//    public List<AddressOutputDTO> getAddresses() {
+//        return addresses;
+//    }
+
+//    public void setAddresses(List<AddressOutputDTO> addresses) {
+//        this.addresses = addresses;
+//    }
+
+//    public UUID getUserId() {
+//        return userId;
+//    }
+
+//    public void setUserId(UUID userId) {
+//        this.userId = userId;
+//    }
+
+    public Long getId() {
+        return id;
     }
 
-    public void setAddresses(List<AddressOutputDTO> addresses) {
-        this.addresses = addresses;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-
 }

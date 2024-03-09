@@ -1,9 +1,12 @@
 package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 import jakarta.persistence.*;
 
 
@@ -26,7 +29,7 @@ public class ExpertiseEntity {
     private String name;
 
 
-    @Column(name = "expertiseId", nullable = false)
+    @Column(name = "expertiseId", nullable = true)
     private Long Expertise;
 
     @Column(name = "saveDateTime", nullable = false)
@@ -35,14 +38,13 @@ public class ExpertiseEntity {
     @Column(name = "updateDateTime", nullable = true)
     private LocalDateTime updateDateTime;
 
-    @Column(name = "latinName" , nullable = true)
-    private String latinName;
+    @Column(name = "latinName" , nullable = false)
+    private ExpertiseLatinNames latinName;
 
-    @ManyToMany
-    @JoinTable(name = "doctor_expertise", joinColumns = @JoinColumn(name = "expertise_id"), inverseJoinColumns = @JoinColumn(name = "doctor_id"))
-    private List<DoctorEntity> doctors;
+    @ManyToMany(mappedBy = "expertises" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<DoctorEntity> doctors = new HashSet<>();
 
-    public ExpertiseEntity(Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, String latinName, List<DoctorEntity> doctors) {
+    public ExpertiseEntity(Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<DoctorEntity> doctors) {
         this.id = id;
         this.name = name;
         Expertise = expertise;
@@ -97,19 +99,19 @@ public class ExpertiseEntity {
         this.updateDateTime = updateDateTime;
     }
 
-    public String getLatinName() {
+    public ExpertiseLatinNames getLatinName() {
         return latinName;
     }
 
-    public void setLatinName(String latinName) {
+    public void setLatinName(ExpertiseLatinNames latinName) {
         this.latinName = latinName;
     }
 
-    public List<DoctorEntity> getDoctors() {
+    public Set<DoctorEntity> getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(List<DoctorEntity> doctors) {
+    public void setDoctors(Set<DoctorEntity> doctors) {
         this.doctors = doctors;
     }
 
