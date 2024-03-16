@@ -45,14 +45,14 @@ public class ElasticAdapterImpl implements ElasticAdapter {
     }
 
     @Override
-    public SearchResultDTO search(String queryString) throws IOException {
+    public SearchResultDTO search(String queryString,Integer pageNumber,Integer pageSize) throws IOException {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
 
 
 
-        SearchHits<ElasticDoctorEntity> searchHits = elasticService.search(queryString);
+        SearchHits<ElasticDoctorEntity> searchHits = elasticService.search(queryString,pageNumber,pageSize);
 
         List<SearchHit> hitsList = new ArrayList<>();
         searchHits.forEach(hitsList::add);

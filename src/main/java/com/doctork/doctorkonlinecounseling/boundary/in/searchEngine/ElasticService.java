@@ -19,7 +19,7 @@ public interface ElasticService {
 
     ElasticDoctorEntity deleteDoctor (String id );
 
-    SearchHits<ElasticDoctorEntity> search(String queryString);
+    SearchHits<ElasticDoctorEntity> search(String queryString, Integer pageNumber,Integer pageSize);
 
     SearchResponse<ElasticDoctorEntity> TermSuggest(String queryString) throws IOException;
 

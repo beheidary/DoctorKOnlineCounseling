@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,9 +40,11 @@ public class ElasticSearchController {
     @GetMapping("/search")
     @ApiOperation(value = "Search on elastic engine", response = SearchResultDTO.class)
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> findByNameAndSpeciality(@RequestParam("queryString") String queryString) throws IOException {
+    DeferredResult<ResponseEntity<?>> findByNameAndSpeciality(@RequestParam("queryString") String queryString,
+                                                              @RequestParam(defaultValue = "0") @PositiveOrZero Integer pageNumber,
+                                                              @RequestParam(defaultValue = "10") @Positive Integer pageSize) throws IOException {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
-        SearchResultDTO searchResultDTO = elasticAdapter.search(queryString);
+        SearchResultDTO searchResultDTO = elasticAdapter.search(queryString,pageNumber,pageSize);
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(searchResultDTO));
         return result;
     }

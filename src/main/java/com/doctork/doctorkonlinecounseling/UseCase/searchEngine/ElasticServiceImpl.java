@@ -1,15 +1,11 @@
 package com.doctork.doctorkonlinecounseling.UseCase.searchEngine;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import com.fasterxml.jackson.core.type.TypeReference;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchHitDTO;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.http.ResponseEntity;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.*;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchResultDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SuggestOutputDTO;
 import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
@@ -21,12 +17,14 @@ import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.*;
 
 import co.elastic.clients.elasticsearch.core.search.FieldSuggester;
 import co.elastic.clients.elasticsearch.core.search.Suggester;
 import java.io.IOException;
 
+import static co.elastic.clients.elasticsearch._types.SuggestMode.Missing;
 
 
 @Component
@@ -59,9 +57,9 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
     @Override
-    public SearchHits<ElasticDoctorEntity> search(String queryString) {
+    public SearchHits<ElasticDoctorEntity> search(String queryString, Integer pageNumber, Integer pageSize) {
 
-        Query query = NativeQuery.builder()
+        Query query = NativeQuery.builder().withScrollTime(Duration.ofMinutes(5))
                 .withQuery(q -> q.bool(
                         p -> {p.should(
                                 n -> n.match(
@@ -75,7 +73,7 @@ public class ElasticServiceImpl implements ElasticService {
                             );
                             return p;
                         }
-                )).build();
+                )).withPageable(Pageable.ofSize(pageSize).withPage(pageNumber)).build();
 
 
         return elasticRepository.search(query, ElasticDoctorEntity.class);
@@ -103,10 +101,11 @@ public class ElasticServiceImpl implements ElasticService {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
+
         Map<String, FieldSuggester> map = new HashMap<>();
         map.put("my-suggestion", FieldSuggester.of(fs -> fs
                 .term(cs -> cs
-                        .field("speciality").minWordLength(3).size(5)
+                            .field("speciality").minWordLength(3).size(5).suggestMode(Missing)
                 )
         ));
         Suggester suggester = Suggester.of(s -> s

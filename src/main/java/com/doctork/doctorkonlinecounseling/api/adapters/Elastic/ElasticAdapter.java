@@ -6,6 +6,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.Sug
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.io.IOException;
 
@@ -15,7 +17,7 @@ public interface ElasticAdapter {
 
     ElasticDoctorEntity deleteDoctor (String id );
 
-    SearchResultDTO search(String queryString) throws IOException;
+    SearchResultDTO search(String queryString, @PositiveOrZero Integer pageNumber, @Positive Integer pageSize) throws IOException;
 
     SuggestOutputDTO TermSuggest(String queryString) throws IOException;
     AutoCompleteOutputDTO autocomplete(String queryString , Integer resultSize) throws IOException;
