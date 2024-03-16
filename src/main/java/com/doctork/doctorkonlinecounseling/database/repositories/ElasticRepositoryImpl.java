@@ -4,7 +4,6 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRep
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
 import com.doctork.doctorkonlinecounseling.database.mappers.searchEngine.ElasticEntityMapper;
@@ -108,5 +107,6 @@ public class ElasticRepositoryImpl implements ElasticRepository {
             return null;
         }
     }
+
 
 }

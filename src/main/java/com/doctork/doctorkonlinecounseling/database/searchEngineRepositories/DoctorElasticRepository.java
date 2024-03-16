@@ -1,5 +1,5 @@
 package com.doctork.doctorkonlinecounseling.database.searchEngineRepositories;
-
+import org.springframework.data.elasticsearch.annotations.Query;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
@@ -18,5 +18,8 @@ public interface DoctorElasticRepository extends ElasticsearchRepository<Elastic
     ElasticDoctorEntity deleteBy_idT(String id);
 
     ElasticDoctorEntity findBy_idT(String id);
+
+
+
 
 }

@@ -1,9 +1,9 @@
 package com.doctork.doctorkonlinecounseling.UseCase.doctor;
 
 import com.doctork.doctorkonlinecounseling.UseCase.miscellaneous.DoctorMiscellaneousServiceImpl;
+import com.doctork.doctorkonlinecounseling.api.adapters.Elastic.ElasticAdapter;
 import com.doctork.doctorkonlinecounseling.boundary.exit.doctor.DoctorRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.doctor.DoctorService;
-import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.DoctorMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.DoctorMongoRepository;
@@ -25,14 +25,15 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorMongoRepository doctorMongoRepository;
 
-    private final ElasticService elasticService;
+
+    private final ElasticAdapter elasticAdapter;
 
 
-    public DoctorServiceImpl(DoctorMiscellaneousServiceImpl doctorMiscellaneousService,DoctorMySqlRepository doctorMySqlRepository, ElasticService elasticService, DoctorRepository doctorRepository,DoctorMongoRepository doctorMongoRepository) {
+    public DoctorServiceImpl(ElasticAdapter elasticAdapter, DoctorMiscellaneousServiceImpl doctorMiscellaneousService,DoctorMySqlRepository doctorMySqlRepository, DoctorRepository doctorRepository,DoctorMongoRepository doctorMongoRepository) {
         this.doctorRepository = doctorRepository;
         this.doctorMiscellaneousService = doctorMiscellaneousService;
         this.doctorMongoRepository = doctorMongoRepository;
-        this.elasticService = elasticService;
+        this.elasticAdapter = elasticAdapter;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setRegisterDateTime(LocalDateTime.now());
         doctor = doctorRepository.addDoctor(doctor);
-        elasticService.addDoctor(doctor);
+        elasticAdapter.addDoctor(doctor);
 
 
         return doctor;
@@ -60,7 +61,7 @@ public class DoctorServiceImpl implements DoctorService {
 
 
             try {
-                domaindoctors.add(elasticService.setDoctorForSync(doctor));
+                domaindoctors.add(elasticAdapter.setDoctorForSync(doctor));
                 doctorMongoRepository.save(doctor);
                     }catch (Exception e){
                         System.out.println(e);

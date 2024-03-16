@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.api.controllers.elastic;
+package com.doctork.doctorkonlinecounseling.api.controllers.doctork;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.doctor.DoctorAdapter;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInputDTO;
@@ -15,14 +15,14 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 @Controller
 @RequestMapping("/api/doctor")
-public class DoctorkComtroller {
+public class DoctorKController {
 
 
 
     private final DoctorAdapter doctorAdapter;
 
 
-    public DoctorkComtroller(DoctorAdapter doctorAdapter) {
+    public DoctorKController(DoctorAdapter doctorAdapter) {
         this.doctorAdapter = doctorAdapter;
 
     }

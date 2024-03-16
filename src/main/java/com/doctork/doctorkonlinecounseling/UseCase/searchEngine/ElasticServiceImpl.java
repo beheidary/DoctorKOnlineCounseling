@@ -1,31 +1,46 @@
 package com.doctork.doctorkonlinecounseling.UseCase.searchEngine;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import com.fasterxml.jackson.core.type.TypeReference;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchHitDTO;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.http.ResponseEntity;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.*;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchResultDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SuggestOutputDTO;
 import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.database.mappers.searchEngine.ElasticEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
-import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import co.elastic.clients.elasticsearch.core.search.FieldSuggester;
+import co.elastic.clients.elasticsearch.core.search.Suggester;
+import java.io.IOException;
+
 
 
 @Component
 public class ElasticServiceImpl implements ElasticService {
 
-    private final ElasticEntityMapper elasticEntityMapper;
+    private final ElasticsearchClient client;
     private final ElasticRepository elasticRepository;
 
 
-    public ElasticServiceImpl(ElasticRepository elasticRepository,ElasticEntityMapper elasticEntityMapper) {
+
+
+    public ElasticServiceImpl(ElasticRepository elasticRepository,ElasticsearchClient client){
         this.elasticRepository = elasticRepository;
-        this.elasticEntityMapper = elasticEntityMapper;
+        this.client = client;
     }
 
     @Override
@@ -44,9 +59,7 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
     @Override
-    public List<Doctor> search(String queryString) {
-
-        List<ElasticDoctorEntity> ret= new ArrayList<>();
+    public SearchHits<ElasticDoctorEntity> search(String queryString) {
 
         Query query = NativeQuery.builder()
                 .withQuery(q -> q.bool(
@@ -63,12 +76,9 @@ public class ElasticServiceImpl implements ElasticService {
                             return p;
                         }
                 )).build();
-        List<SearchHit<ElasticDoctorEntity>> response = elasticRepository.search(query, ElasticDoctorEntity.class).getSearchHits();
-        for (SearchHit<ElasticDoctorEntity> results : response) {
-            ret.add(results.getContent());
-        }
-        return elasticEntityMapper.ElasticToDomainMapper(ret);
 
+
+        return elasticRepository.search(query, ElasticDoctorEntity.class);
     }
 
     @Override
@@ -77,7 +87,6 @@ public class ElasticServiceImpl implements ElasticService {
             throw new IdInputException();
 
         return elasticRepository.addDoctor(doctor);
-
 
     }
 
@@ -88,4 +97,29 @@ public class ElasticServiceImpl implements ElasticService {
 
         return elasticRepository.editDoctor(id,doctor);
     }
+
+
+    public SearchResponse<ElasticDoctorEntity> TermSuggest (String text) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Map<String, FieldSuggester> map = new HashMap<>();
+        map.put("my-suggestion", FieldSuggester.of(fs -> fs
+                .term(cs -> cs
+                        .field("speciality")
+                )
+        ));
+        Suggester suggester = Suggester.of(s -> s
+                .suggesters(map)
+                .text(text));
+        SearchRequest searchRequest = SearchRequest.of(s -> {
+            s.index("doctork")
+                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("speciality")))))
+                    .suggest(suggester);
+        return s;
+        });
+
+        return client.search(searchRequest, ElasticDoctorEntity.class);
+    }
+
 }

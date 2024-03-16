@@ -22,4 +22,5 @@ public interface ElasticRepository {
     List<ElasticDoctorEntity> searchByRepository(String searchQuery);
 
     ElasticDoctorEntity editDoctor(String id , ElasticDoctorEntity doctor);
+
 }
