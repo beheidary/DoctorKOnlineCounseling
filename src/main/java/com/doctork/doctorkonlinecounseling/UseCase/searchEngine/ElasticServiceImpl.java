@@ -106,7 +106,7 @@ public class ElasticServiceImpl implements ElasticService {
         Map<String, FieldSuggester> map = new HashMap<>();
         map.put("my-suggestion", FieldSuggester.of(fs -> fs
                 .term(cs -> cs
-                        .field("speciality").minWordLength(3)
+                        .field("speciality").minWordLength(3).size(5)
                 )
         ));
         Suggester suggester = Suggester.of(s -> s
@@ -123,28 +123,34 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
 
-//    public SearchResponse<ElasticDoctorEntity> autocomplete(String term, int size) throws IOException {
-//        Map<String, FieldSuggester> map = new HashMap<>();
-//        map.put("my-completion", FieldSuggester.of(fs -> fs
-//                .completion(cs -> cs.skipDuplicates(true)
-//                        .size(size)
-//                        .fuzzy(SuggestFuzziness.of(sf -> sf.fuzziness("AUTO")))
-//                        .field("speciality")
-//                )
-//        ));
-//        Suggester suggester = Suggester.of(s -> s
-//                .suggesters(map)
-//                .text(term)
-//        );
-//        SearchRequest searchRequest = SearchRequest.of(s -> {
-//            s.index("doctork")
-//                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("speciality")))))
-//                    .suggest(suggester);
-//            return s;
-//        });
-//        System.out.println(client.search(searchRequest, ElasticDoctorEntity.class));
-//        return null;
-//    }
+    public SearchResponse<ElasticDoctorEntity> autocomplete(String term, int size) throws IOException {
+
+        //applicable on completion Type filed s only
+
+        Map<String, FieldSuggester> map = new HashMap<>();
+        map.put("my-completion", FieldSuggester.of(fs -> fs.prefix("term")
+                .completion(cs -> cs.skipDuplicates(true)
+                        .size(size)
+                        .fuzzy(SuggestFuzziness.of(sf -> sf.fuzziness("AUTO").minLength(4)))
+                        .field("speciality")
+                )
+        ));
+        Suggester suggester = Suggester.of(s -> s
+                .suggesters(map)
+        );
+        SearchRequest searchRequest = SearchRequest.of(s -> {
+            s.index("doctork")
+                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("speciality")))))
+                    .suggest(suggester);
+            return s;
+        });
+
+        //return client.search(searchRequest, ElasticDoctorEntity.class);
+
+        // Entity not complete
+
+        return null;
+    }
 
 
 }

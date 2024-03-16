@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Elastic;
 
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.AutoCompleteOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchResultDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SuggestOutputDTO;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
@@ -17,6 +18,7 @@ public interface ElasticAdapter {
     SearchResultDTO search(String queryString) throws IOException;
 
     SuggestOutputDTO TermSuggest(String queryString) throws IOException;
+    AutoCompleteOutputDTO autocomplete(String queryString , Integer resultSize) throws IOException;
 
     Doctor addDoctor(Doctor doctor);
 

@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Elastic;
 
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.AutoCompleteOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchHitDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchResultDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SuggestOutputDTO;
@@ -10,10 +11,8 @@ import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.Elasti
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ public class ElasticAdapterImpl implements ElasticAdapter {
 
     @Override
     public SearchResultDTO search(String queryString) throws IOException {
-        
 
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -103,6 +101,29 @@ public class ElasticAdapterImpl implements ElasticAdapter {
 
         return null;
 
+
+    }
+
+    @Override
+    public AutoCompleteOutputDTO autocomplete(String queryString, Integer resultSize) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+
+        String jsonResponse = String.valueOf(elasticService.autocomplete(queryString,resultSize));
+        int startIndex = jsonResponse.indexOf(":") + 1;
+        jsonResponse = jsonResponse.substring(startIndex);
+
+
+        try {
+            AutoCompleteOutputDTO autoCompleteOutputDTO = objectMapper.readValue(jsonResponse, AutoCompleteOutputDTO.class);
+
+            return autoCompleteOutputDTO;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
 
     }
 
