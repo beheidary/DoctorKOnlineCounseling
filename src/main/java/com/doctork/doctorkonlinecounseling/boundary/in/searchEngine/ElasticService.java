@@ -27,7 +27,7 @@ public interface ElasticService {
 
     ElasticDoctorEntity editDoctor(String id , ElasticDoctorEntity doctor);
 
-    SearchResponse<ElasticDoctorEntity> autocomplete(String term, int size) throws IOException;
+    //SearchResponse<ElasticDoctorEntity> autocomplete(String term, int size) throws IOException;
 
 
 

@@ -98,7 +98,7 @@ public class ElasticServiceImpl implements ElasticService {
         return elasticRepository.editDoctor(id,doctor);
     }
 
-
+    @Override
     public SearchResponse<ElasticDoctorEntity> TermSuggest (String text) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -106,7 +106,7 @@ public class ElasticServiceImpl implements ElasticService {
         Map<String, FieldSuggester> map = new HashMap<>();
         map.put("my-suggestion", FieldSuggester.of(fs -> fs
                 .term(cs -> cs
-                        .field("speciality")
+                        .field("speciality").minWordLength(3)
                 )
         ));
         Suggester suggester = Suggester.of(s -> s
@@ -121,5 +121,30 @@ public class ElasticServiceImpl implements ElasticService {
 
         return client.search(searchRequest, ElasticDoctorEntity.class);
     }
+
+
+//    public SearchResponse<ElasticDoctorEntity> autocomplete(String term, int size) throws IOException {
+//        Map<String, FieldSuggester> map = new HashMap<>();
+//        map.put("my-completion", FieldSuggester.of(fs -> fs
+//                .completion(cs -> cs.skipDuplicates(true)
+//                        .size(size)
+//                        .fuzzy(SuggestFuzziness.of(sf -> sf.fuzziness("AUTO")))
+//                        .field("speciality")
+//                )
+//        ));
+//        Suggester suggester = Suggester.of(s -> s
+//                .suggesters(map)
+//                .text(term)
+//        );
+//        SearchRequest searchRequest = SearchRequest.of(s -> {
+//            s.index("doctork")
+//                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("speciality")))))
+//                    .suggest(suggester);
+//            return s;
+//        });
+//        System.out.println(client.search(searchRequest, ElasticDoctorEntity.class));
+//        return null;
+//    }
+
 
 }
