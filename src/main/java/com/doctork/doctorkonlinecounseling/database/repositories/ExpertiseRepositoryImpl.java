@@ -4,6 +4,7 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.expertise.ExpertiseRepo
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
+import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ExpertiseMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.ExpertiseEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
@@ -12,6 +13,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ExpertiseRepositoryImpl implements ExpertiseRepository {
@@ -55,5 +59,30 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
 
 
+    }
+
+    @Override
+    public List<Expertise> getExpertises() {
+
+        try {
+
+
+            List<ExpertiseEntity> expertiseEntities = expertiseMySqlRepository.findAll();
+
+            return expertiseEntities.stream().map(expertiseEntityMapper::entityToModel).collect(Collectors.toList());
+
+        } catch (QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
     }
 }

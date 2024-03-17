@@ -147,7 +147,9 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                         oldExpertise.getDoctors().add(doctorEntity);
                         oldExpertise = expertiseMySqlRepository.save(oldExpertise);
                         doctorEntity.getExpertises().add(oldExpertise);
-                        doctorMySqlRepository.save(doctorEntity);
+                        doctorEntity = doctorMySqlRepository.save(doctorEntity);
+                        System.out.println(oldExpertise.getDoctors());
+                        System.out.println(doctorEntity.getExpertises());
                         return expertiseEntityMapper.entityToModel(oldExpertise);
 
                     } else {
@@ -161,8 +163,9 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                         expertise.setLatinName(newExpertise.getLatinName());
                         expertise.setSaveDateTime(newExpertise.getSaveDateTime());
                         expertise.setUpdateDateTime(newExpertise.getSaveDateTime());
+                        System.out.println(newExpertise.getExpertise());
 
-//                       expertise.setExpertise();
+                       expertise.setExpertise(newExpertise.getExpertise());
 
 
 

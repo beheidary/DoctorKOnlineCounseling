@@ -6,7 +6,12 @@ import com.doctork.doctorkonlinecounseling.api.mappers.Expertise.ExpertiseMapper
 import com.doctork.doctorkonlinecounseling.boundary.in.expertise.ExpertiseService;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
 public class ExpertiseAdapterImpl implements ExpertiseAdapter {
 
     ExpertiseService expertiseService;
@@ -28,6 +33,15 @@ public class ExpertiseAdapterImpl implements ExpertiseAdapter {
 
 
 
+
+    }
+
+    @Override
+    public List<ExpertiseOutputDTO> getExpertises() {
+
+        List<Expertise> expertises = expertiseService.getExpertises();
+
+        return expertises.stream().map(expertiseMapper::modelToOutput).collect(Collectors.toList());
 
     }
 }

@@ -59,7 +59,7 @@ public class ElasticSearchController {
         return result;
     }
 
-    @DeleteMapping(value = "/doctorIndex/delete/{id}")
+    @DeleteMapping(value = "/doctorIndex/{id}")
     @ApiOperation(value = "delete a doctor entity", response = ElasticDoctorEntity.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> removeDoctor(@PathVariable String id)
@@ -70,7 +70,7 @@ public class ElasticSearchController {
         return result;
     }
 
-    @PutMapping(value = "/doctorIndex/edit/{id}")
+    @PutMapping(value = "/doctorIndex/{id}")
     @ApiOperation(value = "edit entity", response = ElasticDoctorEntity.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> editDoctor(@PathVariable String id,
@@ -82,7 +82,7 @@ public class ElasticSearchController {
         return result;
     }
 
-    @PostMapping(value = "/doctorIndex/add")
+    @PostMapping(value = "/doctorIndex/")
     public @ResponseBody
     @ApiOperation(value = "add doctor entity", response = Doctor.class)
     DeferredResult<ResponseEntity<?>> addDoctor(@RequestBody @Validated Doctor doctor)

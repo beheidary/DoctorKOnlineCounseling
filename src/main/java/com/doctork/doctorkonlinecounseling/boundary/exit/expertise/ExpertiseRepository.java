@@ -4,9 +4,13 @@ import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEnt
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 
+import java.util.List;
+
 public interface ExpertiseRepository {
 
     Expertise getExpertise(ExpertiseLatinNames LatinName);
+
+    List<Expertise> getExpertises();
 
 
 }

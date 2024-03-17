@@ -9,13 +9,13 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.DoctorMySqlR
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.DoctorMongoRepository;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;

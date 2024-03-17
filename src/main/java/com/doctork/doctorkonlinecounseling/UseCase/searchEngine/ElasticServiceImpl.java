@@ -22,12 +22,14 @@ import java.util.*;
 
 import co.elastic.clients.elasticsearch.core.search.FieldSuggester;
 import co.elastic.clients.elasticsearch.core.search.Suggester;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 
 import static co.elastic.clients.elasticsearch._types.SuggestMode.Missing;
 
 
-@Component
+@Service
 public class ElasticServiceImpl implements ElasticService {
 
     private final ElasticsearchClient client;

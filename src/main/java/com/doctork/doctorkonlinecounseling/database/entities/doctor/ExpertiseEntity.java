@@ -28,7 +28,7 @@ public class ExpertiseEntity {
     @Column(name = "name",nullable = false)
     private String name;
 
-
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "expertiseId", nullable = true)
     private Long Expertise;
 
