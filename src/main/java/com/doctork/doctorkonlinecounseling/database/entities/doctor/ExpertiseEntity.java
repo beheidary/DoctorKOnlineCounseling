@@ -28,9 +28,9 @@ public class ExpertiseEntity {
     @Column(name = "name",nullable = false)
     private String name;
 
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "expertiseId", nullable = true)
-    private Long Expertise;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "expertiseId", nullable = false)
+//    private Long Expertise;
 
     @Column(name = "saveDateTime", nullable = false)
     private LocalDateTime saveDateTime;
@@ -47,7 +47,7 @@ public class ExpertiseEntity {
     public ExpertiseEntity(Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<DoctorEntity> doctors) {
         this.id = id;
         this.name = name;
-        Expertise = expertise;
+//        Expertise = expertise;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
         this.latinName = latinName;
@@ -75,13 +75,13 @@ public class ExpertiseEntity {
         this.name = name;
     }
 
-    public Long getExpertise() {
-        return Expertise;
-    }
+//    public Long getExpertise() {
+//        return Expertise;
+//    }
 
-    public void setExpertise(Long expertise) {
-        Expertise = expertise;
-    }
+//    public void setExpertise(Long expertise) {
+//        Expertise = expertise;
+//    }
 
     public LocalDateTime getSaveDateTime() {
         return saveDateTime;

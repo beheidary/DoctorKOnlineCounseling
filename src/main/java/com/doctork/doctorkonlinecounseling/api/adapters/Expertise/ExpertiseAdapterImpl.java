@@ -44,4 +44,6 @@ public class ExpertiseAdapterImpl implements ExpertiseAdapter {
         return expertises.stream().map(expertiseMapper::modelToOutput).collect(Collectors.toList());
 
     }
+
+
 }

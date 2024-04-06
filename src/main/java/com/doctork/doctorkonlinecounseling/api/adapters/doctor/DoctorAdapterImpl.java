@@ -49,7 +49,7 @@ public class DoctorAdapterImpl implements DoctorAdapter {
 
     @Override
     public ExpertiseOutputDTO addDoctorExpertise(String PSCode, ExpertiseInputDTO expertiseInputDTO) {
-        Expertise expertise = expertiseMapper.inputToModel(expertiseInputDTO);
+        Expertise expertise = expertiseMapper.inputToModelWithoutDoctor(expertiseInputDTO);
         expertise = doctorService.addDoctorExpertise(PSCode , expertise);
         return expertiseMapper.modelToOutput(expertise);
     }

@@ -69,7 +69,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
             List<ExpertiseEntity> expertiseEntities = expertiseMySqlRepository.findAll();
 
-            return expertiseEntities.stream().map(expertiseEntityMapper::entityToModel).collect(Collectors.toList());
+            return expertiseEntities.stream().map(expertiseEntityMapper::entityToModelWithDoctor).collect(Collectors.toList());
 
         } catch (QueryTimeoutException ex) {
 

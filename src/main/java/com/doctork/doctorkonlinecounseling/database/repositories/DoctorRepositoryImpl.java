@@ -104,7 +104,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
            }else{
 
-               return doctorEntityMapper.entityToModel(doctorEntity);
+               return doctorEntityMapper.entityToModelWithExpertise(doctorEntity);
 
            }
 
@@ -150,7 +150,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                         doctorEntity = doctorMySqlRepository.save(doctorEntity);
                         System.out.println(oldExpertise.getDoctors());
                         System.out.println(doctorEntity.getExpertises());
-                        return expertiseEntityMapper.entityToModel(oldExpertise);
+                        return expertiseEntityMapper.entityToModelWithDoctor(oldExpertise);
 
                     } else {
 
@@ -165,11 +165,11 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                         expertise.setUpdateDateTime(newExpertise.getSaveDateTime());
                         System.out.println(newExpertise.getExpertise());
 
-                       expertise.setExpertise(newExpertise.getExpertise());
+                       //expertise.setExpertise(newExpertise.getExpertise());
 
 
 
-                        return expertiseEntityMapper.entityToModel(expertiseMySqlRepository.save(expertise));
+                        return expertiseEntityMapper.entityToModelWithDoctor(expertiseMySqlRepository.save(expertise));
 
 
                     }

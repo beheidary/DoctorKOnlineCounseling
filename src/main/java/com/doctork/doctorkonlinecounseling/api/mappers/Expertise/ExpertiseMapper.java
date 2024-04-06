@@ -5,6 +5,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseO
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,9 @@ import org.springframework.stereotype.Component;
 public interface ExpertiseMapper {
 
     Expertise inputToModel(ExpertiseInputDTO expertiseInputDTO);
+
+    @Mappings({@Mapping(target = "doctors",expression = "java(null)")})
+    Expertise inputToModelWithoutDoctor(ExpertiseInputDTO expertiseInputDTO);
 
     ExpertiseOutputDTO modelToOutput(Expertise expertise);
 
