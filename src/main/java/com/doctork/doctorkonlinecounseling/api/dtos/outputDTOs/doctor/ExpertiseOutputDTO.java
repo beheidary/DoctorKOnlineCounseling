@@ -13,16 +13,14 @@ public class ExpertiseOutputDTO {
 
     private String name;
 
-    private Long Expertise;
     private LocalDateTime saveDateTime;
     private LocalDateTime updateDateTime;
     private ExpertiseLatinNames latinName;
     private List<DoctorOutputDTO> doctors;
 
-    public ExpertiseOutputDTO(Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, List<DoctorOutputDTO> doctors) {
+    public ExpertiseOutputDTO(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, List<DoctorOutputDTO> doctors) {
         this.id = id;
         this.name = name;
-        Expertise = expertise;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
         this.latinName = latinName;
@@ -43,14 +41,6 @@ public class ExpertiseOutputDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getExpertise() {
-        return Expertise;
-    }
-
-    public void setExpertise(Long expertise) {
-        Expertise = expertise;
     }
 
     public LocalDateTime getSaveDateTime() {

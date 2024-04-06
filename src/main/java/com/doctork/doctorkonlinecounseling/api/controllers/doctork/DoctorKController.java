@@ -6,6 +6,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInput
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
+import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,13 +86,28 @@ public class DoctorKController {
     @GetMapping(value = "/expertise/")
     @ApiOperation(value = "All Expertise", response = ExpertiseOutputDTO.class)
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> getExpertise(/*@RequestParam(required = false) String city */){
+    DeferredResult<ResponseEntity<?>> getExpertises(/*@RequestParam(required = false) String city */){
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
         List<ExpertiseOutputDTO> expertises = expertiseAdapter.getExpertises();
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertises));
+
+        return result;
+
+    }
+
+    @GetMapping(value = "/expertise/{lotinName}")
+    @ApiOperation(value = "Get Expertise", response = ExpertiseOutputDTO.class)
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> getExpertise(@PathVariable ExpertiseLatinNames lotinName){
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        ExpertiseOutputDTO expertise = expertiseAdapter.getExpertise(lotinName);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertise));
 
         return result;
 

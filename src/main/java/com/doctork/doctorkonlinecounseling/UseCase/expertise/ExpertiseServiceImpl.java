@@ -19,11 +19,6 @@ public class ExpertiseServiceImpl implements ExpertiseService {
     }
 
     @Override
-    public Expertise addDoctorExpertise(String PSCode, Expertise expertise) {
-        return null;
-    }
-
-    @Override
     public Expertise getExpertise(ExpertiseLatinNames latinName) {
 
 

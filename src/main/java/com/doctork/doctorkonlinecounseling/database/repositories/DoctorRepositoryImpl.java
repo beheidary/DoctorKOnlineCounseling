@@ -163,11 +163,6 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                         expertise.setLatinName(newExpertise.getLatinName());
                         expertise.setSaveDateTime(newExpertise.getSaveDateTime());
                         expertise.setUpdateDateTime(newExpertise.getSaveDateTime());
-                        System.out.println(newExpertise.getExpertise());
-
-                       //expertise.setExpertise(newExpertise.getExpertise());
-
-
 
                         return expertiseEntityMapper.entityToModelWithDoctor(expertiseMySqlRepository.save(expertise));
 

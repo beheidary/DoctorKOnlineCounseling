@@ -15,8 +15,6 @@ public class Expertise {
 
     private String name;
 
-    private Long Expertise;
-
     private LocalDateTime saveDateTime;
 
     private LocalDateTime updateDateTime;
@@ -25,10 +23,9 @@ public class Expertise {
 
     private Set<Doctor> doctors = new HashSet<>();
 
-    public Expertise(Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<Doctor> doctors) {
+    public Expertise(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<Doctor> doctors) {
         this.id = id;
         this.name = name;
-        Expertise = expertise;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
         this.latinName = latinName;
@@ -54,14 +51,6 @@ public class Expertise {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getExpertise() {
-        return Expertise;
-    }
-
-    public void setExpertise(Long expertise) {
-        Expertise = expertise;
     }
 
     public LocalDateTime getSaveDateTime() {

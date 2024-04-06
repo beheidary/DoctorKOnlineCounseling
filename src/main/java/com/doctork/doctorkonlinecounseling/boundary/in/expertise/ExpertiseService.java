@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface ExpertiseService {
 
-    Expertise addDoctorExpertise(String PSCode, Expertise expertise);
-
     Expertise getExpertise(ExpertiseLatinNames latinName);
 
     List<Expertise> getExpertises();

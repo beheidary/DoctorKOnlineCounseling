@@ -3,7 +3,10 @@ package com.doctork.doctorkonlinecounseling.database.repositories;
 import com.doctork.doctorkonlinecounseling.boundary.exit.expertise.ExpertiseRepository;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.DoctorNotFoundException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.ExpertiseNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
+import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ExpertiseMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.ExpertiseEntityMapper;
@@ -38,8 +41,18 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
         try{
 
-            return expertiseEntityMapper.entityToModel(expertiseMySqlRepository.findExpertiseEntitiesByLatinName(LatinName));
+            ExpertiseEntity expertiseEntity = expertiseMySqlRepository.findExpertiseEntitiesByLatinName(LatinName);
 
+
+            if (expertiseEntity == null){
+
+                throw new ExpertiseNotFoundException();
+
+            }else{
+
+                return expertiseEntityMapper.entityToModelWithDoctor(expertiseEntity);
+
+            }
         }catch (QueryTimeoutException ex){
 
             throw new DatabaseTimeOutException();
