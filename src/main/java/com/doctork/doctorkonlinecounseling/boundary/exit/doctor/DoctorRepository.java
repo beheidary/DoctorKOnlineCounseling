@@ -9,7 +9,7 @@ public interface DoctorRepository {
 
     Doctor addDoctor(Doctor doctor);
 
-    List<Doctor> getDoctorsForSync ();
+    Doctor editDoctor(Doctor doctor);
 
 
     Doctor fetchDoctor (String PSCode);

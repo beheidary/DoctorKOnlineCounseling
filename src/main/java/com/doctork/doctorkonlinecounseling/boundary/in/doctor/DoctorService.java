@@ -10,6 +10,9 @@ public interface DoctorService {
 
     Doctor addDoctor(Doctor doctor);
 
+    Doctor editDoctor(Doctor doctor);
+
+
     List<Doctor> getDoctorsForSync();
 
 

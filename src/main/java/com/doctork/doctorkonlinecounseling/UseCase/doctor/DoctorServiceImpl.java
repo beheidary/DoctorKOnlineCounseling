@@ -10,7 +10,6 @@ import com.doctork.doctorkonlinecounseling.database.mongoRepositories.DoctorMong
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,17 @@ public class DoctorServiceImpl implements DoctorService {
 
         return doctor;
 
+    }
+
+    @Override
+    public Doctor editDoctor(Doctor doctor) {
+
+        doctor.setUpdateDateTime(LocalDateTime.now());
+        doctor = doctorRepository.editDoctor(doctor);
+        elasticAdapter.addDoctor(doctor);
+
+
+        return doctor;
     }
 
     @Override

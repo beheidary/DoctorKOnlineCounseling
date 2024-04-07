@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface DoctorMongoRepository extends MongoRepository<DoctorMongoEntity,Long> {
 
 
-    List <DoctorMongoEntity> findAllByActiveCount(int count);
-
     List<DoctorMongoEntity> findAll();
 
 }

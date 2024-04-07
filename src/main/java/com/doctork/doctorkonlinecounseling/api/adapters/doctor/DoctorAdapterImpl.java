@@ -41,6 +41,17 @@ public class DoctorAdapterImpl implements DoctorAdapter {
     }
 
     @Override
+    public DoctorOutputDTO editDoctor(DoctorInputDTO doctorInputDTO) {
+
+        Doctor doctor = doctorMapper.inputToModel(doctorInputDTO);
+
+        doctor = doctorService.editDoctor(doctor );
+
+        return doctorMapper.modelToOutput(doctor);
+
+    }
+
+    @Override
     public DoctorOutputDTO fetchDoctor(String pSCode) {
 
 

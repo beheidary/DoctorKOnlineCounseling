@@ -14,7 +14,7 @@ import jakarta.persistence.*;
 @Table(name = "Expertises", indexes =
         {
 
-                @Index(name = "expertise_id_index" , columnList = "expertiseId" , unique = false)
+              //  @Index(name = "expertise_id_index" , columnList = "expertiseId" , unique = false)
 
         })
 
@@ -27,10 +27,6 @@ public class ExpertiseEntity {
 
     @Column(name = "name",nullable = false)
     private String name;
-
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "expertiseId", nullable = false)
-//    private Long Expertise;
 
     @Column(name = "saveDateTime", nullable = false)
     private LocalDateTime saveDateTime;
@@ -75,13 +71,6 @@ public class ExpertiseEntity {
         this.name = name;
     }
 
-//    public Long getExpertise() {
-//        return Expertise;
-//    }
-
-//    public void setExpertise(Long expertise) {
-//        Expertise = expertise;
-//    }
 
     public LocalDateTime getSaveDateTime() {
         return saveDateTime;

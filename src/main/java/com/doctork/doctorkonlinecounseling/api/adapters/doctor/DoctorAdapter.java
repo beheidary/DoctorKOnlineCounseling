@@ -12,6 +12,9 @@ public interface DoctorAdapter {
 
     DoctorOutputDTO addDoctor(DoctorInputDTO doctorInputDTO);
 
+    DoctorOutputDTO editDoctor(DoctorInputDTO doctorInputDTO);
+
+
     DoctorOutputDTO fetchDoctor(String pSCode);
 
 

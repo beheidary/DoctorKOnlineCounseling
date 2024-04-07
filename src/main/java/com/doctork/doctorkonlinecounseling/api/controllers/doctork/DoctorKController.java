@@ -66,6 +66,23 @@ public class DoctorKController {
 
     }
 
+    @PutMapping(value = "doctor/")
+    public @ResponseBody
+        //    @ApiOperation(value = "add doctor entity", response = DonorOutputDTO.class)
+    DeferredResult<ResponseEntity<?>> editDoctor(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
+    {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        DoctorOutputDTO doctorOutputDTO = doctorAdapter.editDoctor(doctorInputDTO);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(doctorOutputDTO));
+
+        return result;
+
+    }
+
+
     @PostMapping(value = "doctor/addDoctorExpertise/{PSCode}")
     public @ResponseBody
         //    @ApiOperation(value = "add doctor entity", response = DonorOutputDTO.class)
