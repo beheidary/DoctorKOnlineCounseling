@@ -8,6 +8,7 @@ import com.doctork.doctorkonlinecounseling.api.mappers.Doctor.DoctorMapper;
 import com.doctork.doctorkonlinecounseling.api.mappers.Expertise.ExpertiseMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.doctor.DoctorService;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.stereotype.Component;
 
@@ -63,6 +64,14 @@ public class DoctorAdapterImpl implements DoctorAdapter {
         Expertise expertise = expertiseMapper.inputToModelWithoutDoctor(expertiseInputDTO);
         expertise = doctorService.addDoctorExpertise(PSCode , expertise);
         return expertiseMapper.modelToOutput(expertise);
+    }
+
+    @Override
+    public DoctorOutputDTO changeStatus(String PSCode, DoctorStatus status) {
+
+        return doctorMapper.modelToOutput(doctorService.changeStatus(PSCode,status));
+
+
     }
 
 

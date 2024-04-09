@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.boundary.in.doctor;
 
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface DoctorService {
     Doctor fetchDoctor(String pSCode);
 
     Expertise addDoctorExpertise(String pSCode , Expertise expertise);
+
+    Doctor changeStatus (String PSCode , DoctorStatus status);
 }

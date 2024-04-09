@@ -6,6 +6,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInput
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -125,6 +126,22 @@ public class DoctorKController {
         ExpertiseOutputDTO expertise = expertiseAdapter.getExpertise(lotinName);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertise));
+
+        return result;
+
+    }
+
+    @GetMapping(value = "doctor/changestatus/{physicianSystemCode}/{status}")
+    public @ResponseBody
+        //    @ApiOperation(value = "add doctor entity", response = DonorOutputDTO.class)
+    DeferredResult<ResponseEntity<?>> changeStatus(@Validated @PathVariable String physicianSystemCode , @Validated @PathVariable DoctorStatus status)
+    {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        DoctorOutputDTO doctorOutputDTO = doctorAdapter.changeStatus(physicianSystemCode,status);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(doctorOutputDTO));
 
         return result;
 

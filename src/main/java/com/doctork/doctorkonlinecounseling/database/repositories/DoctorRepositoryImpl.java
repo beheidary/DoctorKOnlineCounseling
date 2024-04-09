@@ -13,6 +13,7 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ExpertiseMyS
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.DoctorEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.ExpertiseEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
@@ -231,6 +232,45 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
+
+    }
+
+    @Override
+    public Doctor changeStatus(String PSCode, DoctorStatus status) {
+
+
+        try{
+
+            DoctorEntity doctorEntity = doctorMySqlRepository.findDoctorEntityByPhysicianSystemCode(PSCode);
+
+            if (doctorEntity == null){
+
+                throw new DoctorNotFoundException();
+
+            }else{
+
+                doctorEntity.setStatus(status);
+                doctorEntity = doctorMySqlRepository.save(doctorEntity);
+                return doctorEntityMapper.entityToModel(doctorEntity);
+
+            }
+
+        }catch (QueryTimeoutException ex){
+
+            throw new DatabaseTimeOutException();
+
+        }
+        catch (DataIntegrityViolationException ex){
+
+            throw new InvalidDataException();
+
+        }
+        catch (Exception ex){
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
 
     }
 }

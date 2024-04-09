@@ -8,6 +8,7 @@ import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoE
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.DoctorMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.DoctorMongoRepository;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -52,10 +53,9 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setUpdateDateTime(LocalDateTime.now());
         doctor = doctorRepository.editDoctor(doctor);
-        elasticAdapter.addDoctor(doctor);
-
-
+        //elasticAdapter.addDoctor(doctor);
         return doctor;
+
     }
 
     @Override
@@ -92,6 +92,16 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Expertise addDoctorExpertise(String pSCode, Expertise expertise) {
         return doctorRepository.addDoctorExpertise(pSCode,expertise);
+    }
+
+    @Override
+    public Doctor changeStatus(String PSCode, DoctorStatus status) {
+
+        //elasticAdapter.addDoctor(doctor);
+
+        return doctorRepository.changeStatus(PSCode,status);
+
+
     }
 
 

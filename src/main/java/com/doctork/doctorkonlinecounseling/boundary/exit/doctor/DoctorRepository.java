@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.boundary.exit.doctor;
 
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,8 @@ public interface DoctorRepository {
     Doctor fetchDoctor (String PSCode);
 
     Expertise addDoctorExpertise(String PSCode , Expertise expertise);
+
+    Doctor changeStatus (String PSCode , DoctorStatus status);
 
 
 }

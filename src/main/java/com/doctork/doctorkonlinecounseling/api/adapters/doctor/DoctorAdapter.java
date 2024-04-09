@@ -4,6 +4,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInput
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
+import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 
 import java.util.UUID;
 
@@ -19,6 +21,8 @@ public interface DoctorAdapter {
 
 
     ExpertiseOutputDTO addDoctorExpertise (String PSCode, ExpertiseInputDTO expertiseInputDTO);
+
+    DoctorOutputDTO changeStatus (String PSCode , DoctorStatus status);
 
 
 
