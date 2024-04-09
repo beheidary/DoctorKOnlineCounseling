@@ -36,15 +36,18 @@ public class Doctor {
 
     private Set<Expertise> Expertises = new HashSet<>();
 
+    private DoctorStatus status;
+
 //    private UUID userId;
 
     private String physicianSystemCode;
 
 
-    public Doctor(Long id, String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, Set<Expertise> expertises, UUID userId, String physicianSystemCode) {
+    public Doctor(Long id, DoctorStatus status, String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, Set<Expertise> expertises, UUID userId, String physicianSystemCode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.status = status;
         this.dateOfBirth = dateOfBirth;
         this.nationalCode = nationalCode;
         this.nationalId = nationalId;
@@ -53,8 +56,9 @@ public class Doctor {
         this.registerDateTime = registerDateTime;
         this.updateDateTime = updateDateTime;
         Expertises = expertises;
-//        this.userId = userId;
         this.physicianSystemCode = physicianSystemCode;
+        //        this.userId = userId;
+
     }
 
     public Long getId() {
@@ -159,5 +163,13 @@ public class Doctor {
 
     public void setPhysicianSystemCode(String physicianSystemCode) {
         this.physicianSystemCode = physicianSystemCode;
+    }
+
+    public DoctorStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DoctorStatus status) {
+        this.status = status;
     }
 }

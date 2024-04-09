@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor;
 
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
 
 import java.time.LocalDateTime;
@@ -14,14 +15,20 @@ public class DoctorOutputDTO {
     private LocalDateTime registerDateTime;
     private String physicianSystemCode;
     private LocalDateTime updateDateTime;
+
+
+    private DoctorStatus status;
 //    private List<AddressOutputDTO> addresses;
 //    private UUID userId;
     private Long id;
 
 
-    public DoctorOutputDTO(String firstName, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDTO> addresses, UUID userId, Long id) {
+
+
+    public DoctorOutputDTO(String firstName, DoctorStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDTO> addresses, UUID userId, Long id) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.status = status;
         this.educationLevel = educationLevel;
         this.registerDateTime = registerDateTime;
         this.physicianSystemCode = physicianSystemCode;
@@ -95,6 +102,15 @@ public class DoctorOutputDTO {
 //    public void setUserId(UUID userId) {
 //        this.userId = userId;
 //    }
+
+
+    public DoctorStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DoctorStatus status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

@@ -2,6 +2,7 @@ package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.AddressOutputDTO;
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -79,6 +80,9 @@ public class DoctorEntity {
     @Column(name = "physicianSystemCode", nullable = false)
     private String physicianSystemCode;
 
+    @Column(name = "status" , nullable = false)
+    private DoctorStatus status;
+
 
 
     // Todo complete Addresses and Service Entities
@@ -92,10 +96,11 @@ public class DoctorEntity {
 //
 
 
-    public DoctorEntity(Long id, String firstName,String physicianSystemCode, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, Set<ExpertiseEntity> expertises, UUID userId) {
+    public DoctorEntity(Long id, DoctorStatus status, String firstName,String physicianSystemCode, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, Set<ExpertiseEntity> expertises, UUID userId) {
         this.id = id;
         this.physicianSystemCode =physicianSystemCode;
         this.firstName = firstName;
+        this.status = status;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.nationalCode = nationalCode;
@@ -207,7 +212,15 @@ public class DoctorEntity {
         this.expertises = expertises;
     }
 
-//    public UUID getUserId() {
+    public DoctorStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DoctorStatus status) {
+        this.status = status;
+    }
+
+    //    public UUID getUserId() {
 //        return userId;
 //    }
 //
