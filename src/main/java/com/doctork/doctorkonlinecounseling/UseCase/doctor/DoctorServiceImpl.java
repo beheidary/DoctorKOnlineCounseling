@@ -26,6 +26,8 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorMongoRepository doctorMongoRepository;
 
 
+
+
     private final ElasticAdapter elasticAdapter;
 
 
@@ -53,7 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setUpdateDateTime(LocalDateTime.now());
         doctor = doctorRepository.editDoctor(doctor);
-        //elasticAdapter.addDoctor(doctor);
+        elasticAdapter.addDoctor(doctor);
         return doctor;
 
     }

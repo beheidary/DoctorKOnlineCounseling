@@ -8,7 +8,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutp
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class DoctorKController {
 
     }
 
+    @SecurityRequirement(name = "security_auth")
     @GetMapping(value = "doctor/{physicianSystemCode}")
     //    @ApiOperation(value = "delete a doctor entity", response = DonorOutputDTO.class)
     public @ResponseBody
@@ -102,7 +104,7 @@ public class DoctorKController {
 
 
     @GetMapping(value = "/expertise/")
-    @ApiOperation(value = "All Expertise", response = ExpertiseOutputDTO.class)
+//    @ApiOperation(value = "All Expertise", response = ExpertiseOutputDTO.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> getExpertises(/*@RequestParam(required = false) String city */){
 
@@ -117,7 +119,7 @@ public class DoctorKController {
     }
 
     @GetMapping(value = "/expertise/{lotinName}")
-    @ApiOperation(value = "Get Expertise", response = ExpertiseOutputDTO.class)
+//    @ApiOperation(value = "Get Expertise", response = ExpertiseOutputDTO.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> getExpertise(@PathVariable ExpertiseLatinNames lotinName){
 

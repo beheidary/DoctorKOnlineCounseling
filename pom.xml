@@ -48,6 +48,11 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -61,6 +66,12 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>1.6.0.Beta1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.12.5</version>
         </dependency>
 
         <dependency>
@@ -81,6 +92,7 @@
             <optional>true</optional>
         </dependency>
 
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -89,7 +101,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.0.3</version>
+            <version>2.5.0</version>
         </dependency>
 
 
@@ -106,17 +118,11 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <!-- Runtime library -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <groupId>com.github.therapi</groupId>
+            <artifactId>therapi-runtime-javadoc</artifactId>
+            <version>0.15.0</version>
         </dependency>
 
     </dependencies>
@@ -140,28 +146,33 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>1.6.0.Beta1</version>
                         </path>
+                        <path>
+                            <groupId>com.github.therapi</groupId>
+                            <artifactId>therapi-runtime-javadoc-scribe</artifactId>
+                            <version>0.15.0</version>
+                        </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>io.swagger</groupId>
-                <artifactId>swaggerhub-maven-plugin</artifactId>
-                <version>1.0.10</version>
-                <executions>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>download</goal>
-                        </goals>
-                        <configuration>
-                            <api>PetStoreAPI</api>
-                            <owner>jsfrench</owner>
-                            <version>1.0.0</version>
-                            <outputFile>target/petStoreAPI.json</outputFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>io.swagger</groupId>-->
+<!--                <artifactId>swaggerhub-maven-plugin</artifactId>-->
+<!--                <version>1.0.10</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>download</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <api>PetStoreAPI</api>-->
+<!--                            <owner>jsfrench</owner>-->
+<!--                            <version>1.0.0</version>-->
+<!--                            <outputFile>target/petStoreAPI.json</outputFile>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

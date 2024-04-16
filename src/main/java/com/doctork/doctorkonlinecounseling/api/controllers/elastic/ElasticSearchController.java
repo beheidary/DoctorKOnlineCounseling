@@ -6,8 +6,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.Sug
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.validation.constraints.Positive;
@@ -22,13 +22,13 @@ import java.io.IOException;
 
 
 
-@Api(value = "doctorK Index Controller",produces = "Application/json")
+//@Api(value = "doctorK Index Controller",produces = "Application/json")
 @RestController()
 @OpenAPIDefinition(
         info = @Info(title = "Doctor",version = "0.0",description = "dESCRIPTION")
 )
 @RequestMapping(value = "/elastic/doctor", produces = "application/json", headers = {"Accept-Language"})
-public class ElasticSearchController {
+public class    ElasticSearchController {
 
     private final ElasticAdapter elasticAdapter;
 
@@ -38,7 +38,7 @@ public class ElasticSearchController {
 
 
     @GetMapping("/search")
-    @ApiOperation(value = "Search on elastic engine", response = SearchResultDTO.class)
+//    @ApiOperation(value = "Search on elastic engine", response = SearchResultDTO.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> findByNameAndSpeciality(@RequestParam("queryString") String queryString,
                                                               @RequestParam(defaultValue = "0") @PositiveOrZero Integer pageNumber,
@@ -50,7 +50,7 @@ public class ElasticSearchController {
     }
 
     @GetMapping("/suggest")
-    @ApiOperation(value = "Search on elastic engine", response = SuggestOutputDTO.class)
+//    @ApiOperation(value = "Search on elastic engine", response = SuggestOutputDTO.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> suggestBySpeciality(@RequestParam("queryString") String queryString) throws IOException {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
@@ -60,7 +60,7 @@ public class ElasticSearchController {
     }
 
     @DeleteMapping(value = "/doctorIndex/{id}")
-    @ApiOperation(value = "delete a doctor entity", response = ElasticDoctorEntity.class)
+//    @ApiOperation(value = "delete a doctor entity", response = ElasticDoctorEntity.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> removeDoctor(@PathVariable String id)
     {
@@ -71,7 +71,7 @@ public class ElasticSearchController {
     }
 
     @PutMapping(value = "/doctorIndex/{id}")
-    @ApiOperation(value = "edit entity", response = ElasticDoctorEntity.class)
+//    @ApiOperation(value = "edit entity", response = ElasticDoctorEntity.class)
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> editDoctor(@PathVariable String id,
                                                  @RequestBody @Validated ElasticDoctorEntity elasticDoctorEntity)
@@ -84,7 +84,7 @@ public class ElasticSearchController {
 
     @PostMapping(value = "/doctorIndex/")
     public @ResponseBody
-    @ApiOperation(value = "add doctor entity", response = Doctor.class)
+//    @ApiOperation(value = "add doctor entity", response = Doctor.class)
     DeferredResult<ResponseEntity<?>> addDoctor(@RequestBody @Validated Doctor doctor)
     {
 
