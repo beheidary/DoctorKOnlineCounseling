@@ -3,10 +3,16 @@ package com.doctork.doctorkonlinecounseling.configuration;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,6 +24,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -34,11 +41,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET,"/elastic/**","/swagger-ui/**",
+                        .requestMatchers("/swagger-ui/**",
                                 "/swagger-resources/*","/configuration/ui",
                                 "/v3/api-docs/**","/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/elastic/**").permitAll()
+                        .requestMatchers("/elastic/**").hasRole("Admin")
                         .anyRequest().authenticated()
                 ).exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, ex2) -> {
                     response.sendError(
@@ -58,7 +67,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("http://localhost:8080"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
+        configuration.setAllowedMethods(List.of("GET","POST","PUT", "OPTIONS", "DELETE"));
+        configuration.setAllowCredentials(Boolean.TRUE);
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -66,5 +76,22 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**",configuration);
 
         return source;
+    }
+
+    @Bean
+    static RoleHierarchy roleHierarchy() {
+        var hierarchy = new RoleHierarchyImpl();
+        hierarchy.setHierarchy("ROLE_Admin > ROLE_Physician\n" +
+                "ROLE_Physician > ROLE_Patient");
+
+        return hierarchy;
+    }
+
+    @Bean
+    static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+
+        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+        expressionHandler.setRoleHierarchy(roleHierarchy);
+        return expressionHandler;
     }
 }

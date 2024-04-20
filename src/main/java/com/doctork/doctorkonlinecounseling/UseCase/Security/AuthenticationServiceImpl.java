@@ -33,8 +33,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UserEntity userEntity = userMapper.DtoToEntity(input);
         userEntity.setPassword(passwordEncoder.encode(input.getPassword()));
 
-        System.out.println(userEntity);
-        System.out.println("hi");
 
 
 

@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.configuration;
 
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+import java.security.SignatureException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -50,7 +52,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             final String jwt = authHeader.substring(7);
-            final String userEmail = jwtService.extractUsername(jwt);
+            String userEmail = null;
+            try {
+
+                userEmail = jwtService.extractUsername(jwt);
+            } catch (IllegalArgumentException e) {
+                logger.error("Error occurred while retrieving Username from Token", e);
+            } catch (ExpiredJwtException e) {
+                logger.warn("The token has expired", e);
+            }
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -63,7 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             null,
                             userDetails.getAuthorities()
                     );
-
+                    logger.info("User authenticated: " + userEmail + ", setting security context");
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }

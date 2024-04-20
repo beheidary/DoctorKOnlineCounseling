@@ -1,8 +1,10 @@
 package com.doctork.doctorkonlinecounseling.domain.user;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +22,8 @@ public class User implements UserDetails {
 
     private Date createdAt;
 
-    private UserType userType;
+
+    private UserType role;
 
     private Date updatedAt;
 
@@ -31,7 +34,12 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        authorities.add(new SimpleGrantedAuthority(getRole().toString()));
+
+        return authorities;
     }
 
 
@@ -57,7 +65,7 @@ public class User implements UserDetails {
 
     public User(Integer id, String fullName, String email, UserType userType, String password, Date createdAt, Date updatedAt) {
         this.id = id;
-        this.userType = userType;
+        this.role = userType;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
@@ -112,6 +120,14 @@ public class User implements UserDetails {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public UserType getRole() {
+        return role;
+    }
+
+    public void setRole(UserType role) {
+        this.role = role;
     }
 }
 

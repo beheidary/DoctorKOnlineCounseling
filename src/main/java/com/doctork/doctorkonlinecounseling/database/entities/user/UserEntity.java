@@ -4,10 +4,11 @@ import com.doctork.doctorkonlinecounseling.domain.user.UserType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springdoc.webmvc.core.fn.SpringdocRouteBuilder;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -24,11 +25,16 @@ public class UserEntity implements UserDetails {
     private String fullName;
 
     @Column(nullable = false)
-    private UserType userType;
+    private UserType role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+            authorities.add(new SimpleGrantedAuthority(getRole().toString()));
+
+        return authorities;
     }
 
     @Column(unique = true, length = 100, nullable = false)
@@ -49,7 +55,7 @@ public class UserEntity implements UserDetails {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
-        this.userType = userType;
+        this.role = userType;
         this.password = password;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -93,12 +99,12 @@ public class UserEntity implements UserDetails {
         return email;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public UserType getRole() {
+        return role;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setRole(UserType role) {
+        this.role = role;
     }
 
     @Override

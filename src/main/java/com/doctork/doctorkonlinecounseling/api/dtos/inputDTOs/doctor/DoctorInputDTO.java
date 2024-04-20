@@ -2,6 +2,7 @@ package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor;
 
 import java.time.LocalDate;
 
+import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +39,9 @@ public class DoctorInputDTO {
     @NotBlank
     private String mobileNumber;
 
+
+    private DoctorStatus status;
+
     @NotNull
     private EducationLevel educationLevel;
 
@@ -45,13 +49,14 @@ public class DoctorInputDTO {
     private String physicianSystemCode;
 
 
-    public DoctorInputDTO(String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, String physicianSystemCode) {
+    public DoctorInputDTO(String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, DoctorStatus status, EducationLevel educationLevel, String physicianSystemCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.nationalCode = nationalCode;
         this.nationalId = nationalId;
         this.mobileNumber = mobileNumber;
+        this.status = status;
         this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
     }
@@ -119,5 +124,12 @@ public class DoctorInputDTO {
 
     public void setPhysicianSystemCode(String physicianSystemCode) {
         this.physicianSystemCode = physicianSystemCode;
+    }
+    public DoctorStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DoctorStatus status) {
+        this.status = status;
     }
 }

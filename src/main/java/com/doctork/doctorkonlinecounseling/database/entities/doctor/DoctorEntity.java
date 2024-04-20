@@ -5,6 +5,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.AddressOut
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
 import jakarta.persistence.*;
+import jakarta.validation.groups.Default;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -80,7 +82,7 @@ public class DoctorEntity {
     @Column(name = "physicianSystemCode", nullable = false)
     private String physicianSystemCode;
 
-    @Column(name = "status" , nullable = false)
+    @Column(name = "status", nullable = false)
     private DoctorStatus status;
 
 

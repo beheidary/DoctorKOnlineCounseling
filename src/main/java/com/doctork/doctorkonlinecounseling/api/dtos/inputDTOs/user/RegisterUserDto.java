@@ -9,7 +9,7 @@ public class RegisterUserDto {
 
     private String fullName;
 
-    private UserType userType;
+    private UserType role;
 
 
     public String getEmail() {
@@ -36,11 +36,11 @@ public class RegisterUserDto {
         this.fullName = fullName;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public UserType getRole() {
+        return role;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setRole(UserType role) {
+        this.role = role;
     }
 }

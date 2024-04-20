@@ -6,13 +6,18 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInput
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
+import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputException;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -21,6 +26,7 @@ import java.util.List;
 
 
 @Controller
+@EnableMethodSecurity
 @RequestMapping("/")
 public class DoctorKController {
 
@@ -37,6 +43,7 @@ public class DoctorKController {
     }
 
     @SecurityRequirement(name = "security_auth")
+    @PreAuthorize("hasAuthority('Physician')")
     @GetMapping(value = "doctor/{physicianSystemCode}")
     //    @ApiOperation(value = "delete a doctor entity", response = DonorOutputDTO.class)
     public @ResponseBody
@@ -54,10 +61,12 @@ public class DoctorKController {
     }
 
     @PostMapping(value = "doctor/")
+    @PreAuthorize("hasAuthority('Admin')")
     public @ResponseBody
         //    @ApiOperation(value = "add doctor entity", response = DonorOutputDTO.class)
     DeferredResult<ResponseEntity<?>> addDoctor(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
     {
+
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
@@ -71,7 +80,7 @@ public class DoctorKController {
 
     @PutMapping(value = "doctor/")
     public @ResponseBody
-        //    @ApiOperation(value = "add doctor entity", response = DonorOutputDTO.class)
+        //    @ApiOperation(value = "edit doctor entity", response = DonorOutputDTO.class)
     DeferredResult<ResponseEntity<?>> editDoctor(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
     {
 
