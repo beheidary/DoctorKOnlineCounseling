@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.configuration;
 
+import com.doctork.doctorkonlinecounseling.common.Messages;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,13 @@ public class ApplicationConfiguration {
         return username -> userMySqlRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+
+    @Bean
+    public Messages messages()
+    {
+        return new Messages();
+    }
+
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() {

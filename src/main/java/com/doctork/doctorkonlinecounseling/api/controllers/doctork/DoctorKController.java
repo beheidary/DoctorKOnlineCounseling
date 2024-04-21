@@ -10,6 +10,10 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputExceptio
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
@@ -17,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -42,10 +45,12 @@ public class DoctorKController {
 
     }
 
-    @SecurityRequirement(name = "security_auth")
-    @PreAuthorize("hasAuthority('Physician')")
+    //y@SecurityRequirement(name = "security_auth")
+    //@PreAuthorize("hasAuthority('Admin')")
+    @RolesAllowed("Admin")
     @GetMapping(value = "doctor/{physicianSystemCode}")
-    //    @ApiOperation(value = "delete a doctor entity", response = DonorOutputDTO.class)
+    @Operation(summary = "fetch a doctor")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DoctorOutputDTO.class)) })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> fetchDoctor(@PathVariable String physicianSystemCode)
     {
