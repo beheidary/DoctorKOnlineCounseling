@@ -37,7 +37,7 @@ public class User implements UserDetails {
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority(getRole().toString()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+getRole().toString()));
 
         return authorities;
     }

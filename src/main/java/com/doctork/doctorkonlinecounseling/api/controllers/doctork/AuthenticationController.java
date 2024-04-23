@@ -2,10 +2,16 @@ package com.doctork.doctorkonlinecounseling.api.controllers.doctork;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.LoginUserDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.RegisterUserDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.user.LoginResponse;
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.AuthenticationService;
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.JwtService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,16 +37,19 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    //@PreAuthorize("hasAnyAuthority('Admin')")
     @PostMapping("/signup")
+    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @Operation(summary = "User register")
+    @ApiResponse(content = { @Content(mediaType = "application/json" , schema = @Schema(implementation = UserEntity.class))})
     public ResponseEntity<UserEntity> register(@RequestBody @Valid RegisterUserDto registerUserDto) {
         UserEntity registeredUser = authenticationService.signup(registerUserDto);
 
         return ResponseEntity.ok(registeredUser);
     }
 
-    //@PreAuthorize("isAnonymous()")
     @PostMapping("/login")
+    @Operation(summary = "User Login")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class)) })
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
 
         try {

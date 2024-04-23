@@ -56,7 +56,7 @@ public class DoctorInputDTO {
         this.nationalCode = nationalCode;
         this.nationalId = nationalId;
         this.mobileNumber = mobileNumber;
-        this.status = status;
+        this.status = DoctorStatus.Offline;
         this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
     }

@@ -7,6 +7,7 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.FieldItemError;
 import com.doctork.doctorkonlinecounseling.common.exceptions.InputErrorDetail;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputException;
 import jakarta.validation.ConstraintViolationException;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -91,20 +92,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
-
-
-
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ErrorDetail> handle(Exception ex, WebRequest request) {
-
-        String message = "this one is uncaught, please immediately inform Milad";
-
-        ErrorDetail errorDetail = new ErrorDetail(LocalDateTime.now(), 1000, message);
-
-        return new ResponseEntity<>(errorDetail, HttpStatus.INTERNAL_SERVER_ERROR);
-
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<ErrorDetail> handleAccessDenied(Exception ex, WebRequest request) {
 
@@ -115,6 +102,25 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetail, HttpStatus.FORBIDDEN);
 
     }
+
+
+
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ErrorDetail> handle(Exception ex, WebRequest request) {
+
+        String message = "this one is uncaught, please immediately inform Behnam";
+
+        ErrorDetail errorDetail = new ErrorDetail(LocalDateTime.now(), 1000, message);
+
+        return new ResponseEntity<>(errorDetail, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+
+
+
+
 
 
 }

@@ -1,8 +1,9 @@
 package com.doctork.doctorkonlinecounseling.UseCase.Security;
 
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.JwtService;
+import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.core.Authentication;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,6 +31,8 @@ public class JwtServiceImpl implements JwtService {
     @Value("${security.jwt.expiration-time}")
     private long jwtExpiration;
 
+
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -43,6 +46,9 @@ public class JwtServiceImpl implements JwtService {
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
+
+
+
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);

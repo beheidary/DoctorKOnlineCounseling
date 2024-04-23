@@ -154,25 +154,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>io.swagger</groupId>-->
-<!--                <artifactId>swaggerhub-maven-plugin</artifactId>-->
-<!--                <version>1.0.10</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>generate-resources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>download</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <api>PetStoreAPI</api>-->
-<!--                            <owner>jsfrench</owner>-->
-<!--                            <version>1.0.0</version>-->
-<!--                            <outputFile>target/petStoreAPI.json</outputFile>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 

@@ -1,8 +1,8 @@
 package com.doctork.doctorkonlinecounseling.configuration;
 
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -45,9 +45,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**",
                                 "/swagger-resources/*","/configuration/ui",
-                                "/v3/api-docs/**","/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/elastic/**").permitAll()
-                        .requestMatchers("/elastic/**").hasRole("Admin")
+                                "/v3/api-docs/**","/auth/**","elastic/**").permitAll()
+                        .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll()
                         .anyRequest().authenticated()
                 ).exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, ex2) -> {
                     response.sendError(
@@ -59,6 +58,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
 
     // Used by Spring Security if CORS is enabled. by default is enabled

@@ -1,19 +1,22 @@
 package com.doctork.doctorkonlinecounseling.api.controllers.elastic;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.Elastic.ElasticAdapter;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchResultDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SuggestOutputDTO;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
-
-//import io.swagger.annotations.Api;
-//import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -22,7 +25,6 @@ import java.io.IOException;
 
 
 
-//@Api(value = "doctorK Index Controller",produces = "Application/json")
 @RestController()
 @OpenAPIDefinition(
         info = @Info(title = "Doctor",version = "0.0",description = "dESCRIPTION")
@@ -38,7 +40,8 @@ public class    ElasticSearchController {
 
 
     @GetMapping("/search")
-//    @ApiOperation(value = "Search on elastic engine", response = SearchResultDTO.class)
+    @Operation(summary = "Search on elastic engine")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SearchResultDTO.class)) })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> findByNameAndSpeciality(@RequestParam("queryString") String queryString,
                                                               @RequestParam(defaultValue = "0") @PositiveOrZero Integer pageNumber,
@@ -50,7 +53,8 @@ public class    ElasticSearchController {
     }
 
     @GetMapping("/suggest")
-//    @ApiOperation(value = "Search on elastic engine", response = SuggestOutputDTO.class)
+    @Operation(summary = "Get Suggestions")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SuggestOutputDTO.class)) })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> suggestBySpeciality(@RequestParam("queryString") String queryString) throws IOException {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
@@ -60,7 +64,9 @@ public class    ElasticSearchController {
     }
 
     @DeleteMapping(value = "/doctorIndex/{id}")
-//    @ApiOperation(value = "delete a doctor entity", response = ElasticDoctorEntity.class)
+    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @Operation(summary = "Delete a Doctor doc")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ElasticDoctorEntity.class)) })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> removeDoctor(@PathVariable String id)
     {
@@ -71,7 +77,9 @@ public class    ElasticSearchController {
     }
 
     @PutMapping(value = "/doctorIndex/{id}")
-//    @ApiOperation(value = "edit entity", response = ElasticDoctorEntity.class)
+    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @Operation(summary = "Edit a Doctor doc")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ElasticDoctorEntity.class)) })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> editDoctor(@PathVariable String id,
                                                  @RequestBody @Validated ElasticDoctorEntity elasticDoctorEntity)
@@ -83,8 +91,10 @@ public class    ElasticSearchController {
     }
 
     @PostMapping(value = "/doctorIndex/")
+    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @Operation(summary = "Add a Doctor doc")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Doctor.class)) })
     public @ResponseBody
-//    @ApiOperation(value = "add doctor entity", response = Doctor.class)
     DeferredResult<ResponseEntity<?>> addDoctor(@RequestBody @Validated Doctor doctor)
     {
 

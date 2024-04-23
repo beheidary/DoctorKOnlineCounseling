@@ -11,6 +11,5 @@ public interface JwtService {
 
 
     String generateToken(UserDetails userDetails);
-
     Long getExpirationTime();
 }
