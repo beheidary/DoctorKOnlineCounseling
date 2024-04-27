@@ -7,30 +7,16 @@ import java.time.LocalDateTime;
 public class ExpertiseInputDTO {
 
 
-    private Long id;
-
     private String name;
 
-    private LocalDateTime saveDateTime;
-    private LocalDateTime updateDateTime;
     private ExpertiseLatinNames latinName;
 
 
-    public ExpertiseInputDTO(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName) {
-        this.id = id;
+    public ExpertiseInputDTO(String name, ExpertiseLatinNames latinName) {
         this.name = name;
-        this.saveDateTime = saveDateTime;
-        this.updateDateTime = updateDateTime;
         this.latinName = latinName;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -38,22 +24,6 @@ public class ExpertiseInputDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public LocalDateTime getSaveDateTime() {
-        return saveDateTime;
-    }
-
-    public void setSaveDateTime(LocalDateTime saveDateTime) {
-        this.saveDateTime = saveDateTime;
-    }
-
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
     }
 
     public ExpertiseLatinNames getLatinName() {

@@ -4,7 +4,7 @@ import java.util.List;
 public class SearchResultDTO {
     private long totalHits;
     private String totalHitsRelation;
-    private double maxScore;
+    private Double maxScore;
     private String scrollId;
     private String pointInTimeId;
     private List<SearchHitDTO> searchHits;

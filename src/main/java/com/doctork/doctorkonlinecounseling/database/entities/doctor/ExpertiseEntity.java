@@ -8,6 +8,8 @@ import java.util.Set;
 
 import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Entity
@@ -21,16 +23,15 @@ import jakarta.persistence.*;
 public class ExpertiseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
 
     @Column(name = "name",nullable = false)
     private String name;
-
+    @CreationTimestamp
     @Column(name = "saveDateTime", nullable = false)
     private LocalDateTime saveDateTime;
-
+    @UpdateTimestamp
     @Column(name = "updateDateTime", nullable = true)
     private LocalDateTime updateDateTime;
 

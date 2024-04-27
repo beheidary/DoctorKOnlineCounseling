@@ -64,7 +64,7 @@ public class DoctorKController {
     @PostMapping(value = "doctor/")
     @PreAuthorize("hasRole('ROLE_Admin')")
     @Operation(summary = "Complete Physician Profile")
-    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DoctorOutputDTO.class)) })
+    @ApiResponse(content = { @Content(mediaType = "application/json") })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> addDoctor(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
     {

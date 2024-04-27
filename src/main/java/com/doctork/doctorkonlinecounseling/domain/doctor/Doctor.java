@@ -17,10 +17,11 @@ public class Doctor {
     private LocalDateTime updated_At;
     private Set<Expertise> expertises = new HashSet<>();
     private String physicianSystemCode;
+    private Double businessWeight;
     private DoctorStatus status;
     private User user;
 
-    public Doctor(Long nationalCode, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, DoctorStatus status, User user) {
+    public Doctor(Long nationalCode, String firstName,Double businessWeight, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, DoctorStatus status, User user) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,8 +29,9 @@ public class Doctor {
         this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;
+        this.businessWeight = 0.1;
         this.physicianSystemCode = physicianSystemCode;
-        this.status = status;
+        this.status = DoctorStatus.Offline;
         this.user = user;
     }
 
@@ -111,5 +113,13 @@ public class Doctor {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Double getBusinessWeight() {
+        return businessWeight;
+    }
+
+    public void setBusinessWeight(Double businessWeight) {
+        this.businessWeight = businessWeight;
     }
 }

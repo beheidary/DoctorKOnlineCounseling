@@ -33,7 +33,7 @@ public class DoctorEntity {
     private LocalDate dateOfBirth;
 
     @Column(name = "businessWeight" , nullable = false)
-    private Float businessWeight;
+    private Double businessWeight;
 
     @Column(name = "educationLevel",nullable = false)
     private EducationLevel educationLevel;
@@ -61,12 +61,12 @@ public class DoctorEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public DoctorEntity(Long nationalCode, String firstName, String lastName, LocalDate dateOfBirth, Float businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, DoctorStatus status, UserEntity user) {
+    public DoctorEntity(Long nationalCode, String firstName, String lastName, LocalDate dateOfBirth, Double businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, DoctorStatus status, UserEntity user) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.businessWeight = businessWeight;
+        this.businessWeight = 0.1;
         this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;
@@ -150,11 +150,11 @@ public class DoctorEntity {
         this.status = status;
     }
 
-    public Float getBusinessWeight() {
+    public Double getBusinessWeight() {
         return businessWeight;
     }
 
-    public void setBusinessWeight(Float businessWeight) {
+    public void setBusinessWeight(Double businessWeight) {
         this.businessWeight = businessWeight;
     }
 

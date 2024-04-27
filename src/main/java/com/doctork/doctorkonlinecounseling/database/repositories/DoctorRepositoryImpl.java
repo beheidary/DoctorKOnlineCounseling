@@ -174,27 +174,20 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
                     if (oldExpertise != null) {
 
-                        oldExpertise.setUpdateDateTime(newExpertise.getSaveDateTime());
                         oldExpertise.getDoctors().add(doctorEntity);
                         oldExpertise = expertiseMySqlRepository.save(oldExpertise);
                         doctorEntity.getExpertises().add(oldExpertise);
                         doctorEntity = doctorMySqlRepository.save(doctorEntity);
-                        System.out.println(oldExpertise.getDoctors());
-                        System.out.println(doctorEntity.getExpertises());
                         return expertiseEntityMapper.entityToModelWithDoctor(oldExpertise);
 
                     } else {
-
+                        // there is bug doctors_expertise relation not set in first execute
                         Set<DoctorEntity> doctors = new HashSet<>();
                         doctors.add(doctorEntity);
                         ExpertiseEntity expertise = new ExpertiseEntity();
                         expertise.setDoctors(doctors);
-
                         expertise.setName(newExpertise.getName());
                         expertise.setLatinName(newExpertise.getLatinName());
-                        expertise.setSaveDateTime(newExpertise.getSaveDateTime());
-                        expertise.setUpdateDateTime(newExpertise.getSaveDateTime());
-
                         return expertiseEntityMapper.entityToModelWithDoctor(expertiseMySqlRepository.save(expertise));
 
 
