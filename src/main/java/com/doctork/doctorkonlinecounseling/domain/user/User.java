@@ -1,5 +1,4 @@
 package com.doctork.doctorkonlinecounseling.domain.user;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,24 +7,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class User implements UserDetails {
 
-    private Integer id;
-
-    private String fullName;
-
-
+    private UUID id;
     private String email;
-
     private String password;
-
+    private String mobileNumber;
     private Date createdAt;
-
-
-    private UserType role;
-
     private Date updatedAt;
+    private UserType role;
 
     @Override
     public String getUsername() {
@@ -34,14 +26,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(new SimpleGrantedAuthority("ROLE_"+getRole().toString()));
-
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + getRole().toString()));
         return authorities;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
@@ -63,30 +51,22 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(Integer id, String fullName, String email, UserType userType, String password, Date createdAt, Date updatedAt) {
+    public User(UUID id, String email, String password, String mobileNumber, UserType role, Date createdAt, Date updatedAt) {
         this.id = id;
-        this.role = userType;
-        this.fullName = fullName;
         this.email = email;
         this.password = password;
+        this.mobileNumber = mobileNumber;
+        this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -104,6 +84,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public Date getCreatedAt() {
@@ -130,4 +118,3 @@ public class User implements UserDetails {
         this.role = role;
     }
 }
-

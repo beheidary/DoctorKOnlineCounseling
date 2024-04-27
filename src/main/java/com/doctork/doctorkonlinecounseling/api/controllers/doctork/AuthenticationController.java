@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,10 +39,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    @SecurityRequirement(name = "security_auth")
     @Operation(summary = "User register")
-    @ApiResponse(content = { @Content(mediaType = "application/json" , schema = @Schema(implementation = UserEntity.class))})
-    public ResponseEntity<UserEntity> register(@RequestBody @Valid RegisterUserDto registerUserDto) {
+    @ApiResponse(content = { @Content(mediaType = "application/json" , schema = @Schema(implementation = RegisterUserDto.class))})
+    public ResponseEntity<UserEntity> register(@RequestBody  RegisterUserDto registerUserDto) {
         UserEntity registeredUser = authenticationService.signup(registerUserDto);
 
         return ResponseEntity.ok(registeredUser);

@@ -7,7 +7,6 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.FieldItemError;
 import com.doctork.doctorkonlinecounseling.common.exceptions.InputErrorDetail;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputException;
 import jakarta.validation.ConstraintViolationException;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;

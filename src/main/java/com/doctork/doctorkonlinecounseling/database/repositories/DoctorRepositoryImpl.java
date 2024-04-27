@@ -19,7 +19,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,6 +52,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
 
         try{
+
 
             DoctorEntity doctorEntity = doctorEntityMapper.modelToEntity(doctor);
 
@@ -94,8 +94,6 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
                 doctorEntity.setDateOfBirth(doctor.getDateOfBirth());
                 doctorEntity.setEducationLevel(doctor.getEducationLevel());
-                doctorEntity.setMobileNumber(doctor.getMobileNumber());
-                doctorEntity.setUpdateDateTime(doctor.getUpdateDateTime());
 
                 doctorEntity = doctorMySqlRepository.save(doctorEntity);
 
@@ -274,6 +272,8 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
 
     }
+
+
 }
 
 

@@ -1,11 +1,11 @@
 package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.AddressOutputDTO;
+import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
 import jakarta.persistence.*;
-import jakarta.validation.groups.Default;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,68 +16,35 @@ import java.util.*;
         {
                 @Index(name = "first_name_index", columnList = "firstName", unique = false),
                 @Index(name = "national_code_index", columnList = "nationalCode", unique = true),
-                @Index(name = "national_id_index", columnList = "nationalId", unique = true),
-                @Index(name = "mobile_number_index", columnList = "mobileNumber", unique = false),
-//                @Index(name = "user_id_index", columnList = "userId", unique = false)
         })
 
 public class DoctorEntity {
 
-
-
-
-
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Long nationalCode;
 
     @Column(name = "firstName",nullable = false)
     private String firstName;
 
-
     @Column(name = "lastName",nullable = false)
     private String lastName;
-
 
     @Column(name = "dateOfBirth",nullable = false)
     private LocalDate dateOfBirth;
 
-
-    @Column(name = "nationalCode",nullable = false)
-    private String nationalCode;
-
-
-    @Column(name = "nationalId",nullable = false)
-    private String nationalId;
-
-
-
-    @Column(name = "mobileNumber",nullable = false)
-    private String mobileNumber;
-
+    @Column(name = "businessWeight" , nullable = false)
+    private Float businessWeight;
 
     @Column(name = "educationLevel",nullable = false)
     private EducationLevel educationLevel;
 
-    @Column(name = "registerDateTime",nullable = true)
-    private LocalDateTime registerDateTime;
-
-
-    @Column(name = "updateDateTime",nullable = true)
-    private LocalDateTime updateDateTime;
-
+    @UpdateTimestamp
+    @Column(name = "updated_at",nullable = true)
+    private LocalDateTime updated_At;
 
     @ManyToMany(cascade = {  }, fetch = FetchType.LAZY)
     @JoinTable(name = "doctor_expertise", joinColumns = @JoinColumn(name = "doctor_id"), inverseJoinColumns = @JoinColumn(name = "expertise_id"))
     private Set<ExpertiseEntity> expertises = new HashSet<>();
-
-
-//    @Column(name = "userId", nullable = true)
-//    private UUID userId;
-
-
 
     @Column(name = "physicianSystemCode", nullable = false)
     private String physicianSystemCode;
@@ -85,34 +52,27 @@ public class DoctorEntity {
     @Column(name = "status", nullable = false)
     private DoctorStatus status;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
 
 
     // Todo complete Addresses and Service Entities
-//
-//    @ManyToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    private List<ServiceEntity> services;
-//
-//
-//    @ManyToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    private List<AddressEntity> addresses;
-//
 
 
-    public DoctorEntity(Long id, DoctorStatus status, String firstName,String physicianSystemCode, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, Set<ExpertiseEntity> expertises, UUID userId) {
-        this.id = id;
-        this.physicianSystemCode =physicianSystemCode;
+    public DoctorEntity(Long nationalCode, String firstName, String lastName, LocalDate dateOfBirth, Float businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, DoctorStatus status, UserEntity user) {
+        this.nationalCode = nationalCode;
         this.firstName = firstName;
-        this.status = status;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.nationalCode = nationalCode;
-        this.nationalId = nationalId;
-        this.mobileNumber = mobileNumber;
+        this.businessWeight = businessWeight;
         this.educationLevel = educationLevel;
-        this.registerDateTime = registerDateTime;
-        this.updateDateTime = updateDateTime;
+        this.updated_At = updated_At;
         this.expertises = expertises;
-//        this.userId = userId;
+        this.physicianSystemCode = physicianSystemCode;
+        this.status = status;
+        this.user = user;
     }
 
     public DoctorEntity() {
@@ -124,14 +84,6 @@ public class DoctorEntity {
 
     public void setPhysicianSystemCode(String physicianSystemCode) {
         this.physicianSystemCode = physicianSystemCode;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -158,28 +110,12 @@ public class DoctorEntity {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getNationalCode() {
+    public Long getNationalCode() {
         return nationalCode;
     }
 
-    public void setNationalCode(String nationalCode) {
+    public void setNationalCode(Long nationalCode) {
         this.nationalCode = nationalCode;
-    }
-
-    public String getNationalId() {
-        return nationalId;
-    }
-
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
     }
 
     public EducationLevel getEducationLevel() {
@@ -190,20 +126,12 @@ public class DoctorEntity {
         this.educationLevel = educationLevel;
     }
 
-    public LocalDateTime getRegisterDateTime() {
-        return registerDateTime;
+    public LocalDateTime getUpdated_At() {
+        return updated_At;
     }
 
-    public void setRegisterDateTime(LocalDateTime registerDateTime) {
-        this.registerDateTime = registerDateTime;
-    }
-
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
+    public void setUpdated_At(LocalDateTime updated_At) {
+        this.updated_At = updated_At;
     }
 
     public Set<ExpertiseEntity> getExpertises() {
@@ -222,6 +150,22 @@ public class DoctorEntity {
         this.status = status;
     }
 
+    public Float getBusinessWeight() {
+        return businessWeight;
+    }
+
+    public void setBusinessWeight(Float businessWeight) {
+        this.businessWeight = businessWeight;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
     //    public UUID getUserId() {
 //        return userId;
 //    }
@@ -237,11 +181,11 @@ public class DoctorEntity {
 
         DoctorEntity that = (DoctorEntity) o;
 
-        return Objects.equals(id, that.id);
+        return Objects.equals(nationalCode, that.nationalCode);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return nationalCode != null ? nationalCode.hashCode() : 0;
     }
 }

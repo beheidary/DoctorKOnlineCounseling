@@ -2,7 +2,6 @@ package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor;
 
 import java.time.LocalDate;
 
-import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,16 +30,6 @@ public class DoctorInputDTO {
     @NotBlank
     private String nationalCode;
 
-    @NotNull
-    @NotBlank
-    private String nationalId;
-
-    @NotNull
-    @NotBlank
-    private String mobileNumber;
-
-
-    private DoctorStatus status;
 
     @NotNull
     private EducationLevel educationLevel;
@@ -49,14 +38,11 @@ public class DoctorInputDTO {
     private String physicianSystemCode;
 
 
-    public DoctorInputDTO(String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, DoctorStatus status, EducationLevel educationLevel, String physicianSystemCode) {
+    public DoctorInputDTO(String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, EducationLevel educationLevel, String physicianSystemCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.nationalCode = nationalCode;
-        this.nationalId = nationalId;
-        this.mobileNumber = mobileNumber;
-        this.status = DoctorStatus.Offline;
         this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
     }
@@ -94,21 +80,6 @@ public class DoctorInputDTO {
         this.nationalCode = nationalCode;
     }
 
-    public String getNationalId() {
-        return nationalId;
-    }
-
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
 
     public EducationLevel getEducationLevel() {
         return educationLevel;
@@ -124,12 +95,5 @@ public class DoctorInputDTO {
 
     public void setPhysicianSystemCode(String physicianSystemCode) {
         this.physicianSystemCode = physicianSystemCode;
-    }
-    public DoctorStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(DoctorStatus status) {
-        this.status = status;
     }
 }

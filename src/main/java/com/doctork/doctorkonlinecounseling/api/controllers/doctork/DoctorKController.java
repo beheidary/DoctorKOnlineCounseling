@@ -43,7 +43,7 @@ public class DoctorKController {
 
     }
 
-    @PreAuthorize("hasRole('Patient')")
+    @PreAuthorize("hasRole('ROLE_Patient')")
     @GetMapping(value = "doctor/{physicianSystemCode}")
     @Operation(summary = "Fetch a Doctor")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DoctorOutputDTO.class)) })
@@ -62,7 +62,7 @@ public class DoctorKController {
     }
 
     @PostMapping(value = "doctor/")
-    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     @Operation(summary = "Complete Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DoctorOutputDTO.class)) })
     public @ResponseBody
@@ -81,7 +81,7 @@ public class DoctorKController {
     }
 
     @PutMapping(value = "doctor/")
-    @PreAuthorize("hasAuthority('ROLE_Physician')")
+    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Edit Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DoctorOutputDTO.class)) })
     public @ResponseBody
@@ -100,7 +100,7 @@ public class DoctorKController {
 
 
     @PostMapping(value = "doctor/addDoctorExpertise/{PSCode}")
-    @PreAuthorize("hasAuthority('ROLE_Physician')")
+    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Add Doctor Expertise")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDTO.class)) })
     public @ResponseBody
@@ -119,7 +119,7 @@ public class DoctorKController {
 
 
     @GetMapping(value = "/expertise/")
-    @PreAuthorize("hasAuthority('ROLE_Physician')")
+    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Get All Expertise")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDTO.class)) })
     public @ResponseBody
@@ -136,7 +136,7 @@ public class DoctorKController {
     }
 
     @GetMapping(value = "/expertise/{lotinName}")
-    @PreAuthorize("hasAuthority('ROLE_Physician')")
+    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Get a Expertise")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDTO.class)) })
     public @ResponseBody
@@ -154,7 +154,7 @@ public class DoctorKController {
 
     @GetMapping(value = "doctor/changestatus/{physicianSystemCode}/{status}")
     public @ResponseBody
-    @PreAuthorize("hasAuthority('ROLE_Physician')")
+    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Change Doctor Status")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDTO.class)) })
     DeferredResult<ResponseEntity<?>> changeStatus(@Validated @PathVariable String physicianSystemCode , @Validated @PathVariable DoctorStatus status)

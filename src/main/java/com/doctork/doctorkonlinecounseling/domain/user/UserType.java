@@ -2,6 +2,6 @@ package com.doctork.doctorkonlinecounseling.domain.user;
 
 public enum UserType {
 
-    Patient, Physician, Admin
+    Patient, Physician, Admin, Support
 
 }

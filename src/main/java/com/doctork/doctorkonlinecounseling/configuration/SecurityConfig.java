@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**",
                                 "/swagger-resources/*","/configuration/ui",
-                                "/v3/api-docs/**","/auth/**","elastic/**").permitAll()
+                                "/v3/api-docs/**","auth/login","elastic/**").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll()
                         .anyRequest().authenticated()
                 ).exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, ex2) -> {
@@ -81,7 +81,8 @@ public class SecurityConfig {
     @Bean
     static RoleHierarchy roleHierarchy() {
         var hierarchy = new RoleHierarchyImpl();
-        hierarchy.setHierarchy("ROLE_Admin > ROLE_Physician\n" +
+        hierarchy.setHierarchy("ROLE_Admin > ROLE_Support\n"
+                +"ROLE_Support > ROLE_Physician\n" +
                 "ROLE_Physician > ROLE_Patient");
 
         return hierarchy;

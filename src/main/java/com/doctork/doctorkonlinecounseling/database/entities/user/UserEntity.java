@@ -8,40 +8,27 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Table(name = "users")
 @Entity
 public class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
-    private Integer id;
-
-    @Column(nullable = false)
-    private String fullName;
+    private UUID id;
 
     @Column(nullable = false)
     private UserType role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+getRole().toString()));
-
-        return authorities;
-    }
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "mobileNumber",nullable = true)
+    private String mobileNumber;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -50,11 +37,20 @@ public class UserEntity implements UserDetails {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
 
-    public UserEntity(Integer id, String fullName, UserType userType, String email, String password, Date createdAt, Date updatedAt) {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+getRole().toString()));
+
+        return authorities;
+    }
+
+    public UserEntity(UUID id,String mobileNumber, UserType userType, String email, String password, Date createdAt, Date updatedAt) {
         this.id = id;
-        this.fullName = fullName;
         this.email = email;
+        this.mobileNumber = mobileNumber;
         this.role = userType;
         this.password = password;
         this.createdAt = createdAt;
@@ -66,21 +62,14 @@ public class UserEntity implements UserDetails {
     }
 
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     public String getEmail() {
         return email;
@@ -134,6 +123,15 @@ public class UserEntity implements UserDetails {
     public Date getCreatedAt() {
         return createdAt;
     }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;

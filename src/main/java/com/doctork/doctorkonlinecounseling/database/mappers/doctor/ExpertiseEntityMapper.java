@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 
 public interface ExpertiseEntityMapper {
+    @Mappings({@Mapping(target = "doctors",expression = "java(null)")})
 
     ExpertiseEntity modelToEntity(Expertise expertise);
 
     @Named("entityToModelWithDoctor")
+    @Mappings({@Mapping(target = "doctors",expression = "java(null)")})
     Expertise entityToModelWithDoctor(ExpertiseEntity expertiseEntity);
 
     @Mappings({@Mapping(target = "doctors",expression = "java(null)")})

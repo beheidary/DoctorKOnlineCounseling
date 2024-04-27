@@ -1,72 +1,44 @@
 package com.doctork.doctorkonlinecounseling.domain.doctor;
-
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEntity;
-
+import com.doctork.doctorkonlinecounseling.domain.user.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-
-
 public class Doctor {
 
-    private Long id;
-
+    private Long nationalCode;
     private String firstName;
-
     private String lastName;
-
     private LocalDate dateOfBirth;
-
-    private String nationalCode;
-
-    private String nationalId;
-
-    private String mobileNumber;
-
     private EducationLevel educationLevel;
-
-    private LocalDateTime registerDateTime;
-
-    private LocalDateTime updateDateTime;
-
-    private Set<Expertise> Expertises = new HashSet<>();
-
-    private DoctorStatus status;
-
-//    private UUID userId;
-
+    private LocalDateTime updated_At;
+    private Set<Expertise> expertises = new HashSet<>();
     private String physicianSystemCode;
+    private DoctorStatus status;
+    private User user;
 
-
-    public Doctor(Long id, DoctorStatus status, String firstName, String lastName, LocalDate dateOfBirth, String nationalCode, String nationalId, String mobileNumber, EducationLevel educationLevel, LocalDateTime registerDateTime, LocalDateTime updateDateTime, Set<Expertise> expertises, UUID userId, String physicianSystemCode) {
-        this.id = id;
+    public Doctor(Long nationalCode, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, DoctorStatus status, User user) {
+        this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.status = status;
         this.dateOfBirth = dateOfBirth;
-        this.nationalCode = nationalCode;
-        this.nationalId = nationalId;
-        this.mobileNumber = mobileNumber;
         this.educationLevel = educationLevel;
-        this.registerDateTime = registerDateTime;
-        this.updateDateTime = updateDateTime;
-        Expertises = expertises;
+        this.updated_At = updated_At;
+        this.expertises = expertises;
         this.physicianSystemCode = physicianSystemCode;
-        //        this.userId = userId;
-
+        this.status = status;
+        this.user = user;
     }
 
-    public Long getId() {
-        return id;
+    public Long getNationalCode() {
+        return nationalCode;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNationalCode(Long nationalCode) {
+        this.nationalCode = nationalCode;
     }
 
     public String getFirstName() {
@@ -93,30 +65,6 @@ public class Doctor {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getNationalCode() {
-        return nationalCode;
-    }
-
-    public void setNationalCode(String nationalCode) {
-        this.nationalCode = nationalCode;
-    }
-
-    public String getNationalId() {
-        return nationalId;
-    }
-
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
     public EducationLevel getEducationLevel() {
         return educationLevel;
     }
@@ -125,37 +73,21 @@ public class Doctor {
         this.educationLevel = educationLevel;
     }
 
-    public LocalDateTime getRegisterDateTime() {
-        return registerDateTime;
+    public LocalDateTime getUpdated_At() {
+        return updated_At;
     }
 
-    public void setRegisterDateTime(LocalDateTime registerDateTime) {
-        this.registerDateTime = registerDateTime;
-    }
-
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
+    public void setUpdated_At(LocalDateTime updated_At) {
+        this.updated_At = updated_At;
     }
 
     public Set<Expertise> getExpertises() {
-        return Expertises;
+        return expertises;
     }
 
     public void setExpertises(Set<Expertise> expertises) {
-        Expertises = expertises;
+        this.expertises = expertises;
     }
-
-//    public UUID getUserId() {
-//        return userId;
-//    }
-
-//    public void setUserId(UUID userId) {
-//        this.userId = userId;
-//    }
 
     public String getPhysicianSystemCode() {
         return physicianSystemCode;
@@ -171,5 +103,13 @@ public class Doctor {
 
     public void setStatus(DoctorStatus status) {
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

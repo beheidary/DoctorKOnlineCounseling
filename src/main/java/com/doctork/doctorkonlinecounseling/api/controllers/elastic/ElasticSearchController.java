@@ -64,7 +64,7 @@ public class    ElasticSearchController {
     }
 
     @DeleteMapping(value = "/doctorIndex/{id}")
-    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     @Operation(summary = "Delete a Doctor doc")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ElasticDoctorEntity.class)) })
     public @ResponseBody
@@ -77,7 +77,7 @@ public class    ElasticSearchController {
     }
 
     @PutMapping(value = "/doctorIndex/{id}")
-    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     @Operation(summary = "Edit a Doctor doc")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ElasticDoctorEntity.class)) })
     public @ResponseBody
@@ -91,7 +91,7 @@ public class    ElasticSearchController {
     }
 
     @PostMapping(value = "/doctorIndex/")
-    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     @Operation(summary = "Add a Doctor doc")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Doctor.class)) })
     public @ResponseBody

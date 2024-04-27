@@ -1,8 +1,14 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user;
 
-public class LoginUserDto {
-    private String email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
+public class LoginUserDto {
+    @NotNull
+    @NotBlank
+    private String email;
+    @NotNull
+    @NotBlank
     private String password;
 
     public String getEmail() {

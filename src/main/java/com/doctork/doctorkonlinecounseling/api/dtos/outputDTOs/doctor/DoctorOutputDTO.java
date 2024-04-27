@@ -12,15 +12,12 @@ public class DoctorOutputDTO {
     private String firstName;
     private String lastName;
     private EducationLevel educationLevel;
-    private LocalDateTime registerDateTime;
     private String physicianSystemCode;
     private LocalDateTime updateDateTime;
-
-
     private DoctorStatus status;
+    private Long nationalCode;
 //    private List<AddressOutputDTO> addresses;
 //    private UUID userId;
-    private Long id;
 
 
 
@@ -30,12 +27,11 @@ public class DoctorOutputDTO {
         this.lastName = lastName;
         this.status = status;
         this.educationLevel = educationLevel;
-        this.registerDateTime = registerDateTime;
         this.physicianSystemCode = physicianSystemCode;
         this.updateDateTime = updateDateTime;
+        this.nationalCode = id;
 //        this.addresses = addresses;
 //        this.userId = userId;
-        this.id = id;
     }
 
 
@@ -61,14 +57,6 @@ public class DoctorOutputDTO {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
-    }
-
-    public LocalDateTime getRegisterDateTime() {
-        return registerDateTime;
-    }
-
-    public void setRegisterDateTime(LocalDateTime registerDateTime) {
-        this.registerDateTime = registerDateTime;
     }
 
     public String getPhysicianSystemCode() {
@@ -112,11 +100,11 @@ public class DoctorOutputDTO {
         this.status = status;
     }
 
-    public Long getId() {
-        return id;
+    public Long getNationalCode() {
+        return nationalCode;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNationalCode(Long nationalCode) {
+        this.nationalCode = nationalCode;
     }
 }

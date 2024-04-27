@@ -41,9 +41,9 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Doctor addDoctor(Doctor doctor) {
 
-        doctor.setRegisterDateTime(LocalDateTime.now());
+        //doctor.setRegisterDateTime(LocalDateTime.now());
         doctor = doctorRepository.addDoctor(doctor);
-        elasticAdapter.addDoctor(doctor);
+        //elasticAdapter.addDoctor(doctor);
 
 
         return doctor;
@@ -53,9 +53,9 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Doctor editDoctor(Doctor doctor) {
 
-        doctor.setUpdateDateTime(LocalDateTime.now());
+        //doctor.setUpdateDateTime(LocalDateTime.now());
         doctor = doctorRepository.editDoctor(doctor);
-        elasticAdapter.addDoctor(doctor);
+        //elasticAdapter.addDoctor(doctor);
         return doctor;
 
     }
