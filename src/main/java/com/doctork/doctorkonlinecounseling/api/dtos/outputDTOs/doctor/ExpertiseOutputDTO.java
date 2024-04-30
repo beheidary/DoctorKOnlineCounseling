@@ -1,7 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor;
 
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +24,11 @@ public class ExpertiseOutputDTO {
         this.updateDateTime = updateDateTime;
         this.latinName = latinName;
         this.doctors = doctors;
+    }
+
+
+    public ExpertiseOutputDTO() {
+
     }
 
     public Long getId() {

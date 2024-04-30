@@ -1,8 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor;
 
-import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
-
-import java.time.LocalDateTime;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 public class ExpertiseInputDTO {
 

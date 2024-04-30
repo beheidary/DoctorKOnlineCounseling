@@ -1,0 +1,14 @@
+package com.doctork.doctorkonlinecounseling.api.adapters.miscellaneous;
+
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.ArticleOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.FAQOutputDto;
+
+import java.util.List;
+
+public interface MiscellaneousAdapter {
+
+    List<FAQOutputDto> getFaq();
+
+    List<ArticleOutputDto> getAllArticles();
+
+}

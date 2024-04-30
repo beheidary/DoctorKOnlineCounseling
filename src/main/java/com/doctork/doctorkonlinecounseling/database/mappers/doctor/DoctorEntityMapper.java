@@ -5,6 +5,8 @@ import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DoctorEntityMapper {
@@ -18,8 +20,5 @@ public interface DoctorEntityMapper {
     @Mapping(target = "user",ignore = true)
     @Mappings({@Mapping(target = "expertises",expression = "java(null)")})
     Doctor entityToModel(DoctorEntity doctorEntity);
-
-
-
 
 }

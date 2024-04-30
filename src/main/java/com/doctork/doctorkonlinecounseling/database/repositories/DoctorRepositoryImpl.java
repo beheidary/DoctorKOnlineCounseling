@@ -12,16 +12,20 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.DoctorMySqlR
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ExpertiseMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.DoctorEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.ExpertiseEntityMapper;
+import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -32,17 +36,71 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
     private final DoctorMySqlRepository doctorMySqlRepository;
     private final ExpertiseEntityMapper expertiseEntityMapper;
-
+    private final EntityManager em;
     private final ExpertiseMySqlRepository expertiseMySqlRepository;
 
 
 
 
-    public DoctorRepositoryImpl(ExpertiseEntityMapper expertiseEntityMapper, ExpertiseMySqlRepository expertiseMySqlRepository, DoctorEntityMapper doctorEntityMapper, DoctorMySqlRepository doctorMySqlRepository) {
+    public DoctorRepositoryImpl(EntityManager em, ExpertiseEntityMapper expertiseEntityMapper, ExpertiseMySqlRepository expertiseMySqlRepository, DoctorEntityMapper doctorEntityMapper, DoctorMySqlRepository doctorMySqlRepository) {
         this.doctorEntityMapper = doctorEntityMapper;
         this.expertiseEntityMapper = expertiseEntityMapper;
         this.expertiseMySqlRepository = expertiseMySqlRepository;
         this.doctorMySqlRepository = doctorMySqlRepository;
+        this.em = em;
+    }
+
+
+    @Override
+    public List<TopExpertises> findBestDoctorByExpertise() {
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<ExpertiseEntity> cq = cb.createQuery(ExpertiseEntity.class);
+        Root<ExpertiseEntity> expertiseEntityRoot = cq.from(ExpertiseEntity.class);
+        TypedQuery<ExpertiseEntity> query = em.createQuery(cq);
+        List<ExpertiseEntity> expertiseEntities = query.getResultList();
+
+        List<TopExpertises> expertise = new ArrayList<>();
+        for(ExpertiseEntity expertiseEntity: expertiseEntities){
+            List<Doctor> doctors = new ArrayList<>();
+            for (DoctorEntity doctorEntity : expertiseEntity.getDoctors()){
+                doctors.add(doctorEntityMapper.entityToModel(doctorEntity));
+            }
+            TopExpertises expertise1 = expertiseEntityMapper.topEntityToModel(expertiseEntity);
+            doctors.sort(Comparator.comparingDouble(Doctor::getBusinessWeight).reversed());
+            expertise1.setDoctors(doctors);
+            expertise.add(expertise1);
+        }
+
+        return expertise;
+    }
+
+    @Override
+    public List<Doctor> topDoctors() {
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<DoctorEntity> cq = cb.createQuery(DoctorEntity.class);
+        Root<DoctorEntity> doctorEntityRoot = cq.from(DoctorEntity.class);
+        TypedQuery<DoctorEntity> query = em.createQuery(cq);
+
+//
+//        Subquery<Double> maxBusinessWeightSubquery = cq.subquery(Double.class);
+//        Root<DoctorEntity> subqueryRoot = maxBusinessWeightSubquery.from(DoctorEntity.class);
+//        maxBusinessWeightSubquery.select(cb.max(subqueryRoot.get("businessWeight")));
+//        cq.where(cb.equal(doctorEntityRoot.get("businessWeight"), maxBusinessWeightSubquery));
+//        query.setMaxResults(3);
+
+        List<DoctorEntity> doctorEntities = query.getResultList();
+        doctorEntities.sort(Comparator.comparingDouble(DoctorEntity::getBusinessWeight).reversed());
+        doctorEntities = doctorEntities.stream().limit(3).collect(Collectors.toList());
+        List<Doctor> doctors = new ArrayList<>();
+        for (DoctorEntity doctorEntity : doctorEntities){
+            doctors.add(doctorEntityMapper.entityToModel(doctorEntity));
+        }
+
+
+        return doctors;
+
     }
 
     @Override
@@ -55,6 +113,10 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
 
             DoctorEntity doctorEntity = doctorEntityMapper.modelToEntity(doctor);
+            if (doctorEntity.getBusinessWeight() == null)
+                doctorEntity.setBusinessWeight(0.9);
+            if(doctorEntity.getStatus() == null)
+                doctorEntity.setStatus(DoctorStatus.Offline);
 
             doctorEntity = doctorMySqlRepository.save(doctorEntity);
 
@@ -121,6 +183,8 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     }
 
 
+
+
     @Override
     public Doctor fetchDoctor(String PSCode) {
 
@@ -181,7 +245,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                         return expertiseEntityMapper.entityToModelWithDoctor(oldExpertise);
 
                     } else {
-                        // there is bug doctors_expertise relation not set in first execute
+                        // Todo there is bug doctors_expertise relation not set in first execute
                         Set<DoctorEntity> doctors = new HashSet<>();
                         doctors.add(doctorEntity);
                         ExpertiseEntity expertise = new ExpertiseEntity();

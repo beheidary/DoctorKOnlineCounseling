@@ -1,9 +1,8 @@
 package com.doctork.doctorkonlinecounseling.api.controllers.elastic;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.Elastic.ElasticAdapter;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SearchResultDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.SuggestOutputDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SearchResultDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SuggestOutputDTO;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;

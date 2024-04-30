@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.domain.doctor;
+package com.doctork.doctorkonlinecounseling.domain.Enums;
 
 public enum EducationLevel {
 

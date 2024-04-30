@@ -1,11 +1,9 @@
 package com.doctork.doctorkonlinecounseling.domain.doctor;
 
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class Expertise {

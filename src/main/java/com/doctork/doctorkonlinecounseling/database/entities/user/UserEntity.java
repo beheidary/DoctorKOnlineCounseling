@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.database.entities.user;
 
-import com.doctork.doctorkonlinecounseling.domain.user.UserType;
+import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

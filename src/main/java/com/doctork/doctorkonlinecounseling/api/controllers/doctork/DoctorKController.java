@@ -4,10 +4,11 @@ import com.doctork.doctorkonlinecounseling.api.adapters.Expertise.ExpertiseAdapt
 import com.doctork.doctorkonlinecounseling.api.adapters.doctor.DoctorAdapter;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.TopExpertisesDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
-import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -134,6 +135,40 @@ public class DoctorKController {
         return result;
 
     }
+    @GetMapping(value = "/TopExpertisesPhysicians")
+    @PreAuthorize("hasRole('ROLE_Patient')")
+    @Operation(summary = "Top Expertises Physicians")
+    @ApiResponse(content = { @Content(mediaType = "application/json")})
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> TopExpertisesPhysicians(){
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        List<TopExpertisesDto> expertises = doctorAdapter.findBestDoctorByExpertise();
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertises));
+
+        return result;
+
+    }
+
+    @GetMapping(value = "/TopPhysicians")
+    @PreAuthorize("hasRole('ROLE_Patient')")
+    @Operation(summary = "Top Physicians")
+    @ApiResponse(content = { @Content(mediaType = "application/json")})
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> TopPhysicians(){
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        List<DoctorOutputDTO> expertises = doctorAdapter.topDoctors();
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertises));
+
+        return result;
+
+    }
+
 
     @GetMapping(value = "/expertise/{lotinName}")
     @PreAuthorize("hasRole('ROLE_Physician')")

@@ -2,11 +2,10 @@ package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

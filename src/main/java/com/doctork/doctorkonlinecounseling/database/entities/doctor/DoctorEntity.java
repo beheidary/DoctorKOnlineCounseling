@@ -3,7 +3,7 @@ package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
-import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
+import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -66,7 +66,7 @@ public class DoctorEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.businessWeight = 0.1;
+        this.businessWeight = businessWeight;
         this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;

@@ -1,12 +1,10 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Expertise;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.mappers.Expertise.ExpertiseMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.expertise.ExpertiseService;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
-import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

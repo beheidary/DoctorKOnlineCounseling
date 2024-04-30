@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user;
 
-import com.doctork.doctorkonlinecounseling.domain.user.UserType;
+import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

@@ -1,8 +1,7 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Expertise;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
-import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 import java.util.List;
 

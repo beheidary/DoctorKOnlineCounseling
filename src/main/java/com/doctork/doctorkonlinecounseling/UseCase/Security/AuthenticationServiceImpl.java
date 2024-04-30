@@ -6,7 +6,7 @@ import com.doctork.doctorkonlinecounseling.api.mappers.User.UserMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.AuthenticationService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;
-import com.doctork.doctorkonlinecounseling.domain.user.UserType;
+import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.domain.user;
+package com.doctork.doctorkonlinecounseling.domain.Enums;
 
 public enum UserType {
 

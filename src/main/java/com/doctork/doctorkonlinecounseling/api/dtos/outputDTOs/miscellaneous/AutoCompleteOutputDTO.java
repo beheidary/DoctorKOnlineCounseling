@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous;
 
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SuggestOutputDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;

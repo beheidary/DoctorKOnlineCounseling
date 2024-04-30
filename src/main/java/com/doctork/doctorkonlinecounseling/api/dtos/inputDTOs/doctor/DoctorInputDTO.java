@@ -2,7 +2,7 @@ package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor;
 
 import java.time.LocalDate;
 
-import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
+import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;

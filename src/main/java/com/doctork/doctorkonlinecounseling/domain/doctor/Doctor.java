@@ -1,11 +1,11 @@
 package com.doctork.doctorkonlinecounseling.domain.doctor;
+import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.user.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class Doctor {
 
@@ -29,9 +29,9 @@ public class Doctor {
         this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;
-        this.businessWeight = 0.1;
+        this.businessWeight = businessWeight;
         this.physicianSystemCode = physicianSystemCode;
-        this.status = DoctorStatus.Offline;
+        this.status = status;
         this.user = user;
     }
 

@@ -1,7 +1,7 @@
 package com.doctork.doctorkonlinecounseling.boundary.in.expertise;
 
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
-import com.doctork.doctorkonlinecounseling.domain.doctor.ExpertiseLatinNames;
+import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 import java.util.List;
 

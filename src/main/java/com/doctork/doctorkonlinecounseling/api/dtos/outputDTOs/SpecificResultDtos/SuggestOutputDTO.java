@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous;
+package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -1,7 +1,7 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor;
 
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
-import com.doctork.doctorkonlinecounseling.domain.doctor.EducationLevel;
+import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 
 import java.time.LocalDateTime;
 import java.util.List;

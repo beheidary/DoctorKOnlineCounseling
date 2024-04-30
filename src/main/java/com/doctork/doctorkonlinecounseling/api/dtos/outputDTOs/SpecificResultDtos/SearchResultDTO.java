@@ -1,4 +1,5 @@
-package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous;
+package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos;
+
 import java.util.List;
 
 public class SearchResultDTO {
