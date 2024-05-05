@@ -1,20 +1,17 @@
 package com.doctork.doctorkonlinecounseling.boundary.exit.doctor;
 
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 public interface DoctorRepository {
 
-    Doctor addDoctor(Doctor doctor);
+    Doctor doctorCompleteProfile(Doctor doctor);
 
-    Doctor editDoctor(Doctor doctor);
+    Doctor doctorEditProfile(Doctor doctor);
 
     List<TopExpertises> findBestDoctorByExpertise();
 

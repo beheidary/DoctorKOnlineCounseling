@@ -8,8 +8,10 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.DoctorNotF
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.DoctorMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ExpertiseMySqlRepository;
+import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.DoctorEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.mappers.doctor.ExpertiseEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
@@ -22,6 +24,8 @@ import jakarta.persistence.criteria.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -33,17 +37,18 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
 
     private final DoctorEntityMapper doctorEntityMapper;
-
     private final DoctorMySqlRepository doctorMySqlRepository;
     private final ExpertiseEntityMapper expertiseEntityMapper;
     private final EntityManager em;
     private final ExpertiseMySqlRepository expertiseMySqlRepository;
+    private final UserMySqlRepository userMySqlRepository;
 
 
 
 
-    public DoctorRepositoryImpl(EntityManager em, ExpertiseEntityMapper expertiseEntityMapper, ExpertiseMySqlRepository expertiseMySqlRepository, DoctorEntityMapper doctorEntityMapper, DoctorMySqlRepository doctorMySqlRepository) {
+    public DoctorRepositoryImpl(UserMySqlRepository userMySqlRepository, EntityManager em, ExpertiseEntityMapper expertiseEntityMapper, ExpertiseMySqlRepository expertiseMySqlRepository, DoctorEntityMapper doctorEntityMapper, DoctorMySqlRepository doctorMySqlRepository) {
         this.doctorEntityMapper = doctorEntityMapper;
+        this.userMySqlRepository = userMySqlRepository;
         this.expertiseEntityMapper = expertiseEntityMapper;
         this.expertiseMySqlRepository = expertiseMySqlRepository;
         this.doctorMySqlRepository = doctorMySqlRepository;
@@ -104,7 +109,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     }
 
     @Override
-    public Doctor addDoctor(Doctor doctor) {
+    public Doctor doctorCompleteProfile(Doctor doctor) {
 
         // Todo add to elastic
 
@@ -112,16 +117,29 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         try{
 
 
-            DoctorEntity doctorEntity = doctorEntityMapper.modelToEntity(doctor);
-            if (doctorEntity.getBusinessWeight() == null)
-                doctorEntity.setBusinessWeight(0.9);
-            if(doctorEntity.getStatus() == null)
-                doctorEntity.setStatus(DoctorStatus.Offline);
+            UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            doctorEntity = doctorMySqlRepository.save(doctorEntity);
+            if (doctorMySqlRepository.findDoctorEntityByNationalCode(doctor.getNationalCode())== null && doctorMySqlRepository.findDoctorEntityByUser(userEntity) == null ){
 
-            return doctorEntityMapper.entityToModel(doctorEntity);
+                if(Objects.equals(userEntity.getRole().toString(), "Physician")){
+                    DoctorEntity doctorEntity = doctorEntityMapper.modelToEntity(doctor);
+                    if (doctorEntity.getBusinessWeight() == null)
+                        doctorEntity.setBusinessWeight(0.01);
+                    if(doctorEntity.getStatus() == null)
+                        doctorEntity.setStatus(DoctorStatus.Offline);
+                    doctorEntity.setUser(userEntity);
 
+                    doctorEntity = doctorMySqlRepository.save(doctorEntity);
+
+                    return doctorEntityMapper.entityToModel(doctorEntity);
+                }
+                else {
+                    throw new DoctorNotFoundException();
+                }
+            }else {
+                throw new InvalidDataException();
+
+            }
         }catch (QueryTimeoutException ex){
 
             throw new DatabaseTimeOutException();
@@ -139,14 +157,18 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         }
 
 
+
+
+
+
     }
 
     @Override
-    public Doctor editDoctor(Doctor doctor) {
+    public Doctor doctorEditProfile(Doctor doctor) {
 
         try{
 
-            DoctorEntity doctorEntity = doctorMySqlRepository.findDoctorEntityByPhysicianSystemCode(doctor.getPhysicianSystemCode());
+            DoctorEntity doctorEntity = doctorMySqlRepository.findDoctorEntityByNationalCode(doctor.getNationalCode());
 
             if (doctorEntity == null){
 
@@ -154,12 +176,19 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
             }else{
 
-                doctorEntity.setDateOfBirth(doctor.getDateOfBirth());
-                doctorEntity.setEducationLevel(doctor.getEducationLevel());
+                if (doctorEntity.getUser() == (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()){
 
-                doctorEntity = doctorMySqlRepository.save(doctorEntity);
+                    doctorEntity.setDateOfBirth(doctor.getDateOfBirth());
+                    doctorEntity.setEducationLevel(doctor.getEducationLevel());
 
-                return doctorEntityMapper.entityToModel(doctorEntity);
+                    doctorEntity = doctorMySqlRepository.save(doctorEntity);
+
+                    return doctorEntityMapper.entityToModel(doctorEntity);
+
+
+                }else {
+                    throw new AccessDeniedException("You do not have the required access");
+                }
 
             }
 

@@ -2,6 +2,7 @@ package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import jakarta.persistence.*;
@@ -28,12 +29,17 @@ public class DoctorEntity {
 
     @Column(name = "lastName",nullable = false)
     private String lastName;
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @Column(name = "dateOfBirth",nullable = false)
     private LocalDate dateOfBirth;
 
     @Column(name = "businessWeight" , nullable = false)
     private Double businessWeight;
+
+    @Column(name = "gender" , nullable = false)
+    private Gender gender;
 
     @Column(name = "educationLevel",nullable = false)
     private EducationLevel educationLevel;
@@ -61,10 +67,12 @@ public class DoctorEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public DoctorEntity(Long nationalCode, String firstName, String lastName, LocalDate dateOfBirth, Double businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, DoctorStatus status, UserEntity user) {
+    public DoctorEntity(Gender gender, Long nationalCode,String description, String firstName, String lastName, LocalDate dateOfBirth, Double businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, DoctorStatus status, UserEntity user) {
         this.nationalCode = nationalCode;
+        this.gender = gender;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.description = description;
         this.dateOfBirth = dateOfBirth;
         this.businessWeight = businessWeight;
         this.educationLevel = educationLevel;
@@ -98,12 +106,28 @@ public class DoctorEntity {
         return lastName;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {

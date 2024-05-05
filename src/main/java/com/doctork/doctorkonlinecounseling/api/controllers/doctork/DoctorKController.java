@@ -52,6 +52,9 @@ public class DoctorKController {
     DeferredResult<ResponseEntity<?>> fetchDoctor(@PathVariable String physicianSystemCode)
     {
 
+
+
+
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
         DoctorOutputDTO doctorOutputDTO = doctorAdapter.fetchDoctor(physicianSystemCode);
@@ -63,17 +66,17 @@ public class DoctorKController {
     }
 
     @PostMapping(value = "doctor/")
-    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Complete Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json") })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> addDoctor(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
+    DeferredResult<ResponseEntity<?>> DoctorCoP(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
     {
 
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        DoctorOutputDTO doctorOutputDTO = doctorAdapter.addDoctor(doctorInputDTO);
+        DoctorOutputDTO doctorOutputDTO = doctorAdapter.doctorCompleteProfile(doctorInputDTO);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(doctorOutputDTO));
 
@@ -86,12 +89,12 @@ public class DoctorKController {
     @Operation(summary = "Edit Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DoctorOutputDTO.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> editDoctor(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
+    DeferredResult<ResponseEntity<?>> DoctorEP(@RequestBody @Validated DoctorInputDTO doctorInputDTO)
     {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        DoctorOutputDTO doctorOutputDTO = doctorAdapter.editDoctor(doctorInputDTO);
+        DoctorOutputDTO doctorOutputDTO = doctorAdapter.doctorEditProfile(doctorInputDTO);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(doctorOutputDTO));
 

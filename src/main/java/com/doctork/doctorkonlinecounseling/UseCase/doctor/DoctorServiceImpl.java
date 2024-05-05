@@ -4,7 +4,6 @@ import com.doctork.doctorkonlinecounseling.UseCase.miscellaneous.DoctorMiscellan
 import com.doctork.doctorkonlinecounseling.api.adapters.Elastic.ElasticAdapter;
 import com.doctork.doctorkonlinecounseling.boundary.exit.doctor.DoctorRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.doctor.DoctorService;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.DoctorMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.DoctorMongoRepository;
@@ -13,10 +12,9 @@ import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -35,11 +33,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Doctor addDoctor(Doctor doctor) {
+    public Doctor doctorCompleteProfile(Doctor doctor) {
 
         //doctor.setRegisterDateTime(LocalDateTime.now());
-        doctor = doctorRepository.addDoctor(doctor);
-        //elasticAdapter.addDoctor(doctor);
+        doctor = doctorRepository.doctorCompleteProfile(doctor);
+        //elasticAdapter.doctorCompleteProfile(doctor);
 
 
         return doctor;
@@ -47,11 +45,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Doctor editDoctor(Doctor doctor) {
+    public Doctor doctorEditProfile(Doctor doctor) {
 
         //doctor.setUpdateDateTime(LocalDateTime.now());
-        doctor = doctorRepository.editDoctor(doctor);
-        //elasticAdapter.addDoctor(doctor);
+        doctor = doctorRepository.doctorEditProfile(doctor);
+        //elasticAdapter.doctorCompleteProfile(doctor);
         return doctor;
 
     }
@@ -81,7 +79,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Doctor changeStatus(String PSCode, DoctorStatus status) {
 
-        //elasticAdapter.addDoctor(doctor);
+        //elasticAdapter.doctorCompleteProfile(doctor);
 
         return doctorRepository.changeStatus(PSCode,status);
 

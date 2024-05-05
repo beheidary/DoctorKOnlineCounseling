@@ -1,7 +1,7 @@
 package com.doctork.doctorkonlinecounseling.domain.Enums;
 
-public enum UserType {
+public enum Gender {
 
-    Patient, Physician,Support, Admin
+    Male , Female
 
 }

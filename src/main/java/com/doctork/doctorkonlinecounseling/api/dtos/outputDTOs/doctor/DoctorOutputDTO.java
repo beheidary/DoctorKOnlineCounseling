@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor;
 
+import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 
@@ -11,19 +12,26 @@ public class DoctorOutputDTO {
 
     private String firstName;
     private String lastName;
+
+    private String description;
     private EducationLevel educationLevel;
     private String physicianSystemCode;
     private LocalDateTime updateDateTime;
     private DoctorStatus status;
     private Long nationalCode;
+
+    private Gender gender;
+
 //    private List<AddressOutputDTO> addresses;
 //    private UUID userId;
 
 
 
 
-    public DoctorOutputDTO(String firstName, DoctorStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDTO> addresses, UUID userId, Long id) {
+    public DoctorOutputDTO(Gender gender, String description, String firstName, DoctorStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDTO> addresses, UUID userId, Long id) {
         this.firstName = firstName;
+        this.gender = gender;
+        this.description = description;
         this.lastName = lastName;
         this.status = status;
         this.educationLevel = educationLevel;
@@ -37,6 +45,22 @@ public class DoctorOutputDTO {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setFirstName(String firstName) {

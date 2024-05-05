@@ -5,21 +5,16 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseIn
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.TopExpertisesDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public interface DoctorAdapter {
 
 
-    DoctorOutputDTO addDoctor(DoctorInputDTO doctorInputDTO);
+    DoctorOutputDTO doctorCompleteProfile(DoctorInputDTO doctorInputDTO);
 
-    DoctorOutputDTO editDoctor(DoctorInputDTO doctorInputDTO);
+    DoctorOutputDTO doctorEditProfile(DoctorInputDTO doctorInputDTO);
     List<TopExpertisesDto> findBestDoctorByExpertise();
 
     List<DoctorOutputDTO> topDoctors();

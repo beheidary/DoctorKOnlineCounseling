@@ -27,7 +27,7 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "mobileNumber",nullable = true)
+    @Column(name = "mobileNumber",nullable = false)
     private String mobileNumber;
 
     @CreationTimestamp

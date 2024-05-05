@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.domain.doctor;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.user.User;
 
 import java.time.LocalDate;
@@ -11,6 +12,8 @@ public class Doctor {
 
     private Long nationalCode;
     private String firstName;
+
+    private String description;
     private String lastName;
     private LocalDate dateOfBirth;
     private EducationLevel educationLevel;
@@ -21,8 +24,12 @@ public class Doctor {
     private DoctorStatus status;
     private User user;
 
-    public Doctor(Long nationalCode, String firstName,Double businessWeight, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, DoctorStatus status, User user) {
+    private Gender gender;
+
+    public Doctor(Gender gender, Long nationalCode, String description, String firstName,Double businessWeight, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, DoctorStatus status, User user) {
         this.nationalCode = nationalCode;
+        this.gender = gender;
+        this.description = description;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -47,8 +54,24 @@ public class Doctor {
         return firstName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getLastName() {

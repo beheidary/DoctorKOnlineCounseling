@@ -1,12 +1,14 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user;
 
 import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class RegisterUserDto {
     @NotNull
     @NotBlank
+    @Email
     private String email;
     @NotNull
     @NotBlank
@@ -15,6 +17,7 @@ public class RegisterUserDto {
     @NotBlank
     private UserType role;
     @NotBlank
+    @NotNull
     private String mobileNumber;
 
 

@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-//@PropertySource("classpath:application.properties")
-//@ConfigurationProperties()
 public class MasterUserInfo {
     @Value("${com.doctork.doctorkonlinecounseling.UseCase.Security.email}")
     private String email;
@@ -18,6 +16,8 @@ public class MasterUserInfo {
     private String password;
     @Value("${com.doctork.doctorkonlinecounseling.UseCase.Security.roles}")
     private String roles;
+    @Value("09386887502")
+    private String mobileNumber;
 
     public String getEmail() {
         return email;
@@ -41,5 +41,13 @@ public class MasterUserInfo {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 }

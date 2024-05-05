@@ -34,22 +34,22 @@ public class DoctorAdapterImpl implements DoctorAdapter {
 
 
     @Override
-    public DoctorOutputDTO addDoctor(DoctorInputDTO doctorInputDTO) {
+    public DoctorOutputDTO doctorCompleteProfile(DoctorInputDTO doctorInputDTO) {
 
         Doctor doctor = doctorMapper.inputToModel(doctorInputDTO);
 
-        doctor = doctorService.addDoctor(doctor );
+        doctor = doctorService.doctorCompleteProfile(doctor );
 
         return doctorMapper.modelToOutput(doctor);
 
     }
 
     @Override
-    public DoctorOutputDTO editDoctor(DoctorInputDTO doctorInputDTO) {
+    public DoctorOutputDTO doctorEditProfile(DoctorInputDTO doctorInputDTO) {
 
         Doctor doctor = doctorMapper.inputToModel(doctorInputDTO);
 
-        doctor = doctorService.editDoctor(doctor );
+        doctor = doctorService.doctorEditProfile(doctor );
 
         return doctorMapper.modelToOutput(doctor);
 

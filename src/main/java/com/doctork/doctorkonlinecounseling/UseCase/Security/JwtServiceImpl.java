@@ -1,9 +1,7 @@
 package com.doctork.doctorkonlinecounseling.UseCase.Security;
 
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.JwtService;
-import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.Authentication;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
