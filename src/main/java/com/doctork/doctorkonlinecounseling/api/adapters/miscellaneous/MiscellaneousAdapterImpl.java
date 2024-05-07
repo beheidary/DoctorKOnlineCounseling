@@ -2,7 +2,7 @@ package com.doctork.doctorkonlinecounseling.api.adapters.miscellaneous;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.ArticleOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.FAQOutputDto;
-import com.doctork.doctorkonlinecounseling.api.mappers.Miscellaneous.MiscellaneousMapper;
+import com.doctork.doctorkonlinecounseling.api.mappers.MiscellaneousMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.miscellaneous.MiscellaneousService;
 import org.springframework.stereotype.Component;
 

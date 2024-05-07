@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.api.mappers.Doctor;
+package com.doctork.doctorkonlinecounseling.api.mappers;
 
 
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInputDTO;

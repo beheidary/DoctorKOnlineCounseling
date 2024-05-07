@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.database.mappers.searchEngine;
+package com.doctork.doctorkonlinecounseling.database.mappers;
 
 
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;

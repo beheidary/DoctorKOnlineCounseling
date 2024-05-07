@@ -7,7 +7,7 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.ExpertiseN
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ExpertiseMySqlRepository;
-import com.doctork.doctorkonlinecounseling.database.mappers.doctor.ExpertiseEntityMapper;
+import com.doctork.doctorkonlinecounseling.database.mappers.ExpertiseEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 import org.springframework.dao.DataIntegrityViolationException;

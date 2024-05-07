@@ -2,7 +2,7 @@ package com.doctork.doctorkonlinecounseling.UseCase.Security;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.LoginUserDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.RegisterUserDto;
-import com.doctork.doctorkonlinecounseling.api.mappers.User.UserMapper;
+import com.doctork.doctorkonlinecounseling.api.mappers.UserMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.AuthenticationService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;

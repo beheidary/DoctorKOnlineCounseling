@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.database.mappers.Miscellaneous;
+package com.doctork.doctorkonlinecounseling.database.mappers;
 
 import com.doctork.doctorkonlinecounseling.database.entities.Miscellaneous.ArticleEntity;
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.Article;

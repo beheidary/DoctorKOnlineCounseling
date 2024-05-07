@@ -1,12 +1,15 @@
 package com.doctork.doctorkonlinecounseling.api.controllers.doctork;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.Expertise.ExpertiseAdapter;
+import com.doctork.doctorkonlinecounseling.api.adapters.Patient.PatientAdapter;
 import com.doctork.doctorkonlinecounseling.api.adapters.doctor.DoctorAdapter;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.DoctorInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.PatientInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.TopExpertisesDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.user.PatientOutputDto;
 import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,9 +40,12 @@ public class DoctorKController {
     private final DoctorAdapter doctorAdapter;
     private final ExpertiseAdapter expertiseAdapter;
 
+    private final PatientAdapter patientAdapter;
 
-    public DoctorKController(DoctorAdapter doctorAdapter,ExpertiseAdapter expertiseAdapter) {
+
+    public DoctorKController(PatientAdapter patientAdapter, DoctorAdapter doctorAdapter,ExpertiseAdapter expertiseAdapter) {
         this.doctorAdapter = doctorAdapter;
+        this.patientAdapter = patientAdapter;
         this.expertiseAdapter = expertiseAdapter;
 
     }
@@ -203,6 +209,26 @@ public class DoctorKController {
         DoctorOutputDTO doctorOutputDTO = doctorAdapter.changeStatus(physicianSystemCode,status);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(doctorOutputDTO));
+
+        return result;
+
+    }
+
+
+    @PostMapping(value = "Patient/")
+    @PreAuthorize("hasRole('ROLE_Patient')")
+    @Operation(summary = "Complete Patient Profile")
+    @ApiResponse(content = { @Content(mediaType = "application/json") })
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> PatientCoP(@RequestBody @Validated PatientInputDto patientInputDto)
+    {
+
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+         PatientOutputDto patientOutputDto = patientAdapter.patientCompleteProfile(patientInputDto);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(patientOutputDto));
 
         return result;
 

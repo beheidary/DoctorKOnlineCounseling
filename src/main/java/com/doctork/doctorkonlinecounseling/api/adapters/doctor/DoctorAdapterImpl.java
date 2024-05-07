@@ -5,8 +5,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseIn
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.TopExpertisesDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
-import com.doctork.doctorkonlinecounseling.api.mappers.Doctor.DoctorMapper;
-import com.doctork.doctorkonlinecounseling.api.mappers.Expertise.ExpertiseMapper;
+import com.doctork.doctorkonlinecounseling.api.mappers.DoctorMapper;
+import com.doctork.doctorkonlinecounseling.api.mappers.ExpertiseMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.doctor.DoctorService;
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class DoctorAdapterImpl implements DoctorAdapter {
+public class  DoctorAdapterImpl implements DoctorAdapter {
 
 
     private final DoctorService doctorService;

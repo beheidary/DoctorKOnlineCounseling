@@ -6,7 +6,7 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidData
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.database.mappers.searchEngine.ElasticEntityMapper;
+import com.doctork.doctorkonlinecounseling.database.mappers.ElasticEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.searchEngineRepositories.DoctorElasticRepository;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
 import org.springframework.dao.DataIntegrityViolationException;

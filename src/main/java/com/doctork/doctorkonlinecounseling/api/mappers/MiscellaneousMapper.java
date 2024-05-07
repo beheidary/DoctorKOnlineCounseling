@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.api.mappers.Miscellaneous;
+package com.doctork.doctorkonlinecounseling.api.mappers;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.ArticleOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.FAQOutputDto;

@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.database.mappers.doctor;
+package com.doctork.doctorkonlinecounseling.database.mappers;
 
 import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorEntity;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;

@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.api.mappers.Expertise;
+package com.doctork.doctorkonlinecounseling.api.mappers;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.TopExpertisesDto;
