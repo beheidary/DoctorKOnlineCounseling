@@ -27,6 +27,9 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = true)
+    private Long nationalCode;
+
     @Column(name = "mobileNumber",nullable = false)
     private String mobileNumber;
 
@@ -47,10 +50,11 @@ public class UserEntity implements UserDetails {
         return authorities;
     }
 
-    public UserEntity(UUID id,String mobileNumber, UserType userType, String email, String password, Date createdAt, Date updatedAt) {
+    public UserEntity(Long nationalCode , UUID id,String mobileNumber, UserType userType, String email, String password, Date createdAt, Date updatedAt) {
         this.id = id;
         this.email = email;
         this.mobileNumber = mobileNumber;
+        this.nationalCode = nationalCode;
         this.role = userType;
         this.password = password;
         this.createdAt = createdAt;
@@ -70,6 +74,13 @@ public class UserEntity implements UserDetails {
         this.id = id;
     }
 
+    public Long getNationalCode() {
+        return nationalCode;
+    }
+
+    public void setNationalCode(Long nationalCode) {
+        this.nationalCode = nationalCode;
+    }
 
     public String getEmail() {
         return email;

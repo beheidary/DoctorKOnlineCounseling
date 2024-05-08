@@ -16,6 +16,8 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String mobileNumber;
+
+    private Long nationalCode;
     private Date createdAt;
     private Date updatedAt;
     private UserType role;
@@ -52,11 +54,12 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(UUID id, String email, String password, String mobileNumber, UserType role, Date createdAt, Date updatedAt) {
+    public User(Long nationalCode, UUID id, String email, String password, String mobileNumber, UserType role, Date createdAt, Date updatedAt) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.mobileNumber = mobileNumber;
+        this.nationalCode = nationalCode;
         this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -68,6 +71,14 @@ public class User implements UserDetails {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Long getNationalCode() {
+        return nationalCode;
+    }
+
+    public void setNationalCode(Long nationalCode) {
+        this.nationalCode = nationalCode;
     }
 
     public String getEmail() {

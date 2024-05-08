@@ -2,8 +2,6 @@ package com.doctork.doctorkonlinecounseling.api.controllers.doctork;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.LoginUserDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.RegisterUserDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.user.LoginResponse;
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.AuthenticationService;
 import com.doctork.doctorkonlinecounseling.boundary.in.Security.JwtService;

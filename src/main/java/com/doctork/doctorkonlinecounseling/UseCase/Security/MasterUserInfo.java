@@ -19,6 +19,17 @@ public class MasterUserInfo {
     @Value("09386887502")
     private String mobileNumber;
 
+    @Value("3241751139")
+    private Long nationalCode;
+
+    public Long getNationalCode() {
+        return nationalCode;
+    }
+
+    public void setNationalCode(Long nationalCode) {
+        this.nationalCode = nationalCode;
+    }
+
     public String getEmail() {
         return email;
     }
