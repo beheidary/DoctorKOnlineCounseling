@@ -5,7 +5,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseIn
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.TopExpertisesDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
-import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.DoctorStatus;
 
 import java.util.List;
 

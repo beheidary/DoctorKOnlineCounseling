@@ -1,4 +1,5 @@
 package com.doctork.doctorkonlinecounseling.domain.doctor;
+import com.doctork.doctorkonlinecounseling.domain.Enums.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.user.User;

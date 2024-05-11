@@ -16,7 +16,7 @@ import com.doctork.doctorkonlinecounseling.database.mappers.DoctorEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.mappers.ExpertiseEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
-import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

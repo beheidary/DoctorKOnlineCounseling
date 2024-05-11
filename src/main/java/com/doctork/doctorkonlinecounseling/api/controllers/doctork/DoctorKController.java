@@ -10,7 +10,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDto
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.DoctorOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.user.PatientOutputDto;
-import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

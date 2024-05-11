@@ -10,7 +10,7 @@ import com.doctork.doctorkonlinecounseling.api.mappers.ExpertiseMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.doctor.DoctorService;
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
-import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 import org.springframework.stereotype.Component;
 

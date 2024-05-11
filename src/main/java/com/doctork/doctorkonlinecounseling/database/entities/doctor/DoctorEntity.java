@@ -3,11 +3,10 @@ package com.doctork.doctorkonlinecounseling.database.entities.doctor;
 
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
-import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.context.annotation.Primary;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

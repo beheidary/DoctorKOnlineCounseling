@@ -2,7 +2,7 @@ package com.doctork.doctorkonlinecounseling.boundary.in.doctor;
 
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
-import com.doctork.doctorkonlinecounseling.domain.doctor.DoctorStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.DoctorStatus;
 import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
 
 import java.util.List;
