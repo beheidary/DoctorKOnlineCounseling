@@ -6,6 +6,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician.Expertis
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.PhysicianOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.ExpertiseOutputDto;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -115,11 +116,32 @@ public class PhysicianController {
     }
 
 
+    @GetMapping(value = "physician/changeState/{nationalCode}/{state}")
+    public @ResponseBody
+    @PreAuthorize("hasRole('ROLE_Support')")
+    @Operation(summary = "Change Physician State")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
+    DeferredResult<ResponseEntity<?>> changeState(@Validated @PathVariable Long nationalCode , @Validated @PathVariable State state)
+    {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        PhysicianOutputDto physicianOutputDto = physicianAdapter.changeState(nationalCode,state);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianOutputDto));
+
+        return result;
+
+    }
+
+
+
+
 
     @GetMapping(value = "physician/changeStatus/{nationalCode}/{status}")
     public @ResponseBody
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @Operation(summary = "Change Physician PriceStatus")
+    @Operation(summary = "Change Physician Status")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
     DeferredResult<ResponseEntity<?>> changeStatus(@Validated @PathVariable Long nationalCode , @Validated @PathVariable PhysicianStatus status)
     {
@@ -133,6 +155,8 @@ public class PhysicianController {
         return result;
 
     }
+
+
 
 
 

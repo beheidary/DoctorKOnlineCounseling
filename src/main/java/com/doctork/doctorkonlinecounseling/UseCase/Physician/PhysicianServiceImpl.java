@@ -9,6 +9,7 @@ import com.doctork.doctorkonlinecounseling.database.entities.Physician.Physician
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.PhysicianMongoRepository;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -94,6 +95,17 @@ public class PhysicianServiceImpl implements PhysicianService {
         return physicianRepository.changeStatus(nationalCode,status);
 
 
+    }
+
+    @Override
+    public Physician changeState(Long nationalCode, State state) {
+
+        if(nationalCode == null || state == null)
+            throw new IdInputException();
+
+        //elasticAdapter.physicianCompleteProfile(doctor);
+
+        return physicianRepository.changeState(nationalCode,state);
     }
 
     @Override

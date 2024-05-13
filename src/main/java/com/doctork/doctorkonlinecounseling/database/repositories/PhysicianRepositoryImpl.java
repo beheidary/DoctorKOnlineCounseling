@@ -11,6 +11,7 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMyS
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -80,11 +81,6 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 if(Objects.equals(userEntity.getRole().toString(), "Physician")){
                     PhysicianEntity physicianEntity = physicianEntityMapper.modelToEntity(physician);
-                    physicianEntity.setNationalCode(nationalCode);
-                    if (physicianEntity.getBusinessWeight() == null)
-                        physicianEntity.setBusinessWeight(0.01);
-                    if(physicianEntity.getStatus() == null)
-                        physicianEntity.setStatus(PhysicianStatus.Offline);
                     physicianEntity.setUser(userEntity);
                     physicianEntity = physicianMySqlRepository.save(physicianEntity);
 
@@ -239,6 +235,43 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         }
 
+
+    }
+
+    @Override
+    public Physician changeState(Long nationalCode, State state) {
+
+        try{
+
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByNationalCode(nationalCode);
+
+            if (physicianEntity == null){
+
+                throw new PhysicianNotFoundException();
+
+            }else{
+
+                physicianEntity.setState(state);
+                physicianEntity = physicianMySqlRepository.save(physicianEntity);
+                return physicianEntityMapper.entityToModel(physicianEntity);
+
+            }
+
+        }catch (QueryTimeoutException ex){
+
+            throw new DatabaseTimeOutException();
+
+        }
+        catch (DataIntegrityViolationException ex){
+
+            throw new InvalidDataException();
+
+        }
+        catch (Exception ex){
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
 
     }
 

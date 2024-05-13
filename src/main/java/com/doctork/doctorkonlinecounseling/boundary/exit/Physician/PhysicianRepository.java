@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.boundary.exit.Physician;
 
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 
@@ -18,6 +19,7 @@ public interface PhysicianRepository {
     Physician fetchPhysician (Long nationalCode);
 
     Physician changeStatus (Long nationalCode, PhysicianStatus status);
+    Physician changeState (Long nationalCode, State state);
 
 
 }

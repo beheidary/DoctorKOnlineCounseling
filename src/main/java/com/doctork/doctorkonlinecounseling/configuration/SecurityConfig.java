@@ -81,9 +81,10 @@ public class SecurityConfig {
     @Bean
     static RoleHierarchy roleHierarchy() {
         var hierarchy = new RoleHierarchyImpl();
-        hierarchy.setHierarchy("ROLE_Admin > ROLE_Support\n"
-                +"ROLE_Support > ROLE_Physician\n" +
-                "ROLE_Physician > ROLE_Patient");
+        hierarchy.setHierarchy("""
+                ROLE_Admin > ROLE_Support
+                ROLE_Support > ROLE_Physician
+                ROLE_Physician > ROLE_Patient""");
 
         return hierarchy;
     }

@@ -3,6 +3,7 @@ package com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,15 +13,16 @@ public class PhysicianOutputDto {
 
     private String firstName;
     private String lastName;
-
     private String description;
     private EducationLevel educationLevel;
     private String physicianSystemCode;
     private LocalDateTime updateDateTime;
     private PhysicianStatus status;
     private Long nationalCode;
-
     private Gender gender;
+    private State state;
+
+    private PhysicianStatus physicianStatus;
 
 //    private List<AddressOutputDTO> addresses;
 //    private UUID userId;
@@ -28,8 +30,10 @@ public class PhysicianOutputDto {
 
 
 
-    public PhysicianOutputDto(Gender gender, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDto> addresses, UUID userId, Long id) {
+    public PhysicianOutputDto(Gender gender,PhysicianStatus physicianStatus, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDto> addresses, UUID userId, Long id) {
         this.firstName = firstName;
+        this.state =state;
+        this.physicianStatus = physicianStatus;
         this.gender = gender;
         this.description = description;
         this.lastName = lastName;
@@ -57,6 +61,22 @@ public class PhysicianOutputDto {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public PhysicianStatus getPhysicianStatus() {
+        return physicianStatus;
+    }
+
+    public void setPhysicianStatus(PhysicianStatus physicianStatus) {
+        this.physicianStatus = physicianStatus;
     }
 
     public void setDescription(String description) {

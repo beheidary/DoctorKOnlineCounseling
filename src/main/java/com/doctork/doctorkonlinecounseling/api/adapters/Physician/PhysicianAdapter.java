@@ -6,6 +6,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDto
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.PhysicianOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.ExpertiseOutputDto;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public interface PhysicianAdapter {
 
 
     PhysicianOutputDto changeStatus (Long nationalCode , PhysicianStatus status);
+    PhysicianOutputDto changeState (Long nationalCode , State state);
 
 
 
