@@ -2,9 +2,13 @@ package com.doctork.doctorkonlinecounseling.UseCase.expertise;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.expertise.ExpertiseRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.expertise.ExpertiseService;
+import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
+import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
 import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +32,15 @@ public class ExpertiseServiceImpl implements ExpertiseService {
 
     @Override
     public Expertise addPhysicianExpertise(Long nationalCode, Expertise expertise) {
+
+        if(nationalCode == null )
+            throw new IdInputException();
+
+        Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+        if (!nationalCode.equals(tokenNationalCode))
+            throw new AccessDeniedException("You do not have the required access");
+
+
         return expertiseRepository.addPhysicianExpertise(nationalCode,expertise);
     }
 

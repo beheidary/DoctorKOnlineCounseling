@@ -13,6 +13,7 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ExpertiseMyS
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.ExpertiseEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianEntityMapper;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
 import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
@@ -34,6 +35,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
 
     private final ExpertiseMySqlRepository expertiseMySqlRepository;
+
     private final ExpertiseEntityMapper expertiseEntityMapper;
     private final PhysicianEntityMapper physicianEntityMapper;
     private final PhysicianMySqlRepository physicianMySqlRepository;
@@ -107,11 +109,11 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         oldExpertise.getPhysicians().add(physicianEntity);
                         oldExpertise = expertiseMySqlRepository.save(oldExpertise);
                         physicianEntity.getExpertises().add(oldExpertise);
+                        physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
                         return expertiseEntityMapper.entityToModelWithDoctor(oldExpertise);
 
                     } else {
-                        // Todo there is bug physicians_expertise relation not set in first execute
                         Set<PhysicianEntity> physicians = new HashSet<>();
                         physicians.add(physicianEntity);
                         ExpertiseEntity expertise = new ExpertiseEntity();
@@ -120,6 +122,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         expertise.setLatinName(newExpertise.getLatinName());
                         expertise = expertiseMySqlRepository.save(expertise);
                         physicianEntity.getExpertises().add(expertise);
+                        physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
                         return expertiseEntityMapper.entityToModelWithDoctor(expertise);
 
