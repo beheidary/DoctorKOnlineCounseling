@@ -1,14 +1,14 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Elastic;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.AutoCompleteOutputDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SearchHitDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SearchResultDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SuggestOutputDTO;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.AutoCompleteOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SearchHitDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SearchResultDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestOutputDto;
 import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.elasticsearch.core.SearchHit;
@@ -31,28 +31,28 @@ public class ElasticAdapterImpl implements ElasticAdapter {
     }
 
     @Override
-    public Doctor setDoctorForSync(DoctorMongoEntity doctor) {
+    public Physician setDoctorForSync(PhysicianMongoEntity doctor) {
 
         return elasticService.setDoctorForSync(doctor);
 
     }
 
     @Override
-    public ElasticDoctorEntity deleteDoctor(String id) {
+    public ElasticPhysicianEntity deleteDoctor(String id) {
 
         return elasticService.deleteDoctor(id);
 
     }
 
     @Override
-    public SearchResultDTO search(String queryString,Integer pageNumber,Integer pageSize) throws IOException {
+    public SearchResultDto search(String queryString, Integer pageNumber, Integer pageSize) throws IOException {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
 
 
 
-        SearchHits<ElasticDoctorEntity> searchHits = elasticService.search(queryString,pageNumber,pageSize);
+        SearchHits<ElasticPhysicianEntity> searchHits = elasticService.search(queryString,pageNumber,pageSize);
 
         List<SearchHit> hitsList = new ArrayList<>();
         searchHits.forEach(hitsList::add);
@@ -61,14 +61,14 @@ public class ElasticAdapterImpl implements ElasticAdapter {
             jsonResult = objectMapper.writeValueAsString(hitsList);
 
 
-            SearchResultDTO searchResultDTO = new SearchResultDTO();
+            SearchResultDto searchResultDTO = new SearchResultDto();
 
             searchResultDTO.setMaxScore(searchHits.getMaxScore());
             searchResultDTO.setTotalHits(searchHits.getTotalHits());
 
 
-            List<SearchHitDTO> searchHitDTOList = objectMapper.readValue(jsonResult, new TypeReference<List<SearchHitDTO>>() {});
-            searchResultDTO.setSearchHits(searchHitDTOList);
+            List<SearchHitDto> searchHitDtoList = objectMapper.readValue(jsonResult, new TypeReference<List<SearchHitDto>>() {});
+            searchResultDTO.setSearchHits(searchHitDtoList);
             return searchResultDTO;
 
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class ElasticAdapterImpl implements ElasticAdapter {
     }
 
     @Override
-    public SuggestOutputDTO TermSuggest(String queryString) throws IOException {
+    public SuggestOutputDto TermSuggest(String queryString) throws IOException {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -92,7 +92,7 @@ public class ElasticAdapterImpl implements ElasticAdapter {
 
 
         try {
-            SuggestOutputDTO suggestOutputDTO = objectMapper.readValue(jsonResponse, SuggestOutputDTO.class);
+            SuggestOutputDto suggestOutputDTO = objectMapper.readValue(jsonResponse, SuggestOutputDto.class);
 
             return suggestOutputDTO;
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class ElasticAdapterImpl implements ElasticAdapter {
     }
 
     @Override
-    public AutoCompleteOutputDTO autocomplete(String queryString, Integer resultSize) throws IOException {
+    public AutoCompleteOutputDto autocomplete(String queryString, Integer resultSize) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -116,7 +116,7 @@ public class ElasticAdapterImpl implements ElasticAdapter {
 
 
         try {
-            AutoCompleteOutputDTO autoCompleteOutputDTO = objectMapper.readValue(jsonResponse, AutoCompleteOutputDTO.class);
+            AutoCompleteOutputDto autoCompleteOutputDTO = objectMapper.readValue(jsonResponse, AutoCompleteOutputDto.class);
 
             return autoCompleteOutputDTO;
         } catch (Exception e) {
@@ -128,15 +128,15 @@ public class ElasticAdapterImpl implements ElasticAdapter {
     }
 
     @Override
-    public Doctor addDoctor(Doctor doctor) {
-        if(doctor == null)
+    public Physician addDoctor(Physician physician) {
+        if(physician == null)
             throw new IdInputException();
 
-        return elasticService.addDoctor(doctor);
+        return elasticService.addDoctor(physician);
     }
 
     @Override
-    public ElasticDoctorEntity editDoctor(String id, ElasticDoctorEntity doctor) {
+    public ElasticPhysicianEntity editDoctor(String id, ElasticPhysicianEntity doctor) {
         if(id == null)
             throw new IdInputException();
 

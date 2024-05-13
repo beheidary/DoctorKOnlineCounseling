@@ -4,11 +4,11 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRep
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.mappers.ElasticEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.searchEngineRepositories.DoctorElasticRepository;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -37,25 +37,25 @@ public class ElasticRepositoryImpl implements ElasticRepository {
 
 
     @Override
-    public Doctor syncDoctor(DoctorMongoEntity doctor) {
+    public Physician syncDoctor(PhysicianMongoEntity doctor) {
 
-        ElasticDoctorEntity elasticDoctorEntity = elasticEntityMapper.mongoToElasticMapper(doctor);
-        elasticDoctorEntity.set_idT(doctor.get_id().toString());
+        ElasticPhysicianEntity elasticPhysicianEntity = elasticEntityMapper.mongoToElasticMapper(doctor);
+        elasticPhysicianEntity.set_idT(doctor.get_id().toString());
 
-        return elasticEntityMapper.ElasticToDomainMapper(elasticsearchOperations.save(elasticDoctorEntity));
+        return elasticEntityMapper.ElasticToDomainMapper(elasticsearchOperations.save(elasticPhysicianEntity));
     }
 
     @Override
-    public Doctor addDoctor(Doctor doctor) {
+    public Physician addDoctor(Physician physician) {
         try{
 
-            ElasticDoctorEntity doctorEntity = elasticEntityMapper.DomainToElsticMapper(doctor);
+            ElasticPhysicianEntity physicianEntity = elasticEntityMapper.DomainToElsticMapper(physician);
 
             //Todo maniupolate Id ond other fileds to copmatable with Elastic Entity
 
-            doctorEntity = doctorElasticRepository.save(doctorEntity);
+            physicianEntity = doctorElasticRepository.save(physicianEntity);
 
-            return elasticEntityMapper.ElasticToDomainMapper(doctorEntity);
+            return elasticEntityMapper.ElasticToDomainMapper(physicianEntity);
 
         }catch (QueryTimeoutException ex){
 
@@ -76,7 +76,7 @@ public class ElasticRepositoryImpl implements ElasticRepository {
 
 
     @Override
-    public ElasticDoctorEntity deleteDoctor(String id) {
+    public ElasticPhysicianEntity deleteDoctor(String id) {
         return  doctorElasticRepository.deleteBy_idT(id);
     }
 
@@ -86,16 +86,16 @@ public class ElasticRepositoryImpl implements ElasticRepository {
     }
 
     @Override
-    public List<ElasticDoctorEntity> searchByRepository(String searchQuery) {
+    public List<ElasticPhysicianEntity> searchByRepository(String searchQuery) {
         return doctorElasticRepository.findBySpecialityLike(searchQuery);
     }
 
     @Override
-    public ElasticDoctorEntity editDoctor(String id , ElasticDoctorEntity updatedDoctor) {
-        Optional<ElasticDoctorEntity> optionalDoctor = Optional.ofNullable(doctorElasticRepository.findBy_idT(id));
+    public ElasticPhysicianEntity editDoctor(String id , ElasticPhysicianEntity updatedDoctor) {
+        Optional<ElasticPhysicianEntity> optionalDoctor = Optional.ofNullable(doctorElasticRepository.findBy_idT(id));
 
         if (optionalDoctor.isPresent()) {
-            ElasticDoctorEntity existingDoctor = optionalDoctor.get();
+            ElasticPhysicianEntity existingDoctor = optionalDoctor.get();
 
             existingDoctor.setName(updatedDoctor.getName());
             existingDoctor.setSpeciality(updatedDoctor.getSpeciality());

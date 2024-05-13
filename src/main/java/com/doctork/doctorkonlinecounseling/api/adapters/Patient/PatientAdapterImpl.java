@@ -1,10 +1,10 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Patient;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.PatientInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.user.PatientOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.PatientInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.user.PatientOutputDto;
 import com.doctork.doctorkonlinecounseling.api.mappers.PatientMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.patient.PatientService;
-import com.doctork.doctorkonlinecounseling.domain.user.Patient;
+import com.doctork.doctorkonlinecounseling.domain.Patient.Patient;
 import org.springframework.stereotype.Component;
 
 @Component

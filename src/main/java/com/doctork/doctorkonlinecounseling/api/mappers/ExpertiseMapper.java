@@ -1,11 +1,10 @@
 package com.doctork.doctorkonlinecounseling.api.mappers;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.doctor.ExpertiseInputDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.TopExpertisesDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.doctor.ExpertiseOutputDTO;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.ExpertiseEntity;
-import com.doctork.doctorkonlinecounseling.domain.SpecificModels.TopExpertises;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Expertise;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician.ExpertiseInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.TopExpertisesDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.ExpertiseOutputDto;
+import com.doctork.doctorkonlinecounseling.domain.Expertise.TopExpertises;
+import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -16,14 +15,14 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ExpertiseMapper {
 
-    Expertise inputToModel(ExpertiseInputDTO expertiseInputDTO);
+    Expertise inputToModel(ExpertiseInputDto expertiseInputDTO);
 
-    @Mappings({@Mapping(target = "doctors",expression = "java(null)")})
-    Expertise inputToModelWithoutDoctor(ExpertiseInputDTO expertiseInputDTO);
+    @Mappings({@Mapping(target = "physicians",expression = "java(null)")})
+    Expertise inputToModelWithoutDoctor(ExpertiseInputDto expertiseInputDTO);
 
-    ExpertiseOutputDTO modelToOutput(Expertise expertise);
+    ExpertiseOutputDto modelToOutput(Expertise expertise);
 
-    @Mappings({@Mapping(target = "doctors",expression = "java(null)")})
+    @Mappings({@Mapping(target = "physicians",expression = "java(null)")})
     TopExpertisesDto topModelToOutput(TopExpertises expertise);
 
 

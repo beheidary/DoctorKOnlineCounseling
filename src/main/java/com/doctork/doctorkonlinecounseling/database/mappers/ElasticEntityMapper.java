@@ -1,9 +1,9 @@
 package com.doctork.doctorkonlinecounseling.database.mappers;
 
 
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -13,12 +13,12 @@ import java.util.List;
 public interface ElasticEntityMapper {
 
 
-    ElasticDoctorEntity mongoToElasticMapper(DoctorMongoEntity doctor);
+    ElasticPhysicianEntity mongoToElasticMapper(PhysicianMongoEntity doctor);
 
-    Doctor ElasticToDomainMapper(ElasticDoctorEntity doctor);
+    Physician ElasticToDomainMapper(ElasticPhysicianEntity doctor);
 
-    List<Doctor> ElasticToDomainMapper(List<ElasticDoctorEntity> doctors);
+    List<Physician> ElasticToDomainMapper(List<ElasticPhysicianEntity> physicians);
 
-    ElasticDoctorEntity DomainToElsticMapper(Doctor doctor);
+    ElasticPhysicianEntity DomainToElsticMapper(Physician physician);
 
 }

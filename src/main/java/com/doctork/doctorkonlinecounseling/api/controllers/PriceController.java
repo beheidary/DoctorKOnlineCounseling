@@ -1,8 +1,11 @@
 package com.doctork.doctorkonlinecounseling.api.controllers;
 
+import com.doctork.doctorkonlinecounseling.api.adapters.Price.PriceAdapter;
 import com.doctork.doctorkonlinecounseling.api.adapters.miscellaneous.MiscellaneousAdapter;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.miscellaneous.PriceInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.PriceOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.miscellaneous.PriceInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.miscellaneous.ServicesInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.PriceOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.ServicesOutputDto;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,12 +30,10 @@ import java.util.List;
 @SecurityRequirement(name = "security_auth")
 public class PriceController {
 
-    private final MiscellaneousAdapter miscellaneousAdapter;
+    private final PriceAdapter priceAdapter;
 
-
-    public PriceController(MiscellaneousAdapter miscellaneousAdapter) {
-        this.miscellaneousAdapter = miscellaneousAdapter;
-
+    public PriceController(PriceAdapter priceAdapter) {
+        this.priceAdapter = priceAdapter;
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
@@ -53,7 +54,7 @@ public class PriceController {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        PriceOutputDto priceOutputDto = miscellaneousAdapter.addPrice(priceInputDto, physicianId, servicesId);
+        PriceOutputDto priceOutputDto = priceAdapter.addPrice(priceInputDto, physicianId, servicesId);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceOutputDto));
 
@@ -77,9 +78,27 @@ public class PriceController {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        PriceOutputDto priceOutputDto = miscellaneousAdapter.editPrice(priceId,priceInputDto);
+        PriceOutputDto priceOutputDto = priceAdapter.editPrice(priceId,priceInputDto);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceOutputDto));
+
+        return result;
+
+    }
+
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PostMapping(value = "/Services")
+    @Operation(summary = "Add Services")
+    @ApiResponse(content = { @Content(mediaType = "application/json") })
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> addServices(@RequestBody @Validated ServicesInputDto servicesInputDto)
+    {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        ServicesOutputDto servicesOutputDto = priceAdapter.addServices(servicesInputDto);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(servicesOutputDto));
 
         return result;
 
@@ -95,7 +114,7 @@ public class PriceController {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        List<PriceOutputDto> priceOutputDtos = miscellaneousAdapter.readPrices(physicianId);
+        List<PriceOutputDto> priceOutputDtos = priceAdapter.readPrices(physicianId);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceOutputDtos));
 
@@ -112,7 +131,7 @@ public class PriceController {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        priceId = miscellaneousAdapter.deletePrice(priceId);
+        priceId = priceAdapter.deletePrice(priceId);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceId));
 

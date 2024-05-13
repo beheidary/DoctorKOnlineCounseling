@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.database.jpaRepositories;
 
-import com.doctork.doctorkonlinecounseling.database.entities.Miscellaneous.ServicesEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.Price.ServicesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

@@ -1,11 +1,11 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Elastic;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.miscellaneous.AutoCompleteOutputDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SearchResultDTO;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.SpecificResultDtos.SuggestOutputDTO;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.AutoCompleteOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SearchResultDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestOutputDto;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -13,17 +13,17 @@ import java.io.IOException;
 
 public interface ElasticAdapter {
 
-    Doctor setDoctorForSync(DoctorMongoEntity doctor);
+    Physician setDoctorForSync(PhysicianMongoEntity doctor);
 
-    ElasticDoctorEntity deleteDoctor (String id );
+    ElasticPhysicianEntity deleteDoctor (String id );
 
-    SearchResultDTO search(String queryString, @PositiveOrZero Integer pageNumber, @Positive Integer pageSize) throws IOException;
+    SearchResultDto search(String queryString, @PositiveOrZero Integer pageNumber, @Positive Integer pageSize) throws IOException;
 
-    SuggestOutputDTO TermSuggest(String queryString) throws IOException;
-    AutoCompleteOutputDTO autocomplete(String queryString , Integer resultSize) throws IOException;
+    SuggestOutputDto TermSuggest(String queryString) throws IOException;
+    AutoCompleteOutputDto autocomplete(String queryString , Integer resultSize) throws IOException;
 
-    Doctor addDoctor(Doctor doctor);
+    Physician addDoctor(Physician physician);
 
-    ElasticDoctorEntity editDoctor(String id , ElasticDoctorEntity doctor);
+    ElasticPhysicianEntity editDoctor(String id , ElasticPhysicianEntity doctor);
 
 }

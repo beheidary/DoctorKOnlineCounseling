@@ -1,8 +1,8 @@
 package com.doctork.doctorkonlinecounseling.api.mappers;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.PatientInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.user.PatientOutputDto;
-import com.doctork.doctorkonlinecounseling.domain.user.Patient;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.PatientInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.user.PatientOutputDto;
+import com.doctork.doctorkonlinecounseling.domain.Patient.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;

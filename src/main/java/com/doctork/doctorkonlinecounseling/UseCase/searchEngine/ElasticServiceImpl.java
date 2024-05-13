@@ -9,13 +9,12 @@ import co.elastic.clients.elasticsearch.core.search.*;
 import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.core.query.Query;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.*;
@@ -44,14 +43,14 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
     @Override
-    public Doctor setDoctorForSync(DoctorMongoEntity Mongodoctor) {
+    public Physician setDoctorForSync(PhysicianMongoEntity Mongodoctor) {
 
         return elasticRepository.syncDoctor(Mongodoctor);
 
     }
 
     @Override
-    public ElasticDoctorEntity deleteDoctor(String id) {
+    public ElasticPhysicianEntity deleteDoctor(String id) {
 
         return elasticRepository.deleteDoctor(id);
 
@@ -59,7 +58,7 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
     @Override
-    public SearchHits<ElasticDoctorEntity> search(String queryString, Integer pageNumber, Integer pageSize) {
+    public SearchHits<ElasticPhysicianEntity> search(String queryString, Integer pageNumber, Integer pageSize) {
 
         Query query = NativeQuery.builder().withScrollTime(Duration.ofMinutes(5))
                 .withQuery(q -> q.bool(
@@ -78,20 +77,20 @@ public class ElasticServiceImpl implements ElasticService {
                 )).withPageable(Pageable.ofSize(pageSize).withPage(pageNumber)).build();
 
 
-        return elasticRepository.search(query, ElasticDoctorEntity.class);
+        return elasticRepository.search(query, ElasticPhysicianEntity.class);
     }
 
     @Override
-    public Doctor addDoctor(Doctor doctor) {
-        if(doctor == null)
+    public Physician addDoctor(Physician physician) {
+        if(physician == null)
             throw new IdInputException();
 
-        return elasticRepository.addDoctor(doctor);
+        return elasticRepository.addDoctor(physician);
 
     }
 
     @Override
-    public ElasticDoctorEntity editDoctor(String id, ElasticDoctorEntity doctor) {
+    public ElasticPhysicianEntity editDoctor(String id, ElasticPhysicianEntity doctor) {
         if(id == null)
             throw new IdInputException();
 
@@ -99,7 +98,7 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
     @Override
-    public SearchResponse<ElasticDoctorEntity> TermSuggest (String text) throws IOException {
+    public SearchResponse<ElasticPhysicianEntity> TermSuggest (String text) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -120,11 +119,11 @@ public class ElasticServiceImpl implements ElasticService {
         return s;
         });
 
-        return client.search(searchRequest, ElasticDoctorEntity.class);
+        return client.search(searchRequest, ElasticPhysicianEntity.class);
     }
 
 
-    public SearchResponse<ElasticDoctorEntity> autocomplete(String term, int size) throws IOException {
+    public SearchResponse<ElasticPhysicianEntity> autocomplete(String term, int size) throws IOException {
 
         //applicable on completion Type filed s only
 
@@ -146,7 +145,7 @@ public class ElasticServiceImpl implements ElasticService {
             return s;
         });
 
-        //return client.search(searchRequest, ElasticDoctorEntity.class);
+        //return client.search(searchRequest, ElasticPhysicianEntity.class);
 
         // Entity not complete
 

@@ -1,9 +1,9 @@
 package com.doctork.doctorkonlinecounseling.boundary.in.searchEngine;
 
 import co.elastic.clients.elasticsearch.core.SearchResponse;
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.data.elasticsearch.core.SearchHits;
 
 import java.io.IOException;
@@ -11,19 +11,19 @@ import java.io.IOException;
 public interface ElasticService {
 
 
-    Doctor setDoctorForSync(DoctorMongoEntity doctor);
+    Physician setDoctorForSync(PhysicianMongoEntity doctor);
 
-    ElasticDoctorEntity deleteDoctor (String id );
+    ElasticPhysicianEntity deleteDoctor (String id );
 
-    SearchHits<ElasticDoctorEntity> search(String queryString, Integer pageNumber,Integer pageSize);
+    SearchHits<ElasticPhysicianEntity> search(String queryString, Integer pageNumber,Integer pageSize);
 
-    SearchResponse<ElasticDoctorEntity> TermSuggest(String queryString) throws IOException;
+    SearchResponse<ElasticPhysicianEntity> TermSuggest(String queryString) throws IOException;
 
-    Doctor addDoctor(Doctor doctor);
+    Physician addDoctor(Physician physician);
 
-    ElasticDoctorEntity editDoctor(String id , ElasticDoctorEntity doctor);
+    ElasticPhysicianEntity editDoctor(String id , ElasticPhysicianEntity doctor);
 
-    SearchResponse<ElasticDoctorEntity> autocomplete(String term, int size) throws IOException;
+    SearchResponse<ElasticPhysicianEntity> autocomplete(String term, int size) throws IOException;
 
 
 

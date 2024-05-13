@@ -1,7 +1,7 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Patient;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDTOs.user.PatientInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDTOs.user.PatientOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.PatientInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.user.PatientOutputDto;
 
 public interface PatientAdapter {
 

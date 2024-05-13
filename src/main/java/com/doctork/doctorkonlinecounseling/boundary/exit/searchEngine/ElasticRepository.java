@@ -1,10 +1,9 @@
 package com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine;
 
-import com.doctork.doctorkonlinecounseling.database.entities.doctor.DoctorMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticDoctorEntity;
-import com.doctork.doctorkonlinecounseling.domain.doctor.Doctor;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.Query;
 
 import java.util.List;
@@ -12,15 +11,15 @@ import java.util.List;
 public interface ElasticRepository {
 
 
-    Doctor syncDoctor(DoctorMongoEntity doctor);
+    Physician syncDoctor(PhysicianMongoEntity doctor);
 
-    Doctor addDoctor(Doctor doctor);
+    Physician addDoctor(Physician physician);
 
-    ElasticDoctorEntity deleteDoctor(String id);
+    ElasticPhysicianEntity deleteDoctor(String id);
 
     <T> SearchHits<T> search(Query query, Class<T> clazz) ;
-    List<ElasticDoctorEntity> searchByRepository(String searchQuery);
+    List<ElasticPhysicianEntity> searchByRepository(String searchQuery);
 
-    ElasticDoctorEntity editDoctor(String id , ElasticDoctorEntity doctor);
+    ElasticPhysicianEntity editDoctor(String id , ElasticPhysicianEntity doctor);
 
 }
