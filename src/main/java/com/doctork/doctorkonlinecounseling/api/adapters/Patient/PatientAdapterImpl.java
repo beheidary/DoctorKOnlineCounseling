@@ -25,4 +25,9 @@ public class PatientAdapterImpl implements PatientAdapter {
         patient = patientService.patientCompleteProfile(patient);
         return patientMapper.modelToOutput(patient);
     }
+
+    @Override
+    public PatientOutputDto fetchPatient(Long nationalCode) {
+        return patientMapper.modelToOutput(patientService.fetchPatient(nationalCode));
+    }
 }

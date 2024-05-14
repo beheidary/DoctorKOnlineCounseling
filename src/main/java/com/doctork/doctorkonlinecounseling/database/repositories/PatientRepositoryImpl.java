@@ -8,6 +8,7 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseT
 import com.doctork.doctorkonlinecounseling.database.entities.Patient.PatientEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PatientMySqlRepository;
+import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.PatientEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.Patient.Patient;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,10 +25,12 @@ public class PatientRepositoryImpl implements PatientRepository {
 
     private final PatientEntityMapper patientEntityMapper;
     private final PatientMySqlRepository patientMySqlRepository;
+    private final UserMySqlRepository userMySqlRepository;
 
 
-    public PatientRepositoryImpl(PatientEntityMapper patientEntityMapper, PatientMySqlRepository patientMySqlRepository) {
+    public PatientRepositoryImpl(UserMySqlRepository userMySqlRepository, PatientEntityMapper patientEntityMapper, PatientMySqlRepository patientMySqlRepository) {
         this.patientEntityMapper = patientEntityMapper;
+        this.userMySqlRepository = userMySqlRepository;
         this.patientMySqlRepository = patientMySqlRepository;
     }
     @Override
@@ -46,6 +49,11 @@ public class PatientRepositoryImpl implements PatientRepository {
                     patientEntity.setUser(userEntity);
 
                     patientEntity = patientMySqlRepository.save(patientEntity);
+
+                    userEntity = userMySqlRepository.findUserEntityById(patientEntity.getUser().getId());
+                    userEntity.setNationalCode(patientEntity.getNationalCode());
+
+                    userMySqlRepository.save(userEntity);
 
                     return patientEntityMapper.entityToModel(patientEntity);
                 }
@@ -71,5 +79,33 @@ public class PatientRepositoryImpl implements PatientRepository {
             throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
+    }
+
+    @Override
+    public Patient fetchPatient(Long nationalCode) {
+        try{
+        PatientEntity patientEntity = patientMySqlRepository.findPatientEntityByNationalCode(nationalCode);
+
+        if (patientEntity != null ){
+                return patientEntityMapper.entityToModel(patientEntity);
+        }else {
+            throw new PatientNotfoundException();
+
+        }
+    }catch (QueryTimeoutException ex){
+
+        throw new DatabaseTimeOutException();
+
+    }
+        catch (DataIntegrityViolationException ex){
+
+        throw new InvalidDataException();
+
+    }
+        catch (Exception ex){
+
+        throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+    }
     }
 }

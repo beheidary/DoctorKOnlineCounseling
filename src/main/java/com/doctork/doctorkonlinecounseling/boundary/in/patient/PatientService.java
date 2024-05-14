@@ -6,4 +6,7 @@ public interface PatientService {
 
     Patient patientCompleteProfile (Patient patient);
 
+    Patient fetchPatient (Long nationalCode);
+
+
 }

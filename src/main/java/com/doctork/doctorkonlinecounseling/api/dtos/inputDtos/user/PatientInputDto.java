@@ -1,20 +1,22 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user;
 
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 public class PatientInputDto {
 
 
+    @NotNull
     private Long nationalCode;
-
+    @NotNull
     private Gender gender;
-
+    @NotNull
     private String firstName;
-
+    @NotNull
     private String lastName;
-
+    @NotNull
     private LocalDate dateOfBirth;
 
     public PatientInputDto(Long nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth) {

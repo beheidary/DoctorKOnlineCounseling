@@ -25,7 +25,7 @@ public class ServicesEntity {
     @UpdateTimestamp
     @Column(name = "updateDateTime", nullable = true)
     private LocalDateTime updateDateTime;
-    @Column(name = "priceStatus", nullable = false)
+    @Column(name = "Status", nullable = false)
     private PriceStatus priceStatus;
 
 

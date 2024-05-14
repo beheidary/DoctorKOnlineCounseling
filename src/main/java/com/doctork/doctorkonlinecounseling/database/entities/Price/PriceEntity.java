@@ -25,7 +25,7 @@ public class PriceEntity {
     @Column(name = "cost" , nullable = false)
     private Long cost;
 
-    @Column(name = "priceStatus", nullable = false)
+    @Column(name = "Status", nullable = false)
     private PriceStatus priceStatus;
     @Column(name = "state", nullable = false)
     private State state;

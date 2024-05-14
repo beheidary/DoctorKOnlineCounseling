@@ -9,6 +9,7 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseT
 import com.doctork.doctorkonlinecounseling.database.entities.Price.PriceEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Price.ServicesEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PriceMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ServicesMySqlRepository;
@@ -22,6 +23,8 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -128,11 +131,14 @@ public class PriceRepositoryImpl implements PriceRepository {
 
             if ( priceEntity != null ){
 
-                price.setId(id);
+                Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+                if (!priceEntity.getDoctor().getNationalCode().equals(tokenNationalCode))
+                    throw new AccessDeniedException("You do not have the required access");
                 priceEntity.setCost(price.getCost());
+                priceEntity.setState(price.getState());
+                priceEntity.setStatus(price.getStatus());
                 priceEntity.setTime(price.getTime());
                 return  priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(priceEntity));
-
             }
             throw new PriceNotFoundException();
 
@@ -199,6 +205,9 @@ public class PriceRepositoryImpl implements PriceRepository {
             PriceEntity priceEntity = priceMySqlRepository.findPriceEntityById(priceId);
 
             if(priceEntity != null) {
+                Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+                if (!priceEntity.getDoctor().getNationalCode().equals(tokenNationalCode))
+                    throw new AccessDeniedException("You do not have the required access");
                 priceMySqlRepository.delete(priceEntity);
                 return priceId;
             }

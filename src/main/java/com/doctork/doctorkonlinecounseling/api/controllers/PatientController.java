@@ -13,10 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
 @Controller
@@ -49,6 +46,26 @@ public class PatientController {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
         PatientOutputDto patientOutputDto = patientAdapter.patientCompleteProfile(patientInputDto);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(patientOutputDto));
+
+        return result;
+
+    }
+
+
+
+    @GetMapping(value = "Patient/{nationalCode}")
+    @PreAuthorize("hasRole('ROLE_Patient')")
+    @Operation(summary = "fetch a Patient")
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> fetchPatient(@Validated @PathVariable Long nationalCode )
+    {
+
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        PatientOutputDto patientOutputDto = patientAdapter.fetchPatient(nationalCode);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(patientOutputDto));
 
