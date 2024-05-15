@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine;
 
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
@@ -12,12 +13,12 @@ import java.util.List;
 public interface ElasticRepository {
 
 
-    Physician addPhysician(Physician physician);
+    PhysicianEntity addPhysician(PhysicianEntity physicianEntity);
 
     Long deletePhysician(Long id);
 
     <T> SearchHits<T> search(Query query, Class<T> clazz) ;
 
-    ElasticPhysicianEntity editPhysician(Long id ,Physician physician );
+    ElasticPhysicianEntity editPhysician(Long id , PhysicianEntity physicianEntity );
 
 }

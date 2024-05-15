@@ -4,6 +4,7 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRep
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.mappers.ElasticEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.searchEngineRepositories.PhysicianElasticRepository;
@@ -41,21 +42,21 @@ public class ElasticRepositoryImpl implements ElasticRepository {
 
 
     @Override
-    public Physician addPhysician(Physician physician) {
+    public PhysicianEntity addPhysician(PhysicianEntity physicianEntity) {
         try{
 
-            ElasticPhysicianEntity physicianEntity = elasticEntityMapper.physicianToElasticPhysicianMapper(physician);
+            ElasticPhysicianEntity elasticPhysicianEntity = elasticEntityMapper.physicianToElasticPhysicianMapper(physicianEntity);
 
-            if (physician.getExpertises() != null)
-                physicianEntity.setExpertise(physician.getExpertises().iterator().next().getName());
+            if (physicianEntity.getExpertises() != null)
+                elasticPhysicianEntity.setExpertise(physicianEntity.getExpertises().iterator().next().getName());
 
-            physicianEntity.setId(physician.getNationalCode());
-            physicianEntity.setFullName(physician.getFirstName()+physician.getLastName());
+            elasticPhysicianEntity.setId(physicianEntity.getNationalCode());
+            elasticPhysicianEntity.setFullName(physicianEntity.getFirstName()+physicianEntity.getLastName());
 
 
-            physicianEntity = physicianElasticRepository.save(physicianEntity);
+            elasticPhysicianEntity = physicianElasticRepository.save(elasticPhysicianEntity);
 
-            return elasticEntityMapper.elasticPhysicianToPhysicianMapper(physicianEntity);
+            return elasticEntityMapper.elasticPhysicianToPhysicianMapper(elasticPhysicianEntity);
 
 
         }catch (QueryTimeoutException ex){
@@ -85,7 +86,7 @@ public class ElasticRepositoryImpl implements ElasticRepository {
 
 
     @Override
-    public ElasticPhysicianEntity editPhysician(Long id , Physician updatedPhysician) {
+    public ElasticPhysicianEntity editPhysician(Long id , PhysicianEntity updatedPhysician) {
         Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(id);
 
         if (optionalPhysician.isPresent()) {

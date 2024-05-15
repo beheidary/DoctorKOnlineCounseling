@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.mappers;
 
 
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
@@ -24,9 +25,9 @@ public interface ElasticEntityMapper {
     ElasticPhysicianfakeEntity DomainToElsticMapper(Physician physician);
 
 
-    ElasticPhysicianEntity physicianToElasticPhysicianMapper(Physician physician);
+    ElasticPhysicianEntity physicianToElasticPhysicianMapper(PhysicianEntity physicianEntity);
 
-    Physician elasticPhysicianToPhysicianMapper(ElasticPhysicianEntity elasticPhysicianEntity);
+    PhysicianEntity elasticPhysicianToPhysicianMapper(ElasticPhysicianEntity elasticPhysicianEntity);
 
 
 }

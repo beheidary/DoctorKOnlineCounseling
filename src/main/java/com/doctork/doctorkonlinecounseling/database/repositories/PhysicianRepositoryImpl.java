@@ -89,11 +89,10 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
                     userEntity.setNationalCode(physicianEntity.getNationalCode());
 
                     userMySqlRepository.save(userEntity);
-                    physician = physicianEntityMapper.entityToModel(physicianEntity);
 
-                    elasticRepository.addPhysician(physician);
+                    elasticRepository.addPhysician(physicianEntity);
 
-                    return physician;
+                    return physicianEntityMapper.entityToModel(physicianEntity);
                 }
                 else {
                     throw new PhysicianNotFoundException();
@@ -140,9 +139,8 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
                 physicianEntity.setDateOfBirth(physician.getDateOfBirth());
                 physicianEntity.setEducationLevel(physician.getEducationLevel());
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                physician = physicianEntityMapper.entityToModel(physicianEntity);
 
-                elasticRepository.editPhysician(nationalCode, physician);
+                elasticRepository.editPhysician(nationalCode, physicianEntity);
 
                 return physician;
 
@@ -224,9 +222,8 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setStatus(status);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
-                elasticRepository.editPhysician(nationalCode, physician);
-                return physician;
+                elasticRepository.editPhysician(nationalCode, physicianEntity);
+                return physicianEntityMapper.entityToModel(physicianEntity);
 
             }
 
@@ -264,9 +261,8 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setState(state);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
-                elasticRepository.editPhysician(nationalCode, physician);
-                return physician;
+                elasticRepository.editPhysician(nationalCode, physicianEntity);
+                return physicianEntityMapper.entityToModel(physicianEntity);
 
             }
 

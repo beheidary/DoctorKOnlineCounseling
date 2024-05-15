@@ -117,8 +117,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         physicianEntity.getExpertises().add(oldExpertise);
                         physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                        Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
-                        elasticRepository.editPhysician(nationalCode, physician);
+                        elasticRepository.editPhysician(nationalCode, physicianEntity);
                         return expertiseEntityMapper.entityToModelWithDoctor(oldExpertise);
 
                     } else {
@@ -132,8 +131,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         physicianEntity.getExpertises().add(expertise);
                         physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                        Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
-                        elasticRepository.editPhysician(nationalCode, physician);
+                        elasticRepository.editPhysician(nationalCode, physicianEntity);
                         return expertiseEntityMapper.entityToModelWithDoctor(expertise);
 
 
