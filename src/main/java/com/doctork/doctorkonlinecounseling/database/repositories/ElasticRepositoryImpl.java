@@ -4,10 +4,9 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRep
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
-import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.mappers.ElasticEntityMapper;
-import com.doctork.doctorkonlinecounseling.database.searchEngineRepositories.DoctorElasticRepository;
+import com.doctork.doctorkonlinecounseling.database.searchEngineRepositories.PhysicianElasticRepository;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
@@ -25,37 +24,39 @@ public class ElasticRepositoryImpl implements ElasticRepository {
     private final ElasticsearchOperations elasticsearchOperations;
     private final ElasticEntityMapper elasticEntityMapper;
 
-    private final DoctorElasticRepository doctorElasticRepository;
+    private final PhysicianElasticRepository physicianElasticRepository;
 
 
-    public ElasticRepositoryImpl(ElasticsearchOperations elasticsearchOperations, ElasticEntityMapper elasticEntityMapper, DoctorElasticRepository doctorElasticRepository) {
+    public ElasticRepositoryImpl(ElasticsearchOperations elasticsearchOperations, ElasticEntityMapper elasticEntityMapper, PhysicianElasticRepository physicianElasticRepository) {
         this.elasticEntityMapper = elasticEntityMapper;
-        this.doctorElasticRepository = doctorElasticRepository;
+        this.physicianElasticRepository = physicianElasticRepository;
         this.elasticsearchOperations = elasticsearchOperations;
     }
-
-
-
     @Override
-    public Physician syncDoctor(PhysicianMongoEntity doctor) {
-
-        ElasticPhysicianEntity elasticPhysicianEntity = elasticEntityMapper.mongoToElasticMapper(doctor);
-        elasticPhysicianEntity.set_idT(doctor.get_id().toString());
-
-        return elasticEntityMapper.ElasticToDomainMapper(elasticsearchOperations.save(elasticPhysicianEntity));
+    public <T> SearchHits<T> search(Query query, Class<T> clazz) {
+        return elasticsearchOperations.search(query,clazz);
     }
 
+
+
+
     @Override
-    public Physician addDoctor(Physician physician) {
+    public Physician addPhysician(Physician physician) {
         try{
 
-            ElasticPhysicianEntity physicianEntity = elasticEntityMapper.DomainToElsticMapper(physician);
+            ElasticPhysicianEntity physicianEntity = elasticEntityMapper.physicianToElasticPhysicianMapper(physician);
 
-            //Todo maniupolate Id ond other fileds to copmatable with Elastic Entity
+            if (physician.getExpertises() != null)
+                physicianEntity.setExpertise(physician.getExpertises().iterator().next().getName());
 
-            physicianEntity = doctorElasticRepository.save(physicianEntity);
+            physicianEntity.setId(physician.getNationalCode());
+            physicianEntity.setFullName(physician.getFirstName()+physician.getLastName());
 
-            return elasticEntityMapper.ElasticToDomainMapper(physicianEntity);
+
+            physicianEntity = physicianElasticRepository.save(physicianEntity);
+
+            return elasticEntityMapper.elasticPhysicianToPhysicianMapper(physicianEntity);
+
 
         }catch (QueryTimeoutException ex){
 
@@ -74,39 +75,57 @@ public class ElasticRepositoryImpl implements ElasticRepository {
         }
     }
 
-
     @Override
-    public ElasticPhysicianEntity deleteDoctor(String id) {
-        return  doctorElasticRepository.deleteBy_idT(id);
+    public Long deletePhysician(Long id) {
+
+        physicianElasticRepository.deleteById(id);
+        return id;
     }
 
-    @Override
-    public <T> SearchHits<T> search(Query query, Class<T> clazz) {
-        return elasticsearchOperations.search(query,clazz);
-    }
+
 
     @Override
-    public List<ElasticPhysicianEntity> searchByRepository(String searchQuery) {
-        return doctorElasticRepository.findBySpecialityLike(searchQuery);
-    }
+    public ElasticPhysicianEntity editPhysician(Long id , Physician updatedPhysician) {
+        Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(id);
 
-    @Override
-    public ElasticPhysicianEntity editDoctor(String id , ElasticPhysicianEntity updatedDoctor) {
-        Optional<ElasticPhysicianEntity> optionalDoctor = Optional.ofNullable(doctorElasticRepository.findBy_idT(id));
+        if (optionalPhysician.isPresent()) {
+            ElasticPhysicianEntity existingPhysician = optionalPhysician.get();
 
-        if (optionalDoctor.isPresent()) {
-            ElasticPhysicianEntity existingDoctor = optionalDoctor.get();
+            existingPhysician.setFullName(updatedPhysician.getFirstName()+ updatedPhysician.getLastName());
+            if (updatedPhysician.getExpertises() != null)
+                existingPhysician.setExpertise(updatedPhysician.getExpertises().iterator().next().getName());
 
-            existingDoctor.setName(updatedDoctor.getName());
-            existingDoctor.setSpeciality(updatedDoctor.getSpeciality());
-            existingDoctor.setSites(updatedDoctor.getSites());
-            existingDoctor.setNezam(updatedDoctor.getNezam());
+            existingPhysician.setPhysicianSystemCode(updatedPhysician.getPhysicianSystemCode());
+            existingPhysician.setStatus(updatedPhysician.getStatus());
+            existingPhysician.setState(updatedPhysician.getState());
 
-            return doctorElasticRepository.save(existingDoctor);
+            return physicianElasticRepository.save(existingPhysician);
         } else {
             return null;
         }
     }
+
+
+
+
+//    @Override
+//    public Physician syncDoctor(PhysicianMongoEntity doctor) {
+
+//        ElasticPhysicianfakeEntity elasticPhysicianEntity = elasticEntityMapper.mongoToElasticMapper(doctor);
+//        elasticPhysicianEntity.set_id(doctor.get_id().toString());
+
+//        return elasticEntityMapper.ElasticToDomainMapper(elasticsearchOperations.save(elasticPhysicianEntity));
+//        return null;
+//    }
+
+
+//    @Override
+//    public List<ElasticPhysicianfakeEntity> searchByRepository(String searchQuery) {
+//        //return doctorElasticRepository.findByExpertiseLike(searchQuery);
+//        return null;
+//    }
+
+
 
 
 }

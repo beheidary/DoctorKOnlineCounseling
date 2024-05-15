@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos;
 
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public class SearchHitDto {
     private String id;
     private double score;
     private List<String> sortValues;
-    private ElasticPhysicianEntity content;
+    private ElasticPhysicianfakeEntity content;
 //    private HighlightFieldsDTO highlightFields;
 //     Add any additional fields as needed
 
@@ -40,11 +40,11 @@ public class SearchHitDto {
         this.sortValues = sortValues;
     }
 
-    public ElasticPhysicianEntity getContent() {
+    public ElasticPhysicianfakeEntity getContent() {
         return content;
     }
 
-    public void setContent(ElasticPhysicianEntity content) {
+    public void setContent(ElasticPhysicianfakeEntity content) {
         this.content = content;
     }
 

@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.repositories;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.Physician.PhysicianRepository;
+import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
@@ -35,11 +36,14 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     private final EntityManager em;
     private final UserMySqlRepository userMySqlRepository;
 
+    private final ElasticRepository elasticRepository;
 
 
 
-    public PhysicianRepositoryImpl(UserMySqlRepository userMySqlRepository, EntityManager em, PhysicianEntityMapper physicianEntityMapper, PhysicianMySqlRepository physicianMySqlRepository) {
+
+    public PhysicianRepositoryImpl(ElasticRepository elasticRepository,UserMySqlRepository userMySqlRepository, EntityManager em, PhysicianEntityMapper physicianEntityMapper, PhysicianMySqlRepository physicianMySqlRepository) {
         this.physicianEntityMapper = physicianEntityMapper;
+        this.elasticRepository = elasticRepository;
         this.userMySqlRepository = userMySqlRepository;
         this.physicianMySqlRepository = physicianMySqlRepository;
         this.em = em;
@@ -69,9 +73,6 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     @Override
     public Physician PhysicianCompleteProfile(Physician physician, Long nationalCode) {
 
-        // Todo add to elastic
-
-
         try{
 
 
@@ -88,8 +89,11 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
                     userEntity.setNationalCode(physicianEntity.getNationalCode());
 
                     userMySqlRepository.save(userEntity);
+                    physician = physicianEntityMapper.entityToModel(physicianEntity);
 
-                    return physicianEntityMapper.entityToModel(physicianEntity);
+                    elasticRepository.addPhysician(physician);
+
+                    return physician;
                 }
                 else {
                     throw new PhysicianNotFoundException();
@@ -136,7 +140,12 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
                 physicianEntity.setDateOfBirth(physician.getDateOfBirth());
                 physicianEntity.setEducationLevel(physician.getEducationLevel());
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                return physicianEntityMapper.entityToModel(physicianEntity);
+                physician = physicianEntityMapper.entityToModel(physicianEntity);
+
+                elasticRepository.editPhysician(nationalCode, physician);
+
+                return physician;
+
             }
 
         }catch (QueryTimeoutException ex){
@@ -215,7 +224,9 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setStatus(status);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                return physicianEntityMapper.entityToModel(physicianEntity);
+                Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
+                elasticRepository.editPhysician(nationalCode, physician);
+                return physician;
 
             }
 
@@ -253,7 +264,9 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setState(state);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                return physicianEntityMapper.entityToModel(physicianEntity);
+                Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
+                elasticRepository.editPhysician(nationalCode, physician);
+                return physician;
 
             }
 

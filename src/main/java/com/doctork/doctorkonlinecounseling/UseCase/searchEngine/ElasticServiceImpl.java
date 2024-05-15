@@ -2,6 +2,7 @@ package com.doctork.doctorkonlinecounseling.UseCase.searchEngine;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
@@ -10,7 +11,6 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRep
 import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -42,34 +42,21 @@ public class ElasticServiceImpl implements ElasticService {
         this.client = client;
     }
 
-    @Override
-    public Physician setDoctorForSync(PhysicianMongoEntity Mongodoctor) {
 
-        return elasticRepository.syncDoctor(Mongodoctor);
-
-    }
 
     @Override
-    public ElasticPhysicianEntity deleteDoctor(String id) {
-
-        return elasticRepository.deleteDoctor(id);
-
-
-    }
-
-    @Override
-    public SearchHits<ElasticPhysicianEntity> search(String queryString, Integer pageNumber, Integer pageSize) {
+    public SearchHits<ElasticPhysicianfakeEntity> search(String queryString, Integer pageNumber, Integer pageSize) {
 
         Query query = NativeQuery.builder().withScrollTime(Duration.ofMinutes(5))
                 .withQuery(q -> q.bool(
                         p -> {p.should(
                                 n -> n.match(
-                                        m -> m.field("speciality").query(queryString).fuzziness("AUTO")
+                                        m -> m.field("expertise").query(queryString).fuzziness("AUTO")
                                 )
                             );
                             p.should(
                                     n -> n.match(
-                                            m -> m.field("name").query(queryString).fuzziness("AUTO")
+                                            m -> m.field("fullName").query(queryString).fuzziness("AUTO")
                                     )
                             );
                             return p;
@@ -77,28 +64,12 @@ public class ElasticServiceImpl implements ElasticService {
                 )).withPageable(Pageable.ofSize(pageSize).withPage(pageNumber)).build();
 
 
-        return elasticRepository.search(query, ElasticPhysicianEntity.class);
+        return elasticRepository. search(query, ElasticPhysicianfakeEntity.class);
     }
+//
 
     @Override
-    public Physician addDoctor(Physician physician) {
-        if(physician == null)
-            throw new IdInputException();
-
-        return elasticRepository.addDoctor(physician);
-
-    }
-
-    @Override
-    public ElasticPhysicianEntity editDoctor(String id, ElasticPhysicianEntity doctor) {
-        if(id == null)
-            throw new IdInputException();
-
-        return elasticRepository.editDoctor(id,doctor);
-    }
-
-    @Override
-    public SearchResponse<ElasticPhysicianEntity> TermSuggest (String text) throws IOException {
+    public SearchResponse<ElasticPhysicianfakeEntity> TermSuggest (String text) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -106,24 +77,24 @@ public class ElasticServiceImpl implements ElasticService {
         Map<String, FieldSuggester> map = new HashMap<>();
         map.put("my-suggestion", FieldSuggester.of(fs -> fs
                 .term(cs -> cs
-                            .field("speciality").minWordLength(3).size(5).suggestMode(Missing)
+                            .field("expertise").minWordLength(3).size(5).suggestMode(Missing)
                 )
         ));
         Suggester suggester = Suggester.of(s -> s
                 .suggesters(map)
                 .text(text));
         SearchRequest searchRequest = SearchRequest.of(s -> {
-            s.index("doctork")
-                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("speciality")))))
+            s.index("physicianfakeindex")
+                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("expertise")))))
                     .suggest(suggester);
         return s;
         });
 
-        return client.search(searchRequest, ElasticPhysicianEntity.class);
+        return client.search(searchRequest, ElasticPhysicianfakeEntity.class);
     }
 
 
-    public SearchResponse<ElasticPhysicianEntity> autocomplete(String term, int size) throws IOException {
+    public SearchResponse<ElasticPhysicianfakeEntity> autocomplete(String term, int size) throws IOException {
 
         //applicable on completion Type filed s only
 
@@ -132,25 +103,26 @@ public class ElasticServiceImpl implements ElasticService {
                 .completion(cs -> cs.skipDuplicates(true)
                         .size(size)
                         .fuzzy(SuggestFuzziness.of(sf -> sf.fuzziness("AUTO").minLength(4)))
-                        .field("speciality")
+                        .field("expertise")
                 )
         ));
         Suggester suggester = Suggester.of(s -> s
                 .suggesters(map)
         );
         SearchRequest searchRequest = SearchRequest.of(s -> {
-            s.index("doctork")
-                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("speciality")))))
+            s.index("physicianfakeindex")
+                    .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("expertise")))))
                     .suggest(suggester);
             return s;
         });
 
-        //return client.search(searchRequest, ElasticPhysicianEntity.class);
+
+
+        //return client.search(searchRequest, ElasticPhysicianfakeEntity.class);
 
         // Entity not complete
 
         return null;
     }
-
 
 }

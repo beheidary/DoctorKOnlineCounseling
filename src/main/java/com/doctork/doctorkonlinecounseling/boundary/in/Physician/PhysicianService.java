@@ -14,7 +14,7 @@ public interface PhysicianService {
 
     List<Physician> topPhysician();
 
-    List<Physician> getPhysiciansForSync();
+//    List<Physician> getPhysiciansForSync();
 
     Physician fetchPhysician(Long nationalCode);
 

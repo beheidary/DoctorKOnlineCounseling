@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.repositories;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.expertise.ExpertiseRepository;
+import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
 import com.doctork.doctorkonlinecounseling.common.exceptions.BaseException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
@@ -17,6 +18,7 @@ import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
 import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -41,9 +43,13 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
     private final PhysicianMySqlRepository physicianMySqlRepository;
     private final EntityManager entityManager;
 
+    private final ElasticRepository elasticRepository;
 
-    public ExpertiseRepositoryImpl(PhysicianMySqlRepository physicianMySqlRepository, PhysicianEntityMapper physicianEntityMapper , EntityManager entityManager, ExpertiseMySqlRepository expertiseMySqlRepository, ExpertiseEntityMapper expertiseEntityMapper) {
+
+
+    public ExpertiseRepositoryImpl(ElasticRepository elasticRepository, PhysicianMySqlRepository physicianMySqlRepository, PhysicianEntityMapper physicianEntityMapper , EntityManager entityManager, ExpertiseMySqlRepository expertiseMySqlRepository, ExpertiseEntityMapper expertiseEntityMapper) {
         this.expertiseMySqlRepository = expertiseMySqlRepository;
+        this.elasticRepository  = elasticRepository;
         this.physicianMySqlRepository = physicianMySqlRepository;
         this.physicianEntityMapper = physicianEntityMapper;
         this.entityManager =entityManager;
@@ -111,6 +117,8 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         physicianEntity.getExpertises().add(oldExpertise);
                         physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
+                        Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
+                        elasticRepository.editPhysician(nationalCode, physician);
                         return expertiseEntityMapper.entityToModelWithDoctor(oldExpertise);
 
                     } else {
@@ -124,6 +132,8 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         physicianEntity.getExpertises().add(expertise);
                         physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
+                        Physician physician =physicianEntityMapper.entityToModel(physicianEntity);
+                        elasticRepository.editPhysician(nationalCode, physician);
                         return expertiseEntityMapper.entityToModelWithDoctor(expertise);
 
 

@@ -1,74 +1,91 @@
 package com.doctork.doctorkonlinecounseling.database.entities.searchEngine;
 
+import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "doctork")
+import java.util.Objects;
+
+@Document(indexName = "physicianindex")
 public class ElasticPhysicianEntity {
 
+
     @Id
-    private String _idT;
+    private Long id;
+    @NotNull
+    private String fullName;
+    @NotNull
+    private String physicianSystemCode;
+    @NotNull
+    private String expertise;
+    @NotNull
+    private PhysicianStatus status;
+    @NotNull
+    private State state;
 
-    private String name;
-
-    private String sites;
-
-    private String nezam;
-
-    private String speciality;
-
-
-
-
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getSites() {
-        return sites;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setSites(String sites) {
-        this.sites = sites;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getNezam() {
-        return nezam;
+    public String getPhysicianSystemCode() {
+        return physicianSystemCode;
     }
 
-    public void setNezam(String nezam) {
-        this.nezam = nezam;
+    public void setPhysicianSystemCode(String physicianSystemCode) {
+        this.physicianSystemCode = physicianSystemCode;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getExpertise() {
+        return expertise;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setExpertise(String expertise) {
+        this.expertise = expertise;
+    }
+
+    public PhysicianStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PhysicianStatus status) {
+        this.status = status;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
 
-    public String get_idT() {
-        return _idT;
-    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    public void set_idT(String _idT) {
-        this._idT = _idT;
+        ElasticPhysicianEntity that = (ElasticPhysicianEntity) o;
+
+        return Objects.equals(id, that.id);
     }
 
     @Override
-    public String toString() {
-        return "ElasticPhysicianEntity{" +
-                "_id=" + _idT +
-                ", full_name='" + name + '\'' +
-                ", sites='" + sites + '\'' +
-                ", nezam=" + nezam +
-                ", speciality='" + speciality + '\'' +
-                '}';
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

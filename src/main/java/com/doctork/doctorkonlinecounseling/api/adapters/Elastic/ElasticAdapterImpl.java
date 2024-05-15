@@ -7,7 +7,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDto
 import com.doctork.doctorkonlinecounseling.boundary.in.searchEngine.ElasticService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,19 +30,6 @@ public class ElasticAdapterImpl implements ElasticAdapter {
         this.elasticService = elasticService;
     }
 
-    @Override
-    public Physician setDoctorForSync(PhysicianMongoEntity doctor) {
-
-        return elasticService.setDoctorForSync(doctor);
-
-    }
-
-    @Override
-    public ElasticPhysicianEntity deleteDoctor(String id) {
-
-        return elasticService.deleteDoctor(id);
-
-    }
 
     @Override
     public SearchResultDto search(String queryString, Integer pageNumber, Integer pageSize) throws IOException {
@@ -52,7 +39,7 @@ public class ElasticAdapterImpl implements ElasticAdapter {
 
 
 
-        SearchHits<ElasticPhysicianEntity> searchHits = elasticService.search(queryString,pageNumber,pageSize);
+        SearchHits<ElasticPhysicianfakeEntity> searchHits = elasticService.search(queryString,pageNumber,pageSize);
 
         List<SearchHit> hitsList = new ArrayList<>();
         searchHits.forEach(hitsList::add);
@@ -125,21 +112,5 @@ public class ElasticAdapterImpl implements ElasticAdapter {
 
         return null;
 
-    }
-
-    @Override
-    public Physician addDoctor(Physician physician) {
-        if(physician == null)
-            throw new IdInputException();
-
-        return elasticService.addDoctor(physician);
-    }
-
-    @Override
-    public ElasticPhysicianEntity editDoctor(String id, ElasticPhysicianEntity doctor) {
-        if(id == null)
-            throw new IdInputException();
-
-        return elasticService.editDoctor(id,doctor);
     }
 }

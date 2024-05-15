@@ -3,7 +3,7 @@ package com.doctork.doctorkonlinecounseling.api.controllers.elastic;
 import com.doctork.doctorkonlinecounseling.api.adapters.Elastic.ElasticAdapter;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SearchResultDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestOutputDto;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,9 +26,9 @@ import java.io.IOException;
 
 @RestController()
 @OpenAPIDefinition(
-        info = @Info(title = "Physician",version = "0.0",description = "dESCRIPTION")
+        info = @Info(title = "Physician",version = "0.0",description = "DESCRIPTION")
 )
-@RequestMapping(value = "/elastic/doctor", produces = "application/json", headers = {"Accept-Language"})
+@RequestMapping(value = "/elastic/physician", produces = "application/json", headers = {"Accept-Language"})
 public class    ElasticSearchController {
 
     private final ElasticAdapter elasticAdapter;
@@ -62,44 +62,4 @@ public class    ElasticSearchController {
         return result;
     }
 
-    @DeleteMapping(value = "/doctorIndex/{id}")
-    @PreAuthorize("hasRole('ROLE_Admin')")
-    @Operation(summary = "Delete a Physician doc")
-    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ElasticPhysicianEntity.class)) })
-    public @ResponseBody
-    DeferredResult<ResponseEntity<?>> removeDoctor(@PathVariable String id)
-    {
-        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
-        ElasticPhysicianEntity elasticPhysicianEntity = elasticAdapter.deleteDoctor(id);
-        result.setResult(ResponseEntity.status(HttpStatus.OK).body(elasticPhysicianEntity));
-        return result;
-    }
-
-    @PutMapping(value = "/doctorIndex/{id}")
-    @PreAuthorize("hasRole('ROLE_Admin')")
-    @Operation(summary = "Edit a Physician doc")
-    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ElasticPhysicianEntity.class)) })
-    public @ResponseBody
-    DeferredResult<ResponseEntity<?>> editDoctor(@PathVariable String id,
-                                                 @RequestBody @Validated ElasticPhysicianEntity elasticPhysicianEntity)
-    {
-        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
-        elasticPhysicianEntity = elasticAdapter.editDoctor(id , elasticPhysicianEntity);
-        result.setResult(ResponseEntity.status(HttpStatus.OK).body(elasticPhysicianEntity));
-        return result;
-    }
-
-    @PostMapping(value = "/doctorIndex/")
-    @PreAuthorize("hasRole('ROLE_Admin')")
-    @Operation(summary = "Add a Physician doc")
-    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Physician.class)) })
-    public @ResponseBody
-    DeferredResult<ResponseEntity<?>> addDoctor(@RequestBody @Validated Physician physician)
-    {
-
-        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
-        physician = elasticAdapter.addDoctor(physician);
-        result.setResult(ResponseEntity.status(HttpStatus.OK).body(physician));
-        return result;
-    }
 }
