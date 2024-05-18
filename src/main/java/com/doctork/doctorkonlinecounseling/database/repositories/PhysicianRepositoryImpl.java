@@ -222,7 +222,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setStatus(status);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                elasticRepository.editPhysician(nationalCode, physicianEntity);
+                //elasticRepository.editPhysician(nationalCode, physicianEntity);
                 return physicianEntityMapper.entityToModel(physicianEntity);
 
             }

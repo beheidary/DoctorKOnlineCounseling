@@ -3,12 +3,13 @@ package com.doctork.doctorkonlinecounseling.database.repositories;
 import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.mappers.ElasticEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.searchEngineRepositories.PhysicianElasticRepository;
-import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
+import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -16,7 +17,6 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -38,7 +38,18 @@ public class ElasticRepositoryImpl implements ElasticRepository {
         return elasticsearchOperations.search(query,clazz);
     }
 
+    @Override
+    public ElasticPhysicianEntity changeStatus(Long nationalCode, PhysicianStatus physicianStatus) {
+        Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(nationalCode);
 
+        if (optionalPhysician.isPresent()) {
+            ElasticPhysicianEntity existingPhysician = optionalPhysician.get();
+            existingPhysician.setStatus(physicianStatus);
+            return physicianElasticRepository.save(existingPhysician);
+        }else{
+            throw new PhysicianNotFoundException();
+        }
+    }
 
 
     @Override
@@ -86,8 +97,8 @@ public class ElasticRepositoryImpl implements ElasticRepository {
 
 
     @Override
-    public ElasticPhysicianEntity editPhysician(Long id , PhysicianEntity updatedPhysician) {
-        Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(id);
+    public ElasticPhysicianEntity editPhysician(Long nationalCode , PhysicianEntity updatedPhysician) {
+        Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(nationalCode);
 
         if (optionalPhysician.isPresent()) {
             ElasticPhysicianEntity existingPhysician = optionalPhysician.get();

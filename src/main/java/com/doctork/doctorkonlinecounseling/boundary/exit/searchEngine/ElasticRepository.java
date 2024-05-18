@@ -4,6 +4,7 @@ import com.doctork.doctorkonlinecounseling.database.entities.Physician.Physician
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
+import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.Query;
@@ -18,6 +19,8 @@ public interface ElasticRepository {
     Long deletePhysician(Long id);
 
     <T> SearchHits<T> search(Query query, Class<T> clazz) ;
+
+    ElasticPhysicianEntity changeStatus (Long nationalCode , PhysicianStatus physicianStatus);
 
     ElasticPhysicianEntity editPhysician(Long id , PhysicianEntity physicianEntity );
 
