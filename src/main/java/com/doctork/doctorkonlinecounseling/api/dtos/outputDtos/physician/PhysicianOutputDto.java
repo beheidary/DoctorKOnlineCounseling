@@ -22,7 +22,6 @@ public class PhysicianOutputDto {
     private Gender gender;
     private State state;
 
-    private PhysicianStatus physicianStatus;
 
 //    private List<AddressOutputDTO> addresses;
 //    private UUID userId;
@@ -30,10 +29,9 @@ public class PhysicianOutputDto {
 
 
 
-    public PhysicianOutputDto(Gender gender,PhysicianStatus physicianStatus, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDto> addresses, UUID userId, Long id) {
+    public PhysicianOutputDto(Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDto> addresses, UUID userId, Long id) {
         this.firstName = firstName;
         this.state =state;
-        this.physicianStatus = physicianStatus;
         this.gender = gender;
         this.description = description;
         this.lastName = lastName;
@@ -69,14 +67,6 @@ public class PhysicianOutputDto {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    public PhysicianStatus getPhysicianStatus() {
-        return physicianStatus;
-    }
-
-    public void setPhysicianStatus(PhysicianStatus physicianStatus) {
-        this.physicianStatus = physicianStatus;
     }
 
     public void setDescription(String description) {

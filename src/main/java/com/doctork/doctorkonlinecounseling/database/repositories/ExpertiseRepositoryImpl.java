@@ -24,6 +24,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
@@ -117,7 +118,8 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         physicianEntity.getExpertises().add(oldExpertise);
                         physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                        elasticRepository.editPhysician(nationalCode, physicianEntity);
+                        // Todo add expertise to elastic
+                       // elasticRepository.editPhysician(nationalCode, physicianEntity);
                         return expertiseEntityMapper.entityToModelWithDoctor(oldExpertise);
 
                     } else {
@@ -131,7 +133,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                         physicianEntity.getExpertises().add(expertise);
                         physicianEntity.setState(State.Waiting);
                         physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                        elasticRepository.editPhysician(nationalCode, physicianEntity);
+                      //  elasticRepository.editPhysician(nationalCode, physicianEntity);
                         return expertiseEntityMapper.entityToModelWithDoctor(expertise);
 
 
@@ -198,6 +200,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
 
     @Override
+    @Transactional
     public List<TopExpertises> findBestExpertisePhysicians() {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -208,7 +211,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
         List<TopExpertises> expertise = new ArrayList<>();
         for(ExpertiseEntity expertiseEntity: expertiseEntities){
-            List<com.doctork.doctorkonlinecounseling.domain.physician.Physician> physicians = new ArrayList<>();
+            List<Physician> physicians = new ArrayList<>();
             for (PhysicianEntity physicianEntity : expertiseEntity.getPhysicians()){
                 physicians.add(physicianEntityMapper.entityToModel(physicianEntity));
             }

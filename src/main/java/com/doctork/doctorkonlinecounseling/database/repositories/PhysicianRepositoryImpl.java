@@ -36,14 +36,11 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     private final EntityManager em;
     private final UserMySqlRepository userMySqlRepository;
 
-    private final ElasticRepository elasticRepository;
 
 
 
-
-    public PhysicianRepositoryImpl(ElasticRepository elasticRepository,UserMySqlRepository userMySqlRepository, EntityManager em, PhysicianEntityMapper physicianEntityMapper, PhysicianMySqlRepository physicianMySqlRepository) {
+    public PhysicianRepositoryImpl(UserMySqlRepository userMySqlRepository, EntityManager em, PhysicianEntityMapper physicianEntityMapper, PhysicianMySqlRepository physicianMySqlRepository) {
         this.physicianEntityMapper = physicianEntityMapper;
-        this.elasticRepository = elasticRepository;
         this.userMySqlRepository = userMySqlRepository;
         this.physicianMySqlRepository = physicianMySqlRepository;
         this.em = em;
@@ -89,8 +86,6 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
                     userEntity.setNationalCode(physicianEntity.getNationalCode());
 
                     userMySqlRepository.save(userEntity);
-
-                    elasticRepository.addPhysician(physicianEntity);
 
                     return physicianEntityMapper.entityToModel(physicianEntity);
                 }
@@ -140,9 +135,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
                 physicianEntity.setEducationLevel(physician.getEducationLevel());
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
 
-                elasticRepository.editPhysician(nationalCode, physicianEntity);
-
-                return physician;
+                return physicianEntityMapper.entityToModel(physicianEntity);
 
             }
 
@@ -222,7 +215,6 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setStatus(status);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                //elasticRepository.editPhysician(nationalCode, physicianEntity);
                 return physicianEntityMapper.entityToModel(physicianEntity);
 
             }
@@ -261,7 +253,6 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setState(state);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
-                elasticRepository.editPhysician(nationalCode, physicianEntity);
                 return physicianEntityMapper.entityToModel(physicianEntity);
 
             }

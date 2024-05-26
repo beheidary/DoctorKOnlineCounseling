@@ -51,7 +51,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(RETRY_QUEUE)
                 .withArgument("x-dead-letter-exchange", MAIN_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", MAIN_QUEUE)
-                .withArgument("x-message-ttl", 10000)
+                .withArgument("x-message-ttl", 60000)
                 .build();
     }
 

@@ -20,7 +20,6 @@ import java.util.List;
 @Controller
 @EnableMethodSecurity
 @RequestMapping("/miscellaneous")
-@SecurityRequirement(name = "security_auth")
 public class MiscellaneousController {
 
     private final MiscellaneousAdapter miscellaneousAdapter;
@@ -30,7 +29,6 @@ public class MiscellaneousController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_Patient')")
     @GetMapping(value = "/faq")
     @Operation(summary = "Get All FAQ")
     @ApiResponse(content = { @Content(mediaType = "application/json") })
@@ -50,9 +48,8 @@ public class MiscellaneousController {
 
 
 
-    @PreAuthorize("hasRole('ROLE_Patient')")
     @GetMapping(value = "/articles")
-    @Operation(summary = "Get All articles")
+    @Operation(summary = "Get Top articles")
     @ApiResponse(content = { @Content(mediaType = "application/json") })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> fetchArticles()

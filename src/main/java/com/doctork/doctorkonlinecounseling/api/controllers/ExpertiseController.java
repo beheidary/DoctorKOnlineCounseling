@@ -26,16 +26,13 @@ import java.util.List;
 @Controller
 @EnableMethodSecurity
 @RequestMapping("/")
-@SecurityRequirement(name = "security_auth")
 public class ExpertiseController {
 
 
-    private final PhysicianAdapter physicianAdapter;
     private final ExpertiseAdapter expertiseAdapter;
 
 
-    public ExpertiseController(PhysicianAdapter physicianAdapter, ExpertiseAdapter expertiseAdapter) {
-        this.physicianAdapter = physicianAdapter;
+    public ExpertiseController(ExpertiseAdapter expertiseAdapter) {
         this.expertiseAdapter = expertiseAdapter;
 
     }
@@ -60,14 +57,13 @@ public class ExpertiseController {
     }
 
 
-    @GetMapping(value = "/TopExpertisesPhysicians")
-    @PreAuthorize("hasRole('ROLE_Patient')")
+    @GetMapping(value = "/expertise/TopExpertisesPhysicians")
     @Operation(summary = "Top Physicians of each Expertises ")
     @ApiResponse(content = { @Content(mediaType = "application/json")})
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> TopExpertisesPhysicians(){
 
-        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+            DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
         List<TopExpertisesDto> expertises = expertiseAdapter.findBestExpertisePhysicians();
 
@@ -78,7 +74,6 @@ public class ExpertiseController {
     }
 
     @GetMapping(value = "expertise")
-    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Get All Expertise")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDto.class)) })
     public @ResponseBody

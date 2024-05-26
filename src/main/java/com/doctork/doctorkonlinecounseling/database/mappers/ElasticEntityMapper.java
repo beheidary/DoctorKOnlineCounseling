@@ -4,6 +4,7 @@ package com.doctork.doctorkonlinecounseling.database.mappers;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
+import com.doctork.doctorkonlinecounseling.domain.RabbitMqMessages.CostumeMessage;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -25,7 +26,7 @@ public interface ElasticEntityMapper {
     ElasticPhysicianfakeEntity DomainToElsticMapper(Physician physician);
 
 
-    ElasticPhysicianEntity physicianToElasticPhysicianMapper(PhysicianEntity physicianEntity);
+    ElasticPhysicianEntity messageToElasticPhysicianMapper(CostumeMessage message);
 
     PhysicianEntity elasticPhysicianToPhysicianMapper(ElasticPhysicianEntity elasticPhysicianEntity);
 

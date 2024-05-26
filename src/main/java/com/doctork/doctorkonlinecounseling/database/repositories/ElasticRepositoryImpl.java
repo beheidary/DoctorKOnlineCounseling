@@ -10,6 +10,8 @@ import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.Elasti
 import com.doctork.doctorkonlinecounseling.database.mappers.ElasticEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.searchEngineRepositories.PhysicianElasticRepository;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.RabbitMqMessages.CostumeMessage;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -39,8 +41,8 @@ public class ElasticRepositoryImpl implements ElasticRepository {
     }
 
     @Override
-    public ElasticPhysicianEntity changeStatus(Long nationalCode, PhysicianStatus physicianStatus) {
-        Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(nationalCode);
+    public ElasticPhysicianEntity changeStatus(Long id, PhysicianStatus physicianStatus) {
+        Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(id);
 
         if (optionalPhysician.isPresent()) {
             ElasticPhysicianEntity existingPhysician = optionalPhysician.get();
@@ -51,18 +53,35 @@ public class ElasticRepositoryImpl implements ElasticRepository {
         }
     }
 
+    @Override
+    public ElasticPhysicianEntity changeState(Long id, State state) {
+        Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(id);
+
+        if (optionalPhysician.isPresent()) {
+            ElasticPhysicianEntity existingPhysician = optionalPhysician.get();
+            existingPhysician.setState(state);
+            return physicianElasticRepository.save(existingPhysician);
+        }else{
+            throw new PhysicianNotFoundException();
+        }
+    }
+
 
     @Override
-    public PhysicianEntity addPhysician(PhysicianEntity physicianEntity) {
+    public PhysicianEntity addPhysician(CostumeMessage message) {
         try{
 
-            ElasticPhysicianEntity elasticPhysicianEntity = elasticEntityMapper.physicianToElasticPhysicianMapper(physicianEntity);
+            ElasticPhysicianEntity elasticPhysicianEntity = elasticEntityMapper.messageToElasticPhysicianMapper(message);
 
-            if (physicianEntity.getExpertises() != null)
-                elasticPhysicianEntity.setExpertise(physicianEntity.getExpertises().iterator().next().getName());
+//            if (physicianEntity.getExpertises() != null)
+//                elasticPhysicianEntity.setExpertise(physicianEntity.getExpertises().iterator().next().getName());
 
-            elasticPhysicianEntity.setId(physicianEntity.getNationalCode());
-            elasticPhysicianEntity.setFullName(physicianEntity.getFirstName()+physicianEntity.getLastName());
+            elasticPhysicianEntity.setId(message.getNationalCode());
+            elasticPhysicianEntity.setFullName(message.getFirstName()+message.getLastName());
+            elasticPhysicianEntity.setPhysicianSystemCode(message.getPhysicianSystemCode());
+            elasticPhysicianEntity.setState(message.getState());
+            elasticPhysicianEntity.setStatus(message.getStatus());
+
 
 
             elasticPhysicianEntity = physicianElasticRepository.save(elasticPhysicianEntity);
