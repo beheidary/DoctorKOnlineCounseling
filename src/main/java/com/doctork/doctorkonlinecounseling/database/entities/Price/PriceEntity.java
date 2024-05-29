@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -48,7 +49,7 @@ public class PriceEntity {
     public PriceEntity(Long id, Long time, Long cost, PriceStatus priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
         this.id = id;
         this.time = time;
-        this.cost = cost;
+        setCost(cost);
         this.priceStatus = priceStatus;
         this.state = state;
         this.description = description;
@@ -83,6 +84,11 @@ public class PriceEntity {
     }
 
     public void setCost(Long cost) {
+
+        if (cost <= 0) {
+            throw new IllegalArgumentException("Cost must be positive");
+        }
+
         this.cost = cost;
     }
 

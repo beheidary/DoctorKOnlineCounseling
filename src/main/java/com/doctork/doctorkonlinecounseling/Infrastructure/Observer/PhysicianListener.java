@@ -1,4 +1,4 @@
-package com.doctork.doctorkonlinecounseling.Infrastructure;
+package com.doctork.doctorkonlinecounseling.Infrastructure.Observer;
 import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
 import com.doctork.doctorkonlinecounseling.configuration.RabbitMQConfig.RabbitMQConfig;
 import org.springframework.amqp.core.Message;

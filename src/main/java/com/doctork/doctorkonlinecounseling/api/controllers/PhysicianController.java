@@ -2,9 +2,7 @@ package com.doctork.doctorkonlinecounseling.api.controllers;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.Physician.PhysicianAdapter;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician.PhysicianInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician.ExpertiseInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.PhysicianOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.ExpertiseOutputDto;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import io.swagger.v3.oas.annotations.Operation;
