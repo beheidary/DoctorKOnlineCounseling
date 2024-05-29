@@ -11,10 +11,9 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PatientEntityMapper {
 
-    @Mapping(target = "user",ignore = true)
     Patient entityToModel(PatientEntity patientEntity);
 
-    @Mapping(target = "user",ignore = true)
     PatientEntity modelToEntity(Patient patient);
+
 
 }

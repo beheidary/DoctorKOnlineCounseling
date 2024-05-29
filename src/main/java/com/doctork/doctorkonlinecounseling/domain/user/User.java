@@ -16,6 +16,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String mobileNumber;
+    private List<GrantedAuthority> authorities = new ArrayList<>();
 
     private Long nationalCode;
     private Date createdAt;
@@ -32,6 +33,10 @@ public class User implements UserDetails {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + getRole().toString()));
         return authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = new ArrayList<>(authorities);
     }
 
     @Override

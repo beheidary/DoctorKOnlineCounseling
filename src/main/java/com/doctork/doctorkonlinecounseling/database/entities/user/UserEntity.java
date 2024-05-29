@@ -40,6 +40,11 @@ public class UserEntity implements UserDetails {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+
+    @Transient
+    private List<GrantedAuthority> authorities = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
@@ -48,6 +53,10 @@ public class UserEntity implements UserDetails {
         authorities.add(new SimpleGrantedAuthority("ROLE_"+getRole().toString()));
 
         return authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = new ArrayList<>(authorities);
     }
 
     public UserEntity(Long nationalCode , UUID id,String mobileNumber, UserType userType, String email, String password, Date createdAt, Date updatedAt) {
