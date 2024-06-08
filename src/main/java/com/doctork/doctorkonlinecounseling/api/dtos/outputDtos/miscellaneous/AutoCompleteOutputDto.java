@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestedSentencesOutputDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.Map;
 public class AutoCompleteOutputDto {
 
 
-    private Map<String, List<SuggestOutputDto.Suggestion>> suggest;
+    private Map<String, List<SuggestedSentencesOutputDto.Suggestion>> suggest;
 
-    public Map<String, List<SuggestOutputDto.Suggestion>> getSuggest() {
+    public Map<String, List<SuggestedSentencesOutputDto.Suggestion>> getSuggest() {
         return suggest;
     }
 
-    public void setSuggest(Map<String, List<SuggestOutputDto.Suggestion>> suggest) {
+    public void setSuggest(Map<String, List<SuggestedSentencesOutputDto.Suggestion>> suggest) {
         this.suggest = suggest;
     }
 
@@ -26,7 +26,7 @@ public class AutoCompleteOutputDto {
         private int length;
         private int offset;
         private String text;
-        private List<SuggestOutputDto.Option> options;
+        private List<SuggestedSentencesOutputDto.Option> options;
 
         public int getLength() {
             return length;
@@ -52,11 +52,11 @@ public class AutoCompleteOutputDto {
             this.text = text;
         }
 
-        public List<SuggestOutputDto.Option> getOptions() {
+        public List<SuggestedSentencesOutputDto.Option> getOptions() {
             return options;
         }
 
-        public void setOptions(List<SuggestOutputDto.Option> options) {
+        public void setOptions(List<SuggestedSentencesOutputDto.Option> options) {
             this.options = options;
         }
     }

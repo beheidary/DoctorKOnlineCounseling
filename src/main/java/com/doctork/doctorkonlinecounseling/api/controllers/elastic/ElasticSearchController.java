@@ -1,10 +1,9 @@
 package com.doctork.doctorkonlinecounseling.api.controllers.elastic;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.Elastic.ElasticAdapter;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.CompleteSuggestionOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SearchResultDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestOutputDto;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
-import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestedSentencesOutputDto;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -15,8 +14,6 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -53,12 +50,23 @@ public class    ElasticSearchController {
 
     @GetMapping("/suggest")
     @Operation(summary = "Get Suggestions")
-    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SuggestOutputDto.class)) })
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SuggestedSentencesOutputDto.class)) })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> suggestBySpeciality(@RequestParam("queryString") String queryString) throws IOException {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
-        SuggestOutputDto suggestOutputDTO = elasticAdapter.TermSuggest(queryString);
-        result.setResult(ResponseEntity.status(HttpStatus.OK).body(suggestOutputDTO));
+        SuggestedSentencesOutputDto suggestedSentencesOutputDTO = elasticAdapter.TermSuggest(queryString);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(suggestedSentencesOutputDTO));
+        return result;
+    }
+
+    @GetMapping("/completeSuggest")
+    @Operation(summary = "Get complete Suggestions")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CompleteSuggestionOutputDto.class)) })
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> completeSuggest(@RequestParam("queryString") String queryString) throws IOException {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        CompleteSuggestionOutputDto completeSuggestionOutputDto = elasticAdapter.completeSuggests(queryString);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(completeSuggestionOutputDto));
         return result;
     }
 

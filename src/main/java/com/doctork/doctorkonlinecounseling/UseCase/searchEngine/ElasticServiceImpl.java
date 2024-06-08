@@ -64,7 +64,42 @@ public class ElasticServiceImpl implements ElasticService {
                 )).withPageable(Pageable.ofSize(pageSize).withPage(pageNumber)).build();
 
 
-        return elasticRepository. search(query, ElasticPhysicianfakeEntity.class);
+        return elasticRepository.search(query, ElasticPhysicianfakeEntity.class);
+    }
+
+    @Override
+    public SearchHits<ElasticPhysicianfakeEntity> expertisesSearch(String queryString) {
+        Query query = NativeQuery.builder().withReactiveBatchSize(3)
+                .withQuery(q -> q.bool(
+                        p -> {p.should(
+                                n -> n.match(
+                                        m -> m.field("expertise").query(queryString).fuzziness("AUTO")
+                                )
+                        );
+                            return p;
+                        }
+                )).build();
+
+
+        return elasticRepository.search(query, ElasticPhysicianfakeEntity.class);
+    }
+
+    @Override
+    public SearchHits<ElasticPhysicianfakeEntity> physiciansSearch(String queryString) {
+        Query query = NativeQuery.builder().withReactiveBatchSize(3)
+                .withQuery(q -> q.bool(
+                        p -> {
+                            p.should(
+                                    n -> n.match(
+                                            m -> m.field("fullName").query(queryString).fuzziness("AUTO")
+                                    )
+                            );
+                            return p;
+                        }
+                )).build();
+
+
+        return elasticRepository.search(query, ElasticPhysicianfakeEntity.class);
     }
 //
 
@@ -77,7 +112,14 @@ public class ElasticServiceImpl implements ElasticService {
         Map<String, FieldSuggester> map = new HashMap<>();
         map.put("my-suggestion", FieldSuggester.of(fs -> fs
                 .term(cs -> cs
-                            .field("expertise").minWordLength(3).size(5).suggestMode(Missing)
+                            .field("fullName").minWordLength(3).size(5).suggestMode(Missing)
+
+                )
+        ));
+        map.put("my-suggestion2", FieldSuggester.of(fs -> fs
+                .term(cs -> cs
+                        .field("expertise").minWordLength(3).size(5).suggestMode(Missing)
+
                 )
         ));
         Suggester suggester = Suggester.of(s -> s
@@ -86,6 +128,7 @@ public class ElasticServiceImpl implements ElasticService {
         SearchRequest searchRequest = SearchRequest.of(s -> {
             s.index("physicianfakeindex")
                     .source(SourceConfig.of(sc -> sc.filter(f -> f.includes(List.of("expertise")))))
+
                     .suggest(suggester);
         return s;
         });

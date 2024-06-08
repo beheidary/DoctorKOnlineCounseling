@@ -13,6 +13,10 @@ public interface ElasticService {
 
 
     SearchHits<ElasticPhysicianfakeEntity> search(String queryString, Integer pageNumber, Integer pageSize);
+    SearchHits<ElasticPhysicianfakeEntity> expertisesSearch(String queryString);
+
+    SearchHits<ElasticPhysicianfakeEntity> physiciansSearch(String queryString);
+
 
     SearchResponse<ElasticPhysicianfakeEntity> TermSuggest(String queryString) throws IOException;
 

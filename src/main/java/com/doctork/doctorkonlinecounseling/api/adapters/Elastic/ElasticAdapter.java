@@ -1,11 +1,9 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Elastic;
 
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.CompleteSuggestionOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.AutoCompleteOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SearchResultDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestOutputDto;
-import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianMongoEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.searchEngine.ElasticPhysicianfakeEntity;
-import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.SuggestedSentencesOutputDto;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -16,7 +14,9 @@ public interface ElasticAdapter {
 
     SearchResultDto search(String queryString, @PositiveOrZero Integer pageNumber, @Positive Integer pageSize) throws IOException;
 
-    SuggestOutputDto TermSuggest(String queryString) throws IOException;
+    SuggestedSentencesOutputDto TermSuggest(String queryString) throws IOException;
     AutoCompleteOutputDto autocomplete(String queryString , Integer resultSize) throws IOException;
+
+    CompleteSuggestionOutputDto completeSuggests(String queryString) throws IOException;
 
 }

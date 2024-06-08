@@ -8,7 +8,7 @@ import java.util.Map;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SuggestOutputDto {
+public class SuggestedSentencesOutputDto {
     private Map<String, List<Suggestion>> suggest;
 
     public Map<String, List<Suggestion>> getSuggest() {

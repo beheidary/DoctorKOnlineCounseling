@@ -10,6 +10,7 @@ public class AddressOutputDto {
     private String postalCode;
     private String address;
 
+
     public Long getId() {
         return id;
     }
@@ -58,28 +59,19 @@ public class AddressOutputDto {
         this.city = city;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public AddressOutputDto(Long id, String postalCode, String address, Double latitude, Double longitude, CityOutputDto city, UUID userId) {
+    public AddressOutputDto(Long id, String postalCode, String address, Double latitude, Double longitude, CityOutputDto city) {
         this.id = id;
         this.postalCode = postalCode;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.city = city;
-        this.userId = userId;
     }
 
     private Double latitude;
     private Double longitude;
     private CityOutputDto city;
-    private UUID userId;
 
 
 
