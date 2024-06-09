@@ -29,10 +29,13 @@ public class Physician {
     private PhysicianStatus status;
     private User user;
 
+    private String mainImage;
+
     private Gender gender;
 
-    public Physician(State state,Gender gender, Long nationalCode, String description, String firstName, Double businessWeight, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, PhysicianStatus status, User user) {
+    public Physician(State state,String mainImage,Gender gender, Long nationalCode, String description, String firstName, Double businessWeight, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, PhysicianStatus status, User user) {
         this.nationalCode = nationalCode;
+        this.mainImage=mainImage;
         this.state = state;
         this.gender = gender;
         this.description = description;
@@ -50,6 +53,14 @@ public class Physician {
 
     public Long getNationalCode() {
         return nationalCode;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public void setNationalCode(Long nationalCode) {

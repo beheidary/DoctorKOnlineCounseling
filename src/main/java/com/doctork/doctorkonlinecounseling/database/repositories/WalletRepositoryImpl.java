@@ -18,9 +18,11 @@ import com.doctork.doctorkonlinecounseling.domain.Financial.WalletToWalletTransf
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class WalletRepositoryImpl implements WalletRepository {
 
     private final WalletMySqlRepository walletMySqlRepository;

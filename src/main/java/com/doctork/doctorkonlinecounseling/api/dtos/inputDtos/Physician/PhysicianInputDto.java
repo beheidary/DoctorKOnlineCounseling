@@ -39,9 +39,12 @@ public class PhysicianInputDto {
     @NotNull
     private Gender gender;
 
+    private String mainImage;
 
-    public PhysicianInputDto(Gender gender, String description, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode) {
+
+    public PhysicianInputDto(String mainImage,Gender gender, String description, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode) {
         this.firstName = firstName;
+        this.mainImage = mainImage;
         this.gender = gender;
         this.description = description;
         this.lastName = lastName;
@@ -57,6 +60,14 @@ public class PhysicianInputDto {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public Gender getGender() {

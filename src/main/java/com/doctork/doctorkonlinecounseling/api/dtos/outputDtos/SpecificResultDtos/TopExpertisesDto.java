@@ -7,12 +7,16 @@ import java.util.List;
 
 public class TopExpertisesDto{
         private String name;
-
         private ExpertiseLatinNames latinName;
+
+        private String imageName;
         private List<PhysicianOutputDto> physicians;
 
-        public TopExpertisesDto(String name, ExpertiseLatinNames latinName, List<PhysicianOutputDto> physicians) {
+
+
+        public TopExpertisesDto(String imageName, String name, ExpertiseLatinNames latinName, List<PhysicianOutputDto> physicians) {
             this.name = name;
+            this.imageName = imageName;
             this.latinName = latinName;
             this.physicians = physicians;
         }
@@ -24,7 +28,15 @@ public class TopExpertisesDto{
             return name;
         }
 
-        public void setName(String name) {
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public void setName(String name) {
             this.name = name;
         }
 

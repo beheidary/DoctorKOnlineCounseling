@@ -22,6 +22,8 @@ public class PhysicianOutputDto {
     private Gender gender;
     private State state;
 
+    private String mainImage;
+
 
 //    private List<AddressOutputDTO> addresses;
 //    private UUID userId;
@@ -29,8 +31,9 @@ public class PhysicianOutputDto {
 
 
 
-    public PhysicianOutputDto(Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDto> addresses, UUID userId, Long id) {
+    public PhysicianOutputDto(String mainImage,Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDto> addresses, UUID userId, Long id) {
         this.firstName = firstName;
+        this.mainImage = mainImage;
         this.state =state;
         this.gender = gender;
         this.description = description;
@@ -47,6 +50,14 @@ public class PhysicianOutputDto {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public String getDescription() {

@@ -22,6 +22,7 @@ import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -120,6 +121,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     }
 
     @Override
+    @Transactional
     public Physician PhysicianEditProfile(Physician physician , Long nationalCode) {
 
         try{
@@ -133,6 +135,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 physicianEntity.setDateOfBirth(physician.getDateOfBirth());
                 physicianEntity.setEducationLevel(physician.getEducationLevel());
+                physicianEntity.setMainImage(physician.getMainImage());
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
 
                 return physicianEntityMapper.entityToModel(physicianEntity);
@@ -162,6 +165,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
 
     @Override
+    @Transactional
     public Physician fetchPhysician(Long nationalCode) {
 
 

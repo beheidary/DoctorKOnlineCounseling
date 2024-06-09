@@ -12,10 +12,13 @@ public class TopExpertises {
 
     private ExpertiseLatinNames latinName;
 
+    private String imageName;
+
     private List<Physician> physicians = new ArrayList<>();
 
-    public TopExpertises(String name, ExpertiseLatinNames latinName, List<Physician> physicians) {
+    public TopExpertises(String imageName,String name, ExpertiseLatinNames latinName, List<Physician> physicians) {
         this.name = name;
+        this.imageName = imageName;
         this.latinName = latinName;
         this.physicians = physicians;
     }
@@ -39,6 +42,14 @@ public class TopExpertises {
 
     public List<Physician> getPhysicians() {
         return physicians;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public void setPhysicians(List<Physician> physicians) {
