@@ -17,9 +17,14 @@ public class ExpertiseOutputDto {
     private ExpertiseLatinNames latinName;
     private List<PhysicianOutputDto> physicians;
 
-    public ExpertiseOutputDto(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, List<PhysicianOutputDto> physicians) {
+    private String imageName;
+
+
+
+    public ExpertiseOutputDto(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, List<PhysicianOutputDto> physicians,String imageName) {
         this.id = id;
         this.name = name;
+        this.imageName = imageName;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
         this.latinName = latinName;
@@ -77,5 +82,13 @@ public class ExpertiseOutputDto {
 
     public void setPhysicians(List<PhysicianOutputDto> physicians) {
         this.physicians = physicians;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

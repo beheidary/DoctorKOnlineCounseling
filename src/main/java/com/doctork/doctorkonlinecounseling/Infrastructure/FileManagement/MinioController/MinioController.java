@@ -8,12 +8,14 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.activation.FileTypeMap;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -75,16 +78,21 @@ public class MinioController {
     @Operation(summary ="دانلود فایل")
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> download(HttpServletResponse response,
-                                               @RequestParam(required = false) String objectName) {
+                                               @RequestParam(required = false) String objectName,
+                                               @RequestParam(required = false,defaultValue = "false") boolean preview) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         InputStream in = null;
         try {
             in = minioService.downloadObject(objectName);
-            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(objectName, StandardCharsets.UTF_8));
-            response.setCharacterEncoding("UTF-8");
-
-
+            if(preview){
+                response.setContentType(MediaType.valueOf(FileTypeMap.getDefaultFileTypeMap().getContentType(objectName)).toString());
+            }
+            else{
+                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(objectName, StandardCharsets.UTF_8));
+                response.setCharacterEncoding("UTF-8");
+            }
             IOUtils.copy(in, response.getOutputStream());
+
         } catch (UnsupportedEncodingException e) {
             LOGGER.info("MinioController | download | UnsupportedEncodingException : " + e.getMessage());
         } catch (Exception e) {

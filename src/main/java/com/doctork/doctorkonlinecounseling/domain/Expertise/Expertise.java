@@ -20,10 +20,15 @@ public class Expertise {
 
     private ExpertiseLatinNames latinName;
 
+    private String imageName;
+
+
+
     private Set<Physician> physicians = new HashSet<>();
 
-    public Expertise(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<Physician> physicians) {
+    public Expertise(Long id,String imageName, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<Physician> physicians) {
         this.id = id;
+        this.imageName = imageName;
         this.name = name;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
@@ -82,5 +87,13 @@ public class Expertise {
 
     public void setPhysicians(Set<Physician> physicians) {
         this.physicians = physicians;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

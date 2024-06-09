@@ -13,6 +13,8 @@ public interface ExpertiseRepository {
     List<Expertise> getExpertises();
 
     Expertise addPhysicianExpertise(Long nationalCode, Expertise expertise);
+    Expertise addExpertise(Expertise expertise);
+    Expertise editExpertise(Long expertiseId, Expertise expertise);
 
     List<TopExpertises> findBestExpertisePhysicians();
 

@@ -40,7 +40,6 @@ public class ExpertiseController {
 
 
     @GetMapping(value = "/expertise/{lotinName}")
-    @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Get a Expertise")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDto.class)) })
     public @ResponseBody
@@ -100,6 +99,44 @@ public class ExpertiseController {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
         ExpertiseOutputDto expertiseOutputDTO = expertiseAdapter.addPhysicianExpertise(nationalCode, expertiseInputDTO);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertiseOutputDTO));
+
+        return result;
+
+    }
+
+
+    @PostMapping(value = "expertise/addExpertise/")
+    @PreAuthorize("hasRole('ROLE_Support')")
+    @Operation(summary = "Add Expertise")
+    @SecurityRequirement(name = "security_auth")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDto.class)) })
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> addExpertise(@RequestBody @Validated ExpertiseInputDto expertiseInputDTO)
+    {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        ExpertiseOutputDto expertiseOutputDTO = expertiseAdapter.addExpertise(expertiseInputDTO);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertiseOutputDTO));
+
+        return result;
+
+    }
+    @PutMapping(value = "expertise/editExpertise/{expertiseId}")
+    @PreAuthorize("hasRole('ROLE_Support')")
+    @Operation(summary = "Edit Expertise")
+    @SecurityRequirement(name = "security_auth")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDto.class)) })
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> editExpertise(@PathVariable Long expertiseId, @RequestBody @Validated ExpertiseInputDto expertiseInputDTO)
+    {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        ExpertiseOutputDto expertiseOutputDTO = expertiseAdapter.editExpertise(expertiseId, expertiseInputDTO);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(expertiseOutputDTO));
 

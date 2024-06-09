@@ -102,9 +102,8 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
         try{
 
-            PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByNationalCode(nationalCode);
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(nationalCode).orElseThrow(PhysicianNotFoundException::new);
 
-            if(physicianEntity !=null){
 
                 try {
 
@@ -142,12 +141,6 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
                     throw ex;
                 }
 
-            }else{
-
-                throw new PhysicianNotFoundException();
-
-            }
-
         }
 
 
@@ -171,6 +164,57 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
         }
 
+    }
+
+    @Override
+    public Expertise addExpertise(Expertise expertise) {
+
+        try {
+            ExpertiseEntity expertiseEntity = expertiseEntityMapper.modelToEntity(expertise);
+            expertiseMySqlRepository.save(expertiseEntity);
+
+        } catch (QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+        return null;
+    }
+
+    @Override
+    public Expertise editExpertise(Long expertiseId, Expertise expertise) {
+        try {
+
+            ExpertiseEntity expertiseEntity = expertiseMySqlRepository.findById(expertiseId).orElseThrow(ExpertiseNotFoundException::new);
+
+            expertiseEntity.setImageName(expertise.getImageName());
+            expertiseEntity.setName(expertise.getName());
+
+            expertiseMySqlRepository.save(expertiseEntity);
+
+        } catch (QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+        return null;
     }
 
     @Override

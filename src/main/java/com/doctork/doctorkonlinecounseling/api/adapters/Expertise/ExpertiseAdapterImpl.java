@@ -50,8 +50,22 @@ public class ExpertiseAdapterImpl implements ExpertiseAdapter {
     }
 
     @Override
-    public ExpertiseOutputDto addPhysicianExpertise(Long nationalCode, ExpertiseInputDto expertiseInputDTO) {
-        Expertise expertise = expertiseMapper.inputToModelWithoutDoctor(expertiseInputDTO);
+    public ExpertiseOutputDto addExpertise(ExpertiseInputDto expertiseInputDto) {
+        Expertise expertise = expertiseMapper.inputToModelWithoutDoctor(expertiseInputDto);
+        expertise = expertiseService.addExpertise(expertise);
+        return expertiseMapper.modelToOutput(expertise);
+    }
+
+    @Override
+    public ExpertiseOutputDto editExpertise(Long expertiseId, ExpertiseInputDto expertiseInputDto) {
+        Expertise expertise = expertiseMapper.inputToModelWithoutDoctor(expertiseInputDto);
+        expertise = expertiseService.editExpertise(expertiseId, expertise);
+        return expertiseMapper.modelToOutput(expertise);
+    }
+
+    @Override
+    public ExpertiseOutputDto addPhysicianExpertise(Long nationalCode, ExpertiseInputDto expertiseInputDto) {
+        Expertise expertise = expertiseMapper.inputToModelWithoutDoctor(expertiseInputDto);
         expertise = expertiseService.addPhysicianExpertise( nationalCode, expertise);
         return expertiseMapper.modelToOutput(expertise);
     }

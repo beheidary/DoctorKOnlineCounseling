@@ -9,9 +9,13 @@ public class ExpertiseInputDto {
 
     private ExpertiseLatinNames latinName;
 
+    private String imageName;
 
-    public ExpertiseInputDto(String name, ExpertiseLatinNames latinName) {
+
+
+    public ExpertiseInputDto(String imageName, String name, ExpertiseLatinNames latinName) {
         this.name = name;
+        this.imageName = imageName;
         this.latinName = latinName;
     }
 
@@ -32,4 +36,11 @@ public class ExpertiseInputDto {
         this.latinName = latinName;
     }
 
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 }

@@ -45,6 +45,16 @@ public class ExpertiseServiceImpl implements ExpertiseService {
     }
 
     @Override
+    public Expertise addExpertise(Expertise expertise) {
+        return expertiseRepository.addExpertise(expertise);
+    }
+
+    @Override
+    public Expertise editExpertise(Long expertiseId, Expertise expertise) {
+        return expertiseRepository.editExpertise(expertiseId,expertise);
+    }
+
+    @Override
     public List<Expertise> getExpertises() {
         return expertiseRepository.getExpertises();
     }

@@ -41,14 +41,16 @@ public class ExpertiseEntity {
     @ManyToMany(mappedBy = "expertises" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Set<PhysicianEntity> physicians = new HashSet<>();
 
-    @Column(name = "imageUrl" , nullable = true)
-    private String imageUrl;
+    @Column(name = "imageName" , nullable = true)
+    private String imageName;
 
 
 
-    public ExpertiseEntity(String imageUrl, Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<PhysicianEntity> physicians) {
+
+
+    public ExpertiseEntity(String imageName, Long id, String name, Long expertise, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, Set<PhysicianEntity> physicians) {
         this.id = id;
-        this.imageUrl = imageUrl;
+        this.imageName = imageName;
         this.name = name;
 //        Expertise = expertise;
         this.saveDateTime = saveDateTime;
@@ -74,12 +76,12 @@ public class ExpertiseEntity {
         return name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public void setName(String name) {
