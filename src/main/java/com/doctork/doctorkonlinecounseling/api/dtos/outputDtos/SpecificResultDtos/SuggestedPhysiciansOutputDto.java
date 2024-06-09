@@ -10,7 +10,7 @@ public class SuggestedPhysiciansOutputDto {
     private String expertise;
     private Double businessWeight;
     private PhysicianStatus status;
-    private String imageUrl;
+    private String imageName;
 
     public Long getNationalCode() {
         return nationalCode;
@@ -60,11 +60,11 @@ public class SuggestedPhysiciansOutputDto {
         this.status = status;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }
