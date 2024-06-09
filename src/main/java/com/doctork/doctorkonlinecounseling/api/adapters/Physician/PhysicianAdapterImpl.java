@@ -9,6 +9,7 @@ import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component

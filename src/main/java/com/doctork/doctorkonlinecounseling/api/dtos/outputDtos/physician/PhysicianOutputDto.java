@@ -16,7 +16,7 @@ public class PhysicianOutputDto {
     private String description;
     private EducationLevel educationLevel;
     private String physicianSystemCode;
-    private LocalDateTime updateDateTime;
+    private LocalDateTime updated_At;
     private PhysicianStatus status;
     private Long nationalCode;
     private Gender gender;
@@ -31,7 +31,7 @@ public class PhysicianOutputDto {
 
 
 
-    public PhysicianOutputDto(String mainImage,Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, LocalDateTime registerDateTime, String physicianSystemCode, LocalDateTime updateDateTime, List<AddressOutputDto> addresses, UUID userId, Long id) {
+    public PhysicianOutputDto(String mainImage,Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, String physicianSystemCode, LocalDateTime updated_At, Long id) {
         this.firstName = firstName;
         this.mainImage = mainImage;
         this.state =state;
@@ -41,7 +41,7 @@ public class PhysicianOutputDto {
         this.status = status;
         this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
-        this.updateDateTime = updateDateTime;
+        this.updated_At = updated_At;
         this.nationalCode = id;
 //        this.addresses = addresses;
 //        this.userId = userId;
@@ -112,15 +112,15 @@ public class PhysicianOutputDto {
         this.physicianSystemCode = physicianSystemCode;
     }
 
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
+    public LocalDateTime getUpdated_At() {
+        return updated_At;
     }
 
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
+    public void setUpdated_At(LocalDateTime updated_At) {
+        this.updated_At = updated_At;
     }
 
-//    public List<AddressOutputDTO> getAddresses() {
+    //    public List<AddressOutputDTO> getAddresses() {
 //        return addresses;
 //    }
 

@@ -46,8 +46,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**",
                                 "/swagger-resources/*","/configuration/ui",
-                                "/v3/api-docs/**","auth/login","elastic/**","/expertise/TopExpertisesPhysicians",
-                                "/expertise","/miscellaneous/**").permitAll()
+                                "/v3/api-docs/**","auth/login","elastic/**","/expertise/TopExpertisesPhysicians","/expertise/{lotinName}",
+                                "/expertise","/miscellaneous/**","/file-management/minio/**").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll()
                         .anyRequest().authenticated()
                 ).exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, ex2) -> {

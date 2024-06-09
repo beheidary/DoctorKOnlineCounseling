@@ -49,6 +49,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
 
     @Override
+    @Transactional
     public List<Physician> topPhysician() {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();

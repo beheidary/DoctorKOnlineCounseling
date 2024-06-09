@@ -67,13 +67,17 @@ public class PhysicianEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @Column(name = "mainImage")
+    private String mainImage;
+
 
 
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(State state, Gender gender, Long nationalCode, String description, String firstName, String lastName, LocalDate dateOfBirth, Double businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, PhysicianStatus status, UserEntity user) {
+    public PhysicianEntity(State state,String mainImage, Gender gender, Long nationalCode, String description, String firstName, String lastName, LocalDate dateOfBirth, Double businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, PhysicianStatus status, UserEntity user) {
         this.nationalCode = nationalCode;
+        this.mainImage = mainImage;
         this.state = state;
         this.gender = gender;
         this.firstName = firstName;
@@ -94,6 +98,14 @@ public class PhysicianEntity {
     }
     public String getPhysicianSystemCode() {
         return physicianSystemCode;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public void setPhysicianSystemCode(String physicianSystemCode) {
