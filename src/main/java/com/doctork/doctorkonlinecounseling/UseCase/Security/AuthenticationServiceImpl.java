@@ -3,17 +3,14 @@ package com.doctork.doctorkonlinecounseling.UseCase.Security;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.LoginUserDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.RegisterUserDto;
 import com.doctork.doctorkonlinecounseling.api.mappers.UserMapper;
-import com.doctork.doctorkonlinecounseling.boundary.in.Security.AuthenticationService;
-import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
-import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
+import com.doctork.doctorkonlinecounseling.boundary.exit.Financial.WalletRepository;
+import com.doctork.doctorkonlinecounseling.boundary.internal.Security.AuthenticationService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;
 import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +21,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     private final UserMySqlRepository userMySqlRepository;
-    private final PhysicianMySqlRepository physicianMySqlRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final WalletRepository walletRepository;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationServiceImpl(PhysicianMySqlRepository physicianMySqlRepository, UserMapper userMapper, UserMySqlRepository userMySqlRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
+    public AuthenticationServiceImpl(WalletRepository walletRepository, UserMapper userMapper, UserMySqlRepository userMySqlRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
                                      MasterUserInfo masterUserInfo) {
         this.authenticationManager = authenticationManager;
-        this.physicianMySqlRepository = physicianMySqlRepository;
+        this.walletRepository = walletRepository;
         this.userMapper = userMapper;
         this.userMySqlRepository = userMySqlRepository;
         this.passwordEncoder = passwordEncoder;
@@ -48,8 +45,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
 
+        userEntity = userMySqlRepository.save(userEntity);
+        walletRepository.createWallet(userEntity.getId());
 
-        return userMySqlRepository.save(userEntity);
+
+        return userEntity;
     }
 
     public UserEntity authenticate(LoginUserDto input) {

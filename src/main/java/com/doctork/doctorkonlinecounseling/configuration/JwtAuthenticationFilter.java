@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.configuration;
 
-import com.doctork.doctorkonlinecounseling.boundary.in.Security.JwtService;
+import com.doctork.doctorkonlinecounseling.boundary.internal.Security.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
-import java.security.SignatureException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

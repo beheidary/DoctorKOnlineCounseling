@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.UseCase.Security;
 
-import com.doctork.doctorkonlinecounseling.boundary.in.Security.JwtService;
+import com.doctork.doctorkonlinecounseling.boundary.internal.Security.JwtService;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
