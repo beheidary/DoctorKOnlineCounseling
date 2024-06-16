@@ -127,9 +127,9 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         try{
 
-            PriceEntity priceEntity = priceMySqlRepository.findPriceEntityById(id);
+            PriceEntity priceEntity = priceMySqlRepository.findById(id).orElseThrow(PriceNotFoundException::new);
 
-            if ( priceEntity != null ){
+
 
                 Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
                 if (!priceEntity.getDoctor().getNationalCode().equals(tokenNationalCode))
@@ -139,8 +139,7 @@ public class PriceRepositoryImpl implements PriceRepository {
                 priceEntity.setStatus(price.getStatus());
                 priceEntity.setTime(price.getTime());
                 return  priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(priceEntity));
-            }
-            throw new PriceNotFoundException();
+
 
         }catch (QueryTimeoutException ex){
 
@@ -177,6 +176,7 @@ public class PriceRepositoryImpl implements PriceRepository {
                 for (PriceEntity priceEntity : priceEntities)
                     prices.add(priceEntityMapper.priceEntityToModel(priceEntity));
                 return prices;
+                // Todo physician Entity just moved to model
             }
             throw new PhysicianNotFoundException();
 
@@ -199,19 +199,46 @@ public class PriceRepositoryImpl implements PriceRepository {
     }
 
     @Override
+
+    public Price findPriceById(Long priceId) {
+        try {
+
+            PriceEntity priceEntity = priceMySqlRepository.findById(priceId).orElseThrow(PriceNotFoundException::new);
+            return priceEntityMapper.priceEntityToModel(priceEntity);
+
+
+
+        }catch (QueryTimeoutException ex){
+
+            throw new DatabaseTimeOutException();
+
+        }
+        catch (DataIntegrityViolationException ex){
+
+            throw new InvalidDataException();
+
+        }
+        catch (Exception ex){
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+
+    }
+
+    @Override
     public Long deletePrice(Long priceId) {
         try {
 
-            PriceEntity priceEntity = priceMySqlRepository.findPriceEntityById(priceId);
+            PriceEntity priceEntity = priceMySqlRepository.findById(priceId).orElseThrow(PriceNotFoundException::new);
 
-            if(priceEntity != null) {
-                Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
-                if (!priceEntity.getDoctor().getNationalCode().equals(tokenNationalCode))
-                    throw new AccessDeniedException("You do not have the required access");
-                priceMySqlRepository.delete(priceEntity);
-                return priceId;
-            }
-            throw new PriceNotFoundException();
+            Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+            if (!priceEntity.getDoctor().getNationalCode().equals(tokenNationalCode))
+                throw new AccessDeniedException("You do not have the required access");
+            priceMySqlRepository.delete(priceEntity);
+            return priceId;
+
 
         }catch (QueryTimeoutException ex){
 

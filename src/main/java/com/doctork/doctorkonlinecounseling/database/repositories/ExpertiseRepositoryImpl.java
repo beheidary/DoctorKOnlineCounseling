@@ -24,7 +24,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
@@ -244,7 +244,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
 
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<TopExpertises> findBestExpertisePhysicians() {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();

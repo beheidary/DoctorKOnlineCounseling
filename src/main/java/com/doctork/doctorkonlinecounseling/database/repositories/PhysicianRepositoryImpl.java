@@ -49,7 +49,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Physician> topPhysician() {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -127,12 +127,8 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         try{
 
-            PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByNationalCode(nationalCode);
-            if (physicianEntity == null){
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(nationalCode).orElseThrow(PhysicianNotFoundException::new);
 
-                throw new PhysicianNotFoundException();
-
-            }else {
 
                 physicianEntity.setDateOfBirth(physician.getDateOfBirth());
                 physicianEntity.setEducationLevel(physician.getEducationLevel());
@@ -141,7 +137,6 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
                 return physicianEntityMapper.entityToModel(physicianEntity);
 
-            }
 
         }catch (QueryTimeoutException ex){
 
@@ -166,23 +161,15 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
 
     @Override
-    @Transactional
-    public Physician fetchPhysician(Long nationalCode) {
+    @Transactional(readOnly = true)
+    public Physician findPhysicianById(Long nationalCode) {
 
 
         try{
 
-           PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByNationalCode(nationalCode);
-
-           if (physicianEntity == null){
-
-               throw new PhysicianNotFoundException();
-
-           }else{
+           PhysicianEntity physicianEntity = physicianMySqlRepository.findById(nationalCode).orElseThrow(PhysicianNotFoundException::new);
 
                return physicianEntityMapper.entityToModelWithExpertise(physicianEntity);
-
-           }
 
         }catch (QueryTimeoutException ex){
 
@@ -210,19 +197,13 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         try{
 
-            PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByNationalCode(nationalCode);
-
-            if (physicianEntity == null){
-
-                throw new PhysicianNotFoundException();
-
-            }else{
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(nationalCode).orElseThrow(PhysicianNotFoundException::new);
 
                 physicianEntity.setStatus(status);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
                 return physicianEntityMapper.entityToModel(physicianEntity);
 
-            }
+
 
         }catch (QueryTimeoutException ex){
 
@@ -248,19 +229,13 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         try{
 
-            PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByNationalCode(nationalCode);
-
-            if (physicianEntity == null){
-
-                throw new PhysicianNotFoundException();
-
-            }else{
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(nationalCode).orElseThrow(PhysicianNotFoundException::new);
 
                 physicianEntity.setState(state);
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
                 return physicianEntityMapper.entityToModel(physicianEntity);
 
-            }
+
 
         }catch (QueryTimeoutException ex){
 

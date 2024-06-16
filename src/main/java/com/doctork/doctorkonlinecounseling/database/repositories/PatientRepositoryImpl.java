@@ -16,6 +16,7 @@ import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -34,6 +35,7 @@ public class PatientRepositoryImpl implements PatientRepository {
         this.patientMySqlRepository = patientMySqlRepository;
     }
     @Override
+    @Transactional
     public Patient patientCompleteProfile(Patient patient) {
 
 
@@ -82,16 +84,13 @@ public class PatientRepositoryImpl implements PatientRepository {
     }
 
     @Override
-    public Patient fetchPatient(Long nationalCode) {
+    @Transactional(readOnly = true)
+    public Patient findPatientById(Long nationalCode) {
         try{
-        PatientEntity patientEntity = patientMySqlRepository.findPatientEntityByNationalCode(nationalCode);
+        PatientEntity patientEntity = patientMySqlRepository.findById(nationalCode).orElseThrow(PatientNotfoundException::new);
 
-        if (patientEntity != null ){
                 return patientEntityMapper.entityToModel(patientEntity);
-        }else {
-            throw new PatientNotfoundException();
 
-        }
     }catch (QueryTimeoutException ex){
 
         throw new DatabaseTimeOutException();

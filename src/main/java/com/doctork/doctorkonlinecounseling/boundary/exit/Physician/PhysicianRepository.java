@@ -11,7 +11,7 @@ public interface PhysicianRepository {
     Physician PhysicianCompleteProfile(Physician physician,Long nationalCode);
     Physician PhysicianEditProfile(Physician physician , Long nationalCode);
     List<Physician> topPhysician();
-    Physician fetchPhysician (Long nationalCode);
+    Physician findPhysicianById (Long nationalCode);
     Physician changeStatus (Long nationalCode, PhysicianStatus status);
     Physician changeState (Long nationalCode, State state);
 

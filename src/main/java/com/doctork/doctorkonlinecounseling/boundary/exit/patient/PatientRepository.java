@@ -6,6 +6,6 @@ public interface PatientRepository{
 
     Patient patientCompleteProfile (Patient patient);
 
-    Patient fetchPatient (Long nationalCode);
+    Patient findPatientById (Long nationalCode);
 
 }

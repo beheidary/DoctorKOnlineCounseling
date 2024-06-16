@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface PhysicianMySqlRepository extends JpaRepository <PhysicianEntity, Long> {
 
-    PhysicianEntity findPhysicianEntityByPhysicianSystemCode(String PSCode);
-
     PhysicianEntity findPhysicianEntityByUser(UserEntity user);
 
     PhysicianEntity findPhysicianEntityByNationalCode(Long NationalCode);
