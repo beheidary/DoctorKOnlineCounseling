@@ -8,14 +8,14 @@ public class PriceOutputDto {
 
     private Long id;
     private Long time;
-    private Long cost;
+    private Double cost;
     private PriceStatus priceStatus;
     private State state;
     private String description;
 
 
 
-    public PriceOutputDto(Long id, Long time, Long cost, PriceStatus priceStatus, State state, String description) {
+    public PriceOutputDto(Long id, Long time, Double cost, PriceStatus priceStatus, State state, String description) {
         this.id = id;
         this.time = time;
         this.cost = cost;
@@ -40,11 +40,11 @@ public class PriceOutputDto {
         this.time = time;
     }
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 

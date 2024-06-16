@@ -24,7 +24,7 @@ public class PriceEntity {
     private Long time;
 
     @Column(name = "cost" , nullable = false)
-    private Long cost;
+    private Double cost;
 
     @Column(name = "Status", nullable = false)
     private PriceStatus priceStatus;
@@ -32,10 +32,11 @@ public class PriceEntity {
     private State state;
     @Column(name = "description",nullable = false)
     private String description;
-    @ManyToOne
+    // Todo migrate rename doctor to physician
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
     private PhysicianEntity doctor;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
     private ServicesEntity service;
     @CreationTimestamp
@@ -46,7 +47,7 @@ public class PriceEntity {
     private LocalDateTime updateDateTime;
 
 
-    public PriceEntity(Long id, Long time, Long cost, PriceStatus priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
+    public PriceEntity(Long id, Long time, Double cost, PriceStatus priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
         this.id = id;
         this.time = time;
         setCost(cost);
@@ -79,11 +80,11 @@ public class PriceEntity {
         this.time = time;
     }
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
 
         if (cost <= 0) {
             throw new IllegalArgumentException("Cost must be positive");

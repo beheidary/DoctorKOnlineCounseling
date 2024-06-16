@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.entities.Financial;
 
 import com.doctork.doctorkonlinecounseling.domain.Enums.TransactionStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.TransactionType;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ public class WalletToBankTransferEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wallet_id", nullable = false)
     private WalletEntity wallet;
 
@@ -23,7 +24,7 @@ public class WalletToBankTransferEntity {
     private String bankAccountNumber;
 
     @Column(nullable = false)
-    private BigDecimal amount;
+    private Double amount;
 
     @Column(nullable = false)
     private LocalDateTime transferDate;
@@ -32,11 +33,17 @@ public class WalletToBankTransferEntity {
     @Column(nullable = false)
     private TransactionStatus status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TransactionType type;
+
+
     public WalletToBankTransferEntity() {
     }
 
-    public WalletToBankTransferEntity(WalletEntity wallet, String bankAccountNumber, BigDecimal amount, LocalDateTime transferDate, TransactionStatus status) {
+    public WalletToBankTransferEntity(TransactionType type,WalletEntity wallet, String bankAccountNumber, Double amount, LocalDateTime transferDate, TransactionStatus status) {
         this.wallet = wallet;
+        this.type = type;
         this.bankAccountNumber = bankAccountNumber;
         setAmount(amount);
         this.transferDate = transferDate;
@@ -48,7 +55,7 @@ public class WalletToBankTransferEntity {
         transferDate = LocalDateTime.now();
     }
 
-    // Getters and Setters
+
 
     public Long getId() {
         return id;
@@ -74,12 +81,20 @@ public class WalletToBankTransferEntity {
         this.bankAccountNumber = bankAccountNumber;
     }
 
-    public BigDecimal getAmount() {
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
+    }
+
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+    public void setAmount(Double amount) {
+        if (amount.compareTo(0.0) < 0) {
             throw new IllegalArgumentException("Amount cannot be negative");
         }
         this.amount = amount;

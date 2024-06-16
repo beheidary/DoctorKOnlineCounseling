@@ -6,14 +6,14 @@ import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 public class PriceInputDto {
 
     private Long time;
-    private Long cost;
+    private Double cost;
     private PriceStatus priceStatus;
     private State state;
     private String description;
 
 
 
-    public PriceInputDto(Long time, Long cost, PriceStatus priceStatus, State state, String description) {
+    public PriceInputDto(Long time, Double cost, PriceStatus priceStatus, State state, String description) {
         this.time = time;
         this.cost = cost;
         this.priceStatus = priceStatus;
@@ -29,12 +29,21 @@ public class PriceInputDto {
         this.time = time;
     }
 
-    public Long getCost() {
+
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public PriceStatus getPriceStatus() {
+        return priceStatus;
+    }
+
+    public void setPriceStatus(PriceStatus priceStatus) {
+        this.priceStatus = priceStatus;
     }
 
     public PriceStatus getStatus() {

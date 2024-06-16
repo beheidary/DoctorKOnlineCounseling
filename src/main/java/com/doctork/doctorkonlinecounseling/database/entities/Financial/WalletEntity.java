@@ -2,6 +2,8 @@ package com.doctork.doctorkonlinecounseling.database.entities.Financial;
 
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import jakarta.persistence.*;
+import org.simpleframework.xml.Default;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -18,7 +20,7 @@ public class WalletEntity {
     private UserEntity user;
 
     @Column(nullable = false)
-    private BigDecimal balance;
+    private Double balance;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -27,10 +29,10 @@ public class WalletEntity {
     private LocalDateTime updatedAt;
 
     public WalletEntity() {
-        this.balance = BigDecimal.ZERO;
+        this.balance = 0.0;
     }
 
-    public WalletEntity(UserEntity user, BigDecimal balance, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public WalletEntity(UserEntity user, Double balance, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.user = user;
         setBalance(balance);
         this.createdAt = createdAt;
@@ -64,12 +66,12 @@ public class WalletEntity {
         this.user = user;
     }
 
-    public BigDecimal getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
-        if (balance.compareTo(BigDecimal.ZERO) < 0) {
+    public void setBalance(Double balance) {
+        if (balance.compareTo(0.0) < 0) {
             throw new IllegalArgumentException("Balance cannot be negative");
         }
         this.balance = balance;

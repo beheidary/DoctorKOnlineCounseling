@@ -9,22 +9,22 @@ public class Price {
 
     private Long id;
     private Long time;
-    private Long cost;
+    private Double cost;
     private PriceStatus priceStatus;
     private State state;
     private String description;
-    private PhysicianEntity doctor;
+    private PhysicianEntity physician;
     private ServicesEntity service;
 
 
-    public Price(Long id, Long time, Long cost, PriceStatus priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service) {
+    public Price(Long id, Long time, Double cost, PriceStatus priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service) {
         this.id = id;
         this.time = time;
         this.cost = cost;
         this.priceStatus = priceStatus;
         this.state = state;
         this.description = description;
-        this.doctor = doctor;
+        this.physician = doctor;
         this.service = service;
     }
 
@@ -45,11 +45,11 @@ public class Price {
         this.time = time;
     }
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
@@ -77,12 +77,12 @@ public class Price {
         this.description = description;
     }
 
-    public PhysicianEntity getDoctor() {
-        return doctor;
+    public PhysicianEntity getPhysician() {
+        return physician;
     }
 
-    public void setDoctor(PhysicianEntity doctor) {
-        this.doctor = doctor;
+    public void setPhysician(PhysicianEntity physician) {
+        this.physician = physician;
     }
 
     public ServicesEntity getService() {
