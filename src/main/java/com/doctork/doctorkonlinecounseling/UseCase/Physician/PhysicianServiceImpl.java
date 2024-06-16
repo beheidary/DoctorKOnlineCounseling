@@ -94,7 +94,7 @@ public class PhysicianServiceImpl implements PhysicianService {
         if(nationalCode == null)
             throw new IdInputException();
 
-        return physicianRepository.fetchPhysician(nationalCode);
+        return physicianRepository.findPhysicianById(nationalCode);
 
     }
 

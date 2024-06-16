@@ -26,6 +26,6 @@ public class PatientServiceImpl implements PatientService {
     public Patient fetchPatient(Long nationalCode) {
         if(nationalCode == null)
             throw new IdInputException();
-        return patientRepository.fetchPatient(nationalCode);
+        return patientRepository.findPatientById(nationalCode);
     }
 }
