@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.domain.Financial;
 
 import com.doctork.doctorkonlinecounseling.domain.Enums.TransactionStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,12 +11,15 @@ public class WalletToBankTransfer {
     private Long id;
     private Wallet wallet;
     private String bankAccountNumber;
-    private BigDecimal amount;
+    private Double amount;
     private LocalDateTime transferDate;
     private TransactionStatus status;
+    private TransactionType type;
 
-    public WalletToBankTransfer(Long id, Wallet wallet, String bankAccountNumber, BigDecimal amount, LocalDateTime transferDate, TransactionStatus status) {
+
+    public WalletToBankTransfer(Long id,TransactionType type, Wallet wallet, String bankAccountNumber, Double amount, LocalDateTime transferDate, TransactionStatus status) {
         this.id = id;
+        this.type = type;
         this.wallet = wallet;
         this.bankAccountNumber = bankAccountNumber;
         setAmount(amount);
@@ -23,8 +27,8 @@ public class WalletToBankTransfer {
         this.status = status;
     }
 
-    public WalletToBankTransfer(Wallet wallet, String bankAccountNumber, BigDecimal amount, TransactionStatus status) {
-        this(null, wallet, bankAccountNumber, amount, LocalDateTime.now(), status);
+    public WalletToBankTransfer(TransactionType type,Wallet wallet, String bankAccountNumber, Double amount, TransactionStatus status) {
+        this(null,type, wallet, bankAccountNumber, amount, LocalDateTime.now(), status);
     }
 
     public WalletToBankTransfer() {
@@ -55,12 +59,12 @@ public class WalletToBankTransfer {
         this.bankAccountNumber = bankAccountNumber;
     }
 
-    public BigDecimal getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+    public void setAmount(Double amount) {
+        if (amount.compareTo(0.0) < 0) {
             throw new IllegalArgumentException("Amount cannot be negative");
         }
         this.amount = amount;
@@ -80,5 +84,13 @@ public class WalletToBankTransfer {
 
     public void setStatus(TransactionStatus status) {
         this.status = status;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 }

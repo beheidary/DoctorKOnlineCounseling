@@ -2,13 +2,11 @@ package com.doctork.doctorkonlinecounseling.UseCase.Financial;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.Financial.WalletRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.Financial.WalletService;
-import com.doctork.doctorkonlinecounseling.database.entities.Financial.WalletEntity;
-import com.doctork.doctorkonlinecounseling.database.jpaRepositories.WalletMySqlRepository;
 import com.doctork.doctorkonlinecounseling.domain.Enums.TransactionStatus;
 import com.doctork.doctorkonlinecounseling.domain.Financial.Wallet;
 import com.doctork.doctorkonlinecounseling.domain.Financial.WalletToWalletTransfer;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 
 import java.math.BigDecimal;
@@ -17,17 +15,14 @@ import java.math.BigDecimal;
 public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository walletRepository;
-    public WalletServiceImpl(WalletRepository walletRepository) {
+    private final WalletTransactionService walletTransactionService;
+    public WalletServiceImpl(WalletRepository walletRepository,WalletTransactionService walletTransactionService) {
         this.walletRepository = walletRepository;
+        this.walletTransactionService = walletTransactionService;
     }
 
-
-
-
-
     @Override
-    @Transactional
-    public void performWalletToWalletTransaction(Long sourceWalletId, Long destinationWalletId, BigDecimal amount) {
+    public void performWalletToWalletTransfer(Long sourceWalletId, Long destinationWalletId, Double amount) {
 
        Wallet sourceWallet = walletRepository.findWalletById(sourceWalletId);
        Wallet destinationWallet = walletRepository.findWalletById(destinationWalletId);
@@ -43,20 +38,13 @@ public class WalletServiceImpl implements WalletService {
         transaction.setStatus(TransactionStatus.PENDING);
         transaction = walletRepository.saveWalletToWalletTransaction(transaction);
 
-        sourceWallet.setBalance(sourceWallet.getBalance().subtract(amount));
-        walletRepository.saveWallet(sourceWallet);
-
-        // Todo Simulate buffer
-        // Todo store this in an intermediate table or service
-
-        destinationWallet.setBalance(destinationWallet.getBalance().add(amount));
-        walletRepository.saveWallet(destinationWallet);
-
-        transaction.setStatus(TransactionStatus.COMPLETED);
-        walletRepository.saveWalletToWalletTransaction(transaction);
-
-        //Todo fail state and rollback
-
+        try {
+            walletTransactionService.executeWalletToWalletTransaction(sourceWallet, destinationWallet, amount);
+            transaction.setStatus(TransactionStatus.COMPLETED);
+            walletRepository.saveWalletToWalletTransaction(transaction);
+        } catch (Exception e) {
+            walletTransactionService.updateTransactionStatus(transaction, TransactionStatus.FAILED);
+        }
 
     }
 }
