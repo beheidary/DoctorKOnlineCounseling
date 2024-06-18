@@ -22,6 +22,17 @@ public class MasterUserInfo {
     @Value("3241751139")
     private Long nationalCode;
 
+    @Value("4")
+    private Long adminWalletId;
+
+    public Long getAdminWalletId() {
+        return adminWalletId;
+    }
+
+    public void setAdminWalletId(Long adminWalletId) {
+        this.adminWalletId = adminWalletId;
+    }
+
     public Long getNationalCode() {
         return nationalCode;
     }

@@ -1,8 +1,9 @@
 package com.doctork.doctorkonlinecounseling.database.repositories;
 
-import com.doctork.doctorkonlinecounseling.boundary.exit.Counseling.OnlineCouneslingRepository;
+import com.doctork.doctorkonlinecounseling.boundary.exit.Counseling.OnlineCounselingRepository;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.CounselingNotfoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PriceNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.Counseling.OnlineCounselingEntity;
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Component
-public class OnlineCounselingRepositoryImpl implements OnlineCouneslingRepository {
+public class OnlineCounselingRepositoryImpl implements OnlineCounselingRepository {
 
 
     private final PriceMySqlRepository priceMySqlRepository;
@@ -80,6 +81,34 @@ public class OnlineCounselingRepositoryImpl implements OnlineCouneslingRepositor
 
         }
 
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public OnlineCounseling findCounseling(Long counselingId) {
+
+        try {
+
+            OnlineCounselingEntity onlineCounselingEntity = onlineCounselingMySqlRepository.findById(counselingId).orElseThrow(CounselingNotfoundException::new);
+
+            return counselingEntityMapper.onlineCounselingEntityToModel(onlineCounselingEntity);
+
+            }catch (QueryTimeoutException ex){
+
+                throw new DatabaseTimeOutException();
+
+            }
+            catch (DataIntegrityViolationException ex){
+
+            throw new InvalidDataException();
+
+        }
+            catch (Exception ex){
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
 
     }
 }

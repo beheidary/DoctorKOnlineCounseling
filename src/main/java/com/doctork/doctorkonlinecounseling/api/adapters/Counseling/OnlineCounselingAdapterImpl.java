@@ -29,4 +29,30 @@ public class OnlineCounselingAdapterImpl implements OnlineCounselingAdapter {
 
         return onlineCounselingOutputDto;
     }
+
+    @Override
+    public OnlineCounselingOutputDto patientApproveCounseling(Long counselingId, String paymentExpirationId) {
+        OnlineCounseling onlineCounseling = onlineCounselingService.patientApproveCounseling(counselingId,paymentExpirationId);
+        OnlineCounselingOutputDto onlineCounselingOutputDto = counselingMapper.onlineCounselingModelToOutputDto(onlineCounseling);
+
+
+        onlineCounselingOutputDto.setPatientId(onlineCounseling.getPatient().getNationalCode());
+        onlineCounselingOutputDto.setPriceId(onlineCounseling.getPrice().getId());
+        onlineCounselingOutputDto.setPhysicianId(onlineCounseling.getPhysician().getNationalCode());
+        onlineCounselingOutputDto.setCreatorUserId(onlineCounseling.getCreatorUser().getId());
+
+        return onlineCounselingOutputDto;
+    }
+
+    @Override
+    public OnlineCounselingOutputDto findCounseling(Long counselingId) {
+        OnlineCounseling onlineCounseling = onlineCounselingService.findCounseling(counselingId);
+        OnlineCounselingOutputDto onlineCounselingOutputDto = counselingMapper.onlineCounselingModelToOutputDto(onlineCounseling);
+        onlineCounselingOutputDto.setPatientId(onlineCounseling.getPatient().getNationalCode());
+        onlineCounselingOutputDto.setPriceId(onlineCounseling.getPrice().getId());
+        onlineCounselingOutputDto.setPhysicianId(onlineCounseling.getPhysician().getNationalCode());
+        onlineCounselingOutputDto.setCreatorUserId(onlineCounseling.getCreatorUser().getId());
+
+        return onlineCounselingOutputDto;
+    }
 }
