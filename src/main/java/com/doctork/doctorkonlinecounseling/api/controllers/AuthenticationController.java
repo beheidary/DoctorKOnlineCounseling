@@ -37,10 +37,10 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/signup/admin")
+    @PostMapping("/signup/")
     @PreAuthorize("hasRole('ROLE_Admin')")
     @SecurityRequirement(name = "security_auth")
-    @Operation(summary = "Admin register")
+    @Operation(summary = "admin and support roles register")
     @ApiResponse(content = { @Content(mediaType = "application/json" , schema = @Schema(implementation = RegisterUserDto.class))})
     public ResponseEntity<UserEntity> AdminRegister(@RequestBody  RegisterUserDto registerUserDto) {
         UserEntity registeredUser = authenticationService.signupAdmin(registerUserDto);
@@ -49,7 +49,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login/admin")
-    @Operation(summary = "Admin Login")
+    @Operation(summary = "admin login")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class)) })
     public ResponseEntity<LoginResponse> authenticate(@RequestBody AdminLoginDto adminloginDto) {
 
@@ -78,7 +78,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/login")
-    @Operation(summary = "User Login")
+    @Operation(summary = "user login")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class)) })
     public ResponseEntity<LoginResponse> authenticateOTP(@RequestBody UserOtpLoginDto userOtpLoginDto) {
 
@@ -106,7 +106,7 @@ public class AuthenticationController {
     }
 
 
-    @GetMapping("/createOtp")
+    @GetMapping("/sendOtp")
     @Operation(summary = "otp request")
     public Map<String,Object> CreateOtp(@RequestParam String phoneNumber){
         Map<String,Object> returnMap=new HashMap<>();

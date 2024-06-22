@@ -83,13 +83,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public void CreateOtp(String phoneNumber) {
 
-        //String otp = Integer.toString((int) (Math.random() * 9000) + 1000);
-        OtpDetailsEntity otpDetailsEntity = new OtpDetailsEntity();
-        otpDetailsEntity.setPhoneNumber(phoneNumber);
-        otpDetailsEntity.setOtpCode("1111");
-        otpDetailsEntity.setIsUsed(false);
-        otpDetailsEntity.setCreateTime(LocalDateTime.now());
-        otpDetailsMySqlRepository.save(otpDetailsEntity);
+        Optional<OtpDetailsEntity> otpDetailsEntityOptional = miscellaneousRepository.findLatestByMobileNumber(phoneNumber);
+        if (otpDetailsEntityOptional.map(detailsEntity -> detailsEntity.getCreateTime().isBefore(LocalDateTime.now().minusMinutes(5))).orElse(true)){
+            OtpDetailsEntity otpDetailsEntity = new OtpDetailsEntity();
+            //String otp = Integer.toString((int) (Math.random() * 9000) + 1000);
+            otpDetailsEntity.setPhoneNumber(phoneNumber);
+            otpDetailsEntity.setOtpCode("1111");
+            otpDetailsEntity.setIsUsed(false);
+            otpDetailsEntity.setCreateTime(LocalDateTime.now());
+            otpDetailsMySqlRepository.save(otpDetailsEntity);
+        }
+
+
     }
 
     public UserEntity authenticate(AdminLoginDto input) {
