@@ -11,6 +11,7 @@ import java.util.UUID;
 @Repository
     public interface UserMySqlRepository extends CrudRepository<UserEntity, UUID> {
         Optional<UserEntity> findByEmail(String email);
+        Optional<UserEntity> findByMobileNumber(String MobileNumber);
 
         UserEntity findUserEntityById (UUID uuid);
 

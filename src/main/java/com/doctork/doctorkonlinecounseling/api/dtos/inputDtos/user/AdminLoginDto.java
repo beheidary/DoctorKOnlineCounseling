@@ -3,7 +3,7 @@ package com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class LoginUserDto {
+public class AdminLoginDto {
     @NotNull
     @NotBlank
     private String email;

@@ -8,7 +8,6 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**",
                                 "/swagger-resources/*","/configuration/ui",
-                                "/v3/api-docs/**","auth/login","elastic/**","/expertise/TopExpertisesPhysicians","/expertise/{lotinName}",
+                                "/v3/api-docs/**","auth/login/admin","auth/createOtp","auth/login","elastic/**","/expertise/TopExpertisesPhysicians","/expertise/{lotinName}",
                                 "/expertise","/miscellaneous/**","/file-management/minio/**").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll()
                         .anyRequest().authenticated()

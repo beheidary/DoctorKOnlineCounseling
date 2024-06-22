@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.database.entities.user;
 
+import cn.hutool.core.date.DateTime;
 import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,6 +42,8 @@ public class UserEntity implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @Column(nullable = false, name = "Login_ByOtp")
+    private Boolean LoginByOPT;
 
     @Transient
     private List<GrantedAuthority> authorities = new ArrayList<>();
@@ -74,6 +77,15 @@ public class UserEntity implements UserDetails {
 
     }
 
+    public UserEntity(String mobileNumber, UserType userType,String password) {
+        this.mobileNumber=mobileNumber;
+        this.email = mobileNumber;
+        this.password = password;
+        this.role = userType;
+        this.LoginByOPT = true;
+        this.setCreatedAt(DateTime.now());
+    }
+
 
     public UUID getId() {
         return id;
@@ -100,6 +112,8 @@ public class UserEntity implements UserDetails {
     }
 
     public String getPassword() {
+        if(LoginByOPT)
+            return "$2a$10$VkYuRyVLKqPsE02sB8HCDu7uLMs39QcWyRPbTvk5EyHQ6JM1mrSPe";
         return password;
     }
 
@@ -163,5 +177,13 @@ public class UserEntity implements UserDetails {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Boolean getLoginByOPT() {
+        return LoginByOPT;
+    }
+
+    public void setLoginByOPT(Boolean loginByOPT) {
+        LoginByOPT = loginByOPT;
     }
 }
