@@ -20,8 +20,12 @@ public class PatientOutputDto {
 
     private LocalDateTime updated_At;
 
-    public PatientOutputDto(Long nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth, LocalDateTime updated_At) {
+    private Boolean profileNecessaryInfoInserted;
+
+
+    public PatientOutputDto(Long nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth,Boolean profileNecessaryInfoInserted, LocalDateTime updated_At) {
         this.nationalCode = nationalCode;
+        this.profileNecessaryInfoInserted = Boolean.TRUE;
         this.gender = gender;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,6 +33,14 @@ public class PatientOutputDto {
         this.updated_At = updated_At;
     }
 
+
+    public Boolean getProfileNecessaryInfoInserted() {
+        return profileNecessaryInfoInserted;
+    }
+
+    public void setProfileNecessaryInfoInserted(Boolean profileNecessaryInfoInserted) {
+        this.profileNecessaryInfoInserted = profileNecessaryInfoInserted;
+    }
 
     public Long getNationalCode() {
         return nationalCode;

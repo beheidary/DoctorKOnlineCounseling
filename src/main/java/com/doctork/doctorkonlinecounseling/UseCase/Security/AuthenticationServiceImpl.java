@@ -7,6 +7,7 @@ import com.doctork.doctorkonlinecounseling.api.mappers.UserMapper;
 import com.doctork.doctorkonlinecounseling.boundary.exit.Financial.WalletRepository;
 import com.doctork.doctorkonlinecounseling.boundary.exit.Miscellaneous.MiscellaneousRepository;
 import com.doctork.doctorkonlinecounseling.boundary.internal.Security.AuthenticationService;
+import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidLoginTypeException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidOtpException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.OtpNotFoundException;
@@ -16,13 +17,10 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.OtpDetailsMy
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.UserMySqlRepository;
 import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,9 +54,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
-    public UserEntity signupAdmin(RegisterUserDto input) {
-        UserEntity userEntity = userMapper.DtoToEntity(input);
-        userEntity.setPassword(passwordEncoder.encode(input.getPassword()));
+    public UserEntity signupAdmin(RegisterUserDto registerUserDto) {
+
+        if(registerUserDto.getRole() == UserType.Physician || registerUserDto.getRole() == UserType.Patient)
+            throw new InvalidDataException();
+
+        UserEntity userEntity = userMapper.DtoToEntity(registerUserDto);
+        userEntity.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         userEntity.setLoginByOPT(Boolean.FALSE);
 
 
@@ -70,8 +72,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return userEntity;
     }
 
-    public UserEntity signupByOTP(String mobileNumber) {
-        UserEntity userEntity = new UserEntity(mobileNumber,UserType.Patient, passwordEncoder.encode(UUID.randomUUID().toString()));
+    public UserEntity signupByOTP(String mobileNumber, UserType userType) {
+
+        if(userType == UserType.Admin || userType == UserType.Support)
+            throw new InvalidDataException();
+
+        UserEntity userEntity = new UserEntity(mobileNumber,userType, passwordEncoder.encode(UUID.randomUUID().toString()));
 
         userEntity = userMySqlRepository.save(userEntity);
         walletRepository.createWallet(userEntity.getId());
@@ -86,9 +92,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<OtpDetailsEntity> otpDetailsEntityOptional = miscellaneousRepository.findLatestByMobileNumber(phoneNumber);
         if (otpDetailsEntityOptional.map(detailsEntity -> detailsEntity.getCreateTime().isBefore(LocalDateTime.now().minusMinutes(5))).orElse(true)){
             OtpDetailsEntity otpDetailsEntity = new OtpDetailsEntity();
-            //String otp = Integer.toString((int) (Math.random() * 9000) + 1000);
+            //String otp = Integer.toString((int) (Math.random() * 90000) + 10000);
             otpDetailsEntity.setPhoneNumber(phoneNumber);
-            otpDetailsEntity.setOtpCode("1111");
+            otpDetailsEntity.setOtpCode("11111");
             otpDetailsEntity.setIsUsed(false);
             otpDetailsEntity.setCreateTime(LocalDateTime.now());
             otpDetailsMySqlRepository.save(otpDetailsEntity);
@@ -132,7 +138,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         Optional<UserEntity> userEntity = userMySqlRepository.findByMobileNumber(userOtpLoginDto.getMobileNumber());
         if (userEntity.isEmpty())
-            userEntity = Optional.ofNullable(signupByOTP(userOtpLoginDto.getMobileNumber()));
+            userEntity = Optional.ofNullable(signupByOTP(userOtpLoginDto.getMobileNumber(),userOtpLoginDto.getRole()));
 
         if (userEntity.map(user -> !user.getLoginByOPT()).orElse(true))
             throw new InvalidLoginTypeException(101,"You cannot Login with Otp", HttpStatus.FORBIDDEN);

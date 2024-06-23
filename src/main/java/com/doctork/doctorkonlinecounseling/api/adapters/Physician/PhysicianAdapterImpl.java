@@ -4,6 +4,8 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician.Physicia
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.PhysicianOutputDto;
 import com.doctork.doctorkonlinecounseling.api.mappers.PhysicianMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.Physician.PhysicianService;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
+import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
@@ -64,6 +66,27 @@ public class PhysicianAdapterImpl implements PhysicianAdapter {
             physicianOutputDtos.add(physicianMapper.modelToOutput(physician));
         }
         return physicianOutputDtos;
+    }
+
+    @Override
+    public PhysicianOutputDto physicianCheckProfile(UserEntity userEntity) {
+        try {
+            Physician physician = physicianService.fetchPhysician(userEntity);
+            PhysicianOutputDto physicianOutputDto = physicianMapper.modelToOutput(physician);
+            if (physicianOutputDto.getPhysicianSystemCode() == null || physicianOutputDto.getFirstName() == null ||
+                    physicianOutputDto.getLastName() == null || physicianOutputDto.getNationalCode() == null)
+                physicianOutputDto.setProfileNecessaryInfoInserted(Boolean.FALSE);
+            return physicianOutputDto;
+
+        }
+        catch (NullPointerException ex) //get error not find physician
+        {
+            Physician physician = new Physician();
+            PhysicianOutputDto physicianOutputDto = physicianMapper.modelToOutput(physician);
+            physicianOutputDto.setProfileNecessaryInfoInserted(Boolean.FALSE);
+            return physicianOutputDto;
+        }
+
     }
 
     @Override

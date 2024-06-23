@@ -21,8 +21,9 @@ public class PhysicianOutputDto {
     private Long nationalCode;
     private Gender gender;
     private State state;
-
     private String mainImage;
+
+    private Boolean profileNecessaryInfoInserted;
 
 
 //    private List<AddressOutputDTO> addresses;
@@ -31,8 +32,9 @@ public class PhysicianOutputDto {
 
 
 
-    public PhysicianOutputDto(String mainImage,Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, String physicianSystemCode, LocalDateTime updated_At, Long id) {
+    public PhysicianOutputDto(String mainImage,Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, String physicianSystemCode,Boolean profileNecessaryInfoInserted, LocalDateTime updated_At, Long id) {
         this.firstName = firstName;
+        this.profileNecessaryInfoInserted = Boolean.TRUE;
         this.mainImage = mainImage;
         this.state =state;
         this.gender = gender;
@@ -98,6 +100,14 @@ public class PhysicianOutputDto {
 
     public EducationLevel getEducationLevel() {
         return educationLevel;
+    }
+
+    public Boolean getProfileNecessaryInfoInserted() {
+        return profileNecessaryInfoInserted;
+    }
+
+    public void setProfileNecessaryInfoInserted(Boolean profileNecessaryInfoInserted) {
+        this.profileNecessaryInfoInserted = profileNecessaryInfoInserted;
     }
 
     public void setEducationLevel(EducationLevel educationLevel) {

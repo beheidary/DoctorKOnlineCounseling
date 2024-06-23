@@ -190,6 +190,32 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
     }
 
+    @Override
+    public Physician findPhysicianByUser(UserEntity userEntity) {
+        try{
+
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByUser(userEntity);
+            return physicianEntityMapper.entityToModelWithExpertise(physicianEntity);
+
+        }catch (QueryTimeoutException ex){
+
+            throw new DatabaseTimeOutException();
+
+        }
+        catch (DataIntegrityViolationException ex){
+
+            throw new InvalidDataException();
+
+        }
+
+        catch (Exception ex){
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
 
     @Override
     public Physician changeStatus(Long nationalCode, PhysicianStatus status) {

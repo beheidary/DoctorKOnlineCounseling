@@ -1,10 +1,8 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.Physician;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician.PhysicianInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician.ExpertiseInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos.TopExpertisesDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.PhysicianOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.ExpertiseOutputDto;
+import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 
@@ -18,6 +16,8 @@ public interface PhysicianAdapter {
     PhysicianOutputDto physicianEditProfile(PhysicianInputDto physicianInputDto , Long nationalCode);
 
     List<PhysicianOutputDto> topPhysician();
+
+    PhysicianOutputDto physicianCheckProfile(UserEntity userEntity);
 
 
     PhysicianOutputDto fetchPhysician(Long nationalCode);

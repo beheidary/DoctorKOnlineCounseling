@@ -31,23 +31,23 @@ public class PhysicianEntity {
 
     @Column(name = "lastName",nullable = false)
     private String lastName;
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "dateOfBirth",nullable = false)
+    @Column(name = "dateOfBirth")
     private LocalDate dateOfBirth;
 
     @Column(name = "businessWeight" , nullable = false)
     private Double businessWeight;
 
-    @Column(name = "gender" , nullable = false)
+    @Column(name = "gender" )
     private Gender gender;
 
-    @Column(name = "educationLevel",nullable = false)
+    @Column(name = "educationLevel")
     private EducationLevel educationLevel;
 
     @UpdateTimestamp
-    @Column(name = "updated_at",nullable = true)
+    @Column(name = "updated_at")
     private LocalDateTime updated_At;
 
     @ManyToMany(cascade = {  }, fetch = FetchType.LAZY)

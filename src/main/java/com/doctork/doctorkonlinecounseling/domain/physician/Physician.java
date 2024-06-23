@@ -50,6 +50,11 @@ public class Physician {
         this.status = status;
         this.user = user;
     }
+    public Physician(){
+        this.state = State.Waiting;
+        this.status = PhysicianStatus.Online;
+
+    }
 
     public Long getNationalCode() {
         return nationalCode;

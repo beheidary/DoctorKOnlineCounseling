@@ -4,6 +4,7 @@ import com.doctork.doctorkonlinecounseling.UseCase.miscellaneous.PhysicianMiscel
 import com.doctork.doctorkonlinecounseling.boundary.exit.Physician.PhysicianRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.Physician.PhysicianService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputException;
 import com.doctork.doctorkonlinecounseling.configuration.RabbitMQConfig.RabbitMQConfig;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.PhysicianMongoRepository;
@@ -95,6 +96,16 @@ public class PhysicianServiceImpl implements PhysicianService {
             throw new IdInputException();
 
         return physicianRepository.findPhysicianById(nationalCode);
+
+    }
+
+    @Override
+    public Physician fetchPhysician(UserEntity userEntity) {
+
+        if(userEntity == null)
+            throw new InputException();
+
+        return physicianRepository.findPhysicianByUser(userEntity);
 
     }
 

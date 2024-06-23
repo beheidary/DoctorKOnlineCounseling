@@ -107,4 +107,29 @@ public class PatientRepositoryImpl implements PatientRepository {
 
     }
     }
+
+    @Override
+    public Patient fetchPatient(UserEntity userEntity) {
+        try{
+
+            PatientEntity patientEntity = patientMySqlRepository.findPatientEntityByUser(userEntity);
+            return patientEntityMapper.entityToModel(patientEntity);
+
+        }catch (QueryTimeoutException ex){
+
+            throw new DatabaseTimeOutException();
+
+        }
+        catch (DataIntegrityViolationException ex){
+
+            throw new InvalidDataException();
+
+        }
+
+        catch (Exception ex){
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
 }

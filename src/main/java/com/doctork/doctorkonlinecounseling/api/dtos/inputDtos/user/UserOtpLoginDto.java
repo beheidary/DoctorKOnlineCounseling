@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user;
 
+import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,9 +14,22 @@ public class UserOtpLoginDto {
     @NotNull
     private String otp;
 
-    public UserOtpLoginDto(String mobileNumber, String otp) {
+    @NotBlank
+    @NotNull
+    private UserType role;
+
+    public UserOtpLoginDto(String mobileNumber, String otp, UserType role) {
         this.mobileNumber = mobileNumber;
         this.otp = otp;
+        this.role = role;
+    }
+
+    public UserType getRole() {
+        return role;
+    }
+
+    public void setRole(UserType role) {
+        this.role = role;
     }
 
     public String getMobileNumber() {

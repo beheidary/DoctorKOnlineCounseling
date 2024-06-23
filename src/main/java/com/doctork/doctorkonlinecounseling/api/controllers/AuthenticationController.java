@@ -1,13 +1,18 @@
 package com.doctork.doctorkonlinecounseling.api.controllers;
 
+import com.doctork.doctorkonlinecounseling.api.adapters.Patient.PatientAdapter;
+import com.doctork.doctorkonlinecounseling.api.adapters.Physician.PhysicianAdapter;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.AdminLoginDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.RegisterUserDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.user.UserOtpLoginDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.PhysicianOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.user.LoginResponse;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.user.PatientOutputDto;
 import com.doctork.doctorkonlinecounseling.boundary.internal.Security.AuthenticationService;
 import com.doctork.doctorkonlinecounseling.boundary.internal.Security.JwtService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 
+import com.doctork.doctorkonlinecounseling.domain.Enums.UserType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,7 +24,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +36,16 @@ import java.util.Map;
 @RestController
 public class AuthenticationController {
     private final JwtService jwtService;
-
+    private final UserDetailsService userDetailsService;
+    private final PhysicianAdapter physicianAdapter;
+    private final PatientAdapter patientAdapter;
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
+    public AuthenticationController(JwtService jwtService,PatientAdapter patientAdapter,PhysicianAdapter physicianAdapter,UserDetailsService userDetailsService, AuthenticationService authenticationService) {
         this.jwtService = jwtService;
+        this.patientAdapter = patientAdapter;
+        this.physicianAdapter = physicianAdapter;
+        this.userDetailsService = userDetailsService;
         this.authenticationService = authenticationService;
     }
 
@@ -120,6 +132,27 @@ public class AuthenticationController {
         }
 
         return returnMap;
+    }
+
+
+    @GetMapping("/returnProfile")
+    @Operation(summary = "check profile with token")
+    public DeferredResult<ResponseEntity<?>> checkProfile(@RequestParam String JwtToken){
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        String user = jwtService.extractUsername(JwtToken);
+        UserEntity userEntity = (UserEntity) userDetailsService.loadUserByUsername(user);
+        if (userEntity.getRole() == UserType.Physician) {
+            PhysicianOutputDto physicianOutputDto = physicianAdapter.physicianCheckProfile(userEntity);
+            result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianOutputDto));
+            return result;
+        } else if ((userEntity.getRole() == UserType.Patient)){
+            PatientOutputDto patientOutputDto = patientAdapter.patientCheckProfile(userEntity);
+            result.setResult(ResponseEntity.status(HttpStatus.OK).body(patientOutputDto));
+            return result;
+        }
+        return null;
     }
 
 }

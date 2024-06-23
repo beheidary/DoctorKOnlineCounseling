@@ -37,6 +37,10 @@ public class Patient {
         this.updated_At = updated_At;
     }
 
+    public Patient(){
+
+    }
+
 
     public Long getNationalCode() {
         return nationalCode;
