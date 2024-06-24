@@ -90,7 +90,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void CreateOtp(String phoneNumber) {
 
         Optional<OtpDetailsEntity> otpDetailsEntityOptional = miscellaneousRepository.findLatestByMobileNumber(phoneNumber);
-        if (otpDetailsEntityOptional.map(detailsEntity -> detailsEntity.getCreateTime().isBefore(LocalDateTime.now().minusMinutes(5))).orElse(true)){
+        if (otpDetailsEntityOptional.map(detailsEntity -> detailsEntity.getCreateTime().isBefore(LocalDateTime.now().minusMinutes(1)) || detailsEntity.getIsUsed()).orElse(true)){
             OtpDetailsEntity otpDetailsEntity = new OtpDetailsEntity();
             //String otp = Integer.toString((int) (Math.random() * 90000) + 10000);
             otpDetailsEntity.setPhoneNumber(phoneNumber);
