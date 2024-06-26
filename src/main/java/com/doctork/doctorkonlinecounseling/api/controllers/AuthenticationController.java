@@ -34,7 +34,7 @@ import java.util.Map;
 @RequestMapping("/auth")
 @EnableMethodSecurity
 @RestController
-public class AuthenticationController {
+public class AuthenticationController extends BaseController{
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final PhysicianAdapter physicianAdapter;
@@ -137,18 +137,18 @@ public class AuthenticationController {
 
     @GetMapping("/returnProfile")
     @Operation(summary = "check profile with token")
-    public DeferredResult<ResponseEntity<?>> checkProfile(@RequestParam String JwtToken){
+    @PreAuthorize("hasRole('ROLE_Patient')")
+    @SecurityRequirement(name = "security_auth")
+    public DeferredResult<ResponseEntity<?>> checkProfile(){
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        String user = jwtService.extractUsername(JwtToken);
-        UserEntity userEntity = (UserEntity) userDetailsService.loadUserByUsername(user);
-        if (userEntity.getRole() == UserType.Physician) {
-            PhysicianOutputDto physicianOutputDto = physicianAdapter.physicianCheckProfile(userEntity);
+        if (getCurrentUser().getRole() == UserType.Physician) {
+            PhysicianOutputDto physicianOutputDto = physicianAdapter.physicianCheckProfile(getCurrentUser());
             result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianOutputDto));
             return result;
-        } else if ((userEntity.getRole() == UserType.Patient)){
-            PatientOutputDto patientOutputDto = patientAdapter.patientCheckProfile(userEntity);
+        } else if ((getCurrentUser().getRole() == UserType.Patient)){
+            PatientOutputDto patientOutputDto = patientAdapter.patientCheckProfile(getCurrentUser());
             result.setResult(ResponseEntity.status(HttpStatus.OK).body(patientOutputDto));
             return result;
         }
