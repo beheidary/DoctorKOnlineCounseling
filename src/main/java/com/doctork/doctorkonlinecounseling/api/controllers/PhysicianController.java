@@ -58,7 +58,7 @@ public class PhysicianController extends BaseController {
 
     }
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @GetMapping(value = "physician/")
+    @GetMapping(value = "physician")
     @Operation(summary = "Physician Get Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
     public @ResponseBody
@@ -76,12 +76,12 @@ public class PhysicianController extends BaseController {
 
     }
 
-    @PostMapping(value = "physician/")
+    @PostMapping(value = "physician")
     @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Complete Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json") })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> PhysicianCop(@RequestBody @Validated PhysicianInputDto physicianInputDto)
+    DeferredResult<ResponseEntity<?>> PhysicianCop(@RequestBody PhysicianInputDto physicianInputDto)
     {
 
 
@@ -95,7 +95,7 @@ public class PhysicianController extends BaseController {
 
     }
 
-    @PutMapping(value = "physician/")
+    @PutMapping(value = "physician")
     @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Edit Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })

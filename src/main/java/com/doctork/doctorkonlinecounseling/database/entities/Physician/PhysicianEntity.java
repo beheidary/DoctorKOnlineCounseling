@@ -2,6 +2,7 @@ package com.doctork.doctorkonlinecounseling.database.entities.Physician;
 
 
 import com.doctork.doctorkonlinecounseling.database.entities.Expertise.ExpertiseEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
@@ -43,6 +44,8 @@ public class PhysicianEntity {
     @Column(name = "gender" )
     private Gender gender;
 
+
+
     @Column(name = "educationLevel")
     private EducationLevel educationLevel;
 
@@ -53,6 +56,14 @@ public class PhysicianEntity {
     @ManyToMany(cascade = {  }, fetch = FetchType.LAZY)
     @JoinTable(name = "physician_expertise", joinColumns = @JoinColumn(name = "physician_id"), inverseJoinColumns = @JoinColumn(name = "expertise_id"))
     private Set<ExpertiseEntity> expertises = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "physician_sickness",
+            joinColumns = @JoinColumn(name = "phisician_id"),
+            inverseJoinColumns = @JoinColumn(name = "sickess_id")
+    )
+    private Set<SicknessEntity> sicknessEntities = new HashSet<>();
 
     @Column(name = "physicianSystemCode", nullable = false)
     private String physicianSystemCode;
@@ -70,32 +81,79 @@ public class PhysicianEntity {
     @Column(name = "mainImage")
     private String mainImage;
 
+    @Column(name = "bankAccountNumber")
+    private String bankAccountNumber;
+    @Column(name = "bankCardNumber")
+    private String bankCardNumber;
+    @Column(name = "bankShebaNumber")
+    private String bankShebaNumber;
+
+
+
+
 
 
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(State state,String mainImage, Gender gender, Long nationalCode, String description, String firstName, String lastName, LocalDate dateOfBirth, Double businessWeight, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, String physicianSystemCode, PhysicianStatus status, UserEntity user) {
+    public PhysicianEntity(Long nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknessEntities, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
-        this.mainImage = mainImage;
-        this.state = state;
-        this.gender = gender;
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
         this.dateOfBirth = dateOfBirth;
         this.businessWeight = businessWeight;
+        this.gender = gender;
         this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;
+        this.sicknessEntities = sicknessEntities;
         this.physicianSystemCode = physicianSystemCode;
         this.status = status;
+        this.state = state;
         this.user = user;
+        this.mainImage = mainImage;
+        this.bankAccountNumber = bankAccountNumber;
+        this.bankCardNumber = bankCardNumber;
+        this.bankShebaNumber = bankShebaNumber;
     }
 
     public PhysicianEntity() {
 
     }
+
+    public Set<SicknessEntity> getSicknessEntities() {
+        return sicknessEntities;
+    }
+
+    public void setSicknessEntities(Set<SicknessEntity> sicknessEntities) {
+        this.sicknessEntities = sicknessEntities;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankShebaNumber() {
+        return bankShebaNumber;
+    }
+
+    public void setBankShebaNumber(String bankShebaNumber) {
+        this.bankShebaNumber = bankShebaNumber;
+    }
+
     public String getPhysicianSystemCode() {
         return physicianSystemCode;
     }

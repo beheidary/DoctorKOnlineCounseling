@@ -1,14 +1,18 @@
 package com.doctork.doctorkonlinecounseling.domain.physician;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.user.User;
+import jakarta.persistence.Column;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Physician {
@@ -32,24 +36,34 @@ public class Physician {
     private String mainImage;
 
     private Gender gender;
+    private String bankAccountNumber;
+    private String bankCardNumber;
+    private String bankShebaNumber;
+    private Set<Sickness> sicknesses;
 
-    public Physician(State state,String mainImage,Gender gender, Long nationalCode, String description, String firstName, Double businessWeight, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, PhysicianStatus status, User user) {
+
+    public Physician(Long nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses) {
         this.nationalCode = nationalCode;
-        this.mainImage=mainImage;
-        this.state = state;
-        this.gender = gender;
-        this.description = description;
         this.firstName = firstName;
+        this.description = description;
         this.lastName = lastName;
+        this.state = state;
         this.dateOfBirth = dateOfBirth;
         this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;
-        this.businessWeight = businessWeight;
         this.physicianSystemCode = physicianSystemCode;
+        this.businessWeight = businessWeight;
         this.status = status;
         this.user = user;
+        this.mainImage = mainImage;
+        this.gender = gender;
+        this.bankAccountNumber = bankAccountNumber;
+        this.bankCardNumber = bankCardNumber;
+        this.bankShebaNumber = bankShebaNumber;
+        this.sicknesses = sicknesses;
     }
+
     public Physician(){
         this.state = State.Waiting;
         this.status = PhysicianStatus.Online;
@@ -174,5 +188,37 @@ public class Physician {
 
     public void setBusinessWeight(Double businessWeight) {
         this.businessWeight = businessWeight;
+    }
+
+    public Set<Sickness> getSicknesses() {
+        return sicknesses;
+    }
+
+    public void setSicknesses(Set<Sickness> sicknesses) {
+        this.sicknesses = sicknesses;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankShebaNumber() {
+        return bankShebaNumber;
+    }
+
+    public void setBankShebaNumber(String bankShebaNumber) {
+        this.bankShebaNumber = bankShebaNumber;
     }
 }

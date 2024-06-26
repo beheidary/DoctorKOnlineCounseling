@@ -16,31 +16,26 @@ public class PhysicianInputDto {
 
 
     @NotNull
-    @NotBlank
     private String firstName;
 
     @NotNull
-    @NotBlank
     private String lastName;
     @NotNull
     @NotBlank
     private Long nationalCode;
 
 
-    @NotNull
     private String description;
 
-    @NotNull
-    @Past
+
     private LocalDate dateOfBirth;
 
-    @NotNull
     private EducationLevel educationLevel;
 
     @NotNull
     private String physicianSystemCode;
 
-    @NotNull
+
     private Gender gender;
 
     private String mainImage;
@@ -57,7 +52,12 @@ public class PhysicianInputDto {
         this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
     }
-
+    public PhysicianInputDto(Long nationalCode,String firstName, String lastName,String physicianSystemCode) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nationalCode = nationalCode;
+        this.physicianSystemCode = physicianSystemCode;
+    }
 
     public String getFirstName() {
         return firstName;
