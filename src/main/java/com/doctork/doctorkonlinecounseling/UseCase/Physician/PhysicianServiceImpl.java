@@ -38,16 +38,13 @@ public class PhysicianServiceImpl implements PhysicianService {
     }
 
     @Override
-    public Physician PhysicianCompleteProfile(Physician physician , Long nationalCode) {
+    public Physician PhysicianCompleteProfile(Physician physician) {
 
-        if(nationalCode == null)
-            throw new IdInputException();
-
-        physician = physicianRepository.PhysicianCompleteProfile(physician , nationalCode);
+        physician = physicianRepository.PhysicianCompleteProfile(physician);
 
         CostumeMessage message = new CostumeMessage();
         message.setMessageType(MessageType.addDocs);
-        message.setNationalCode(nationalCode);
+        message.setNationalCode(physician.getNationalCode());
         message.setTimestamp(System.currentTimeMillis());
         message.setStatus(physician.getStatus());
         message.setState(physician.getState());
@@ -65,14 +62,12 @@ public class PhysicianServiceImpl implements PhysicianService {
     }
 
     @Override
-    public Physician PhysicianEditProfile(Physician physician , Long nationalCode) {
+    public Physician PhysicianEditProfile(Physician physician) {
 
-        if(nationalCode == null)
-            throw new IdInputException();
         Long tokenNationalCode =((UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
-        if (!nationalCode.equals(tokenNationalCode))
+        if (!physician.getNationalCode().equals(tokenNationalCode))
             throw new AccessDeniedException("You do not have the required access");
-        physician = physicianRepository.PhysicianEditProfile(physician , nationalCode);
+        physician = physicianRepository.PhysicianEditProfile(physician);
 
 //        Todo add message for change properties
 //        CostumeMessage message = new CostumeMessage(MessageType.changeStatus,nationalCode,System.currentTimeMillis(),status);

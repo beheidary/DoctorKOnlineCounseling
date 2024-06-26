@@ -26,7 +26,7 @@ import java.util.List;
 @EnableMethodSecurity
 @RequestMapping("/")
 @SecurityRequirement(name = "security_auth")
-public class PhysicianController {
+public class PhysicianController extends BaseController {
 
 
 
@@ -57,19 +57,18 @@ public class PhysicianController {
         return result;
 
     }
-
-    @PostMapping(value = "physician/{nationalCode}")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @Operation(summary = "Complete Physician Profile")
-    @ApiResponse(content = { @Content(mediaType = "application/json") })
+    @GetMapping(value = "physician/")
+    @Operation(summary = "Physician Get Profile")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> PhysicianCop(@PathVariable Long nationalCode, @RequestBody @Validated PhysicianInputDto physicianInputDto)
+    DeferredResult<ResponseEntity<?>> PhysicianGetProfile()
     {
 
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        PhysicianOutputDto physicianOutputDto = physicianAdapter.physicianCompleteProfile(physicianInputDto, nationalCode);
+        PhysicianOutputDto physicianOutputDto = physicianAdapter.fetchPhysician(getCurrentUser());
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianOutputDto));
 
@@ -77,17 +76,36 @@ public class PhysicianController {
 
     }
 
-    @PutMapping(value = "physician/{nationalCode}")
+    @PostMapping(value = "physician/")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @Operation(summary = "Complete Physician Profile")
+    @ApiResponse(content = { @Content(mediaType = "application/json") })
+    public @ResponseBody
+    DeferredResult<ResponseEntity<?>> PhysicianCop(@RequestBody @Validated PhysicianInputDto physicianInputDto)
+    {
+
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        PhysicianOutputDto physicianOutputDto = physicianAdapter.physicianCompleteProfile(physicianInputDto);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianOutputDto));
+
+        return result;
+
+    }
+
+    @PutMapping(value = "physician/")
     @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Edit Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> PhysicianEp(@PathVariable Long nationalCode, @RequestBody @Validated PhysicianInputDto physicianInputDto)
+    DeferredResult<ResponseEntity<?>> PhysicianEp( @RequestBody @Validated PhysicianInputDto physicianInputDto)
     {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        PhysicianOutputDto physicianOutputDto = physicianAdapter.physicianEditProfile(physicianInputDto, nationalCode);
+        PhysicianOutputDto physicianOutputDto = physicianAdapter.physicianEditProfile(physicianInputDto);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianOutputDto));
 

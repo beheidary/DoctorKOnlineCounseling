@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface PhysicianRepository {
 
-    Physician PhysicianCompleteProfile(Physician physician,Long nationalCode);
-    Physician PhysicianEditProfile(Physician physician , Long nationalCode);
+    Physician PhysicianCompleteProfile(Physician physician);
+    Physician PhysicianEditProfile(Physician physician);
     List<Physician> topPhysician();
     Physician findPhysicianById (Long nationalCode);
 

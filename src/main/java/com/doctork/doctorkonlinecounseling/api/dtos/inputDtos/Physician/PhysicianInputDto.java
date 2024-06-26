@@ -22,6 +22,10 @@ public class PhysicianInputDto {
     @NotNull
     @NotBlank
     private String lastName;
+    @NotNull
+    @NotBlank
+    private Long nationalCode;
+
 
     @NotNull
     private String description;
@@ -42,10 +46,11 @@ public class PhysicianInputDto {
     private String mainImage;
 
 
-    public PhysicianInputDto(String mainImage,Gender gender, String description, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode) {
+    public PhysicianInputDto(Long nationalCode,String mainImage,Gender gender, String description, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode) {
         this.firstName = firstName;
         this.mainImage = mainImage;
         this.gender = gender;
+        this.nationalCode = nationalCode;
         this.description = description;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -112,6 +117,14 @@ public class PhysicianInputDto {
 
     public String getPhysicianSystemCode() {
         return physicianSystemCode;
+    }
+
+    public Long getNationalCode() {
+        return nationalCode;
+    }
+
+    public void setNationalCode(Long nationalCode) {
+        this.nationalCode = nationalCode;
     }
 
     public void setPhysicianSystemCode(String physicianSystemCode) {

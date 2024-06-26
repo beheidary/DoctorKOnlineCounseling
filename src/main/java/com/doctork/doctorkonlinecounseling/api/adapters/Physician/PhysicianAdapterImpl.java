@@ -30,28 +30,26 @@ public class PhysicianAdapterImpl implements PhysicianAdapter {
 
 
     @Override
-    public PhysicianOutputDto physicianCompleteProfile(PhysicianInputDto physicianInputDto , Long nationalCode) {
+    public PhysicianOutputDto physicianCompleteProfile(PhysicianInputDto physicianInputDto) {
 
         Physician physician = physicianMapper.inputToModel(physicianInputDto);
-
-        physician.setNationalCode(nationalCode);
         physician.setBusinessWeight(0.01);
         physician.setStatus(PhysicianStatus.Offline);
         physician.setState(State.Waiting);
 
-        physician = physicianService.PhysicianCompleteProfile(physician, nationalCode);
+        physician = physicianService.PhysicianCompleteProfile(physician);
 
         return physicianMapper.modelToOutput(physician);
 
     }
 
     @Override
-    public PhysicianOutputDto physicianEditProfile(PhysicianInputDto physicianInputDto, Long nationalCode) {
+    public PhysicianOutputDto physicianEditProfile(PhysicianInputDto physicianInputDto) {
 
         Physician physician = physicianMapper.inputToModel(physicianInputDto);
         physician.setState(State.Waiting);
 
-        physician = physicianService.PhysicianEditProfile(physician , nationalCode);
+        physician = physicianService.PhysicianEditProfile(physician);
 
         return physicianMapper.modelToOutput(physician);
 
@@ -94,6 +92,11 @@ public class PhysicianAdapterImpl implements PhysicianAdapter {
 
 
         return physicianMapper.modelToOutput(physicianService.fetchPhysician(nationalCode));
+    }
+    public PhysicianOutputDto fetchPhysician(UserEntity userEntity) {
+
+
+        return physicianMapper.modelToOutput(physicianService.fetchPhysician(userEntity));
     }
 
 

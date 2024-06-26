@@ -11,9 +11,9 @@ import java.util.List;
 public interface PhysicianAdapter {
 
 
-    PhysicianOutputDto physicianCompleteProfile(PhysicianInputDto physicianInputDto, Long nationalCode);
+    PhysicianOutputDto physicianCompleteProfile(PhysicianInputDto physicianInputDto);
 
-    PhysicianOutputDto physicianEditProfile(PhysicianInputDto physicianInputDto , Long nationalCode);
+    PhysicianOutputDto physicianEditProfile(PhysicianInputDto physicianInputDto);
 
     List<PhysicianOutputDto> topPhysician();
 
@@ -21,15 +21,11 @@ public interface PhysicianAdapter {
 
 
     PhysicianOutputDto fetchPhysician(Long nationalCode);
-
+    PhysicianOutputDto fetchPhysician(UserEntity userEntity);
 
 
     PhysicianOutputDto changeStatus (Long nationalCode , PhysicianStatus status);
     PhysicianOutputDto changeState (Long nationalCode , State state);
-
-
-
-
 
 
 }

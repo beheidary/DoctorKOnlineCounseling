@@ -70,14 +70,14 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     }
 
     @Override
-    public Physician PhysicianCompleteProfile(Physician physician, Long nationalCode) {
+    public Physician PhysicianCompleteProfile(Physician physician) {
 
         try{
 
 
             UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            if (physicianMySqlRepository.findPhysicianEntityByNationalCode(nationalCode)== null && physicianMySqlRepository.findPhysicianEntityByUser(userEntity) == null ){
+            if (physicianMySqlRepository.findPhysicianEntityByNationalCode(physician.getNationalCode())== null && physicianMySqlRepository.findPhysicianEntityByUser(userEntity) == null ){
 
                 if(Objects.equals(userEntity.getRole().toString(), "Physician")){
                     PhysicianEntity physicianEntity = physicianEntityMapper.modelToEntity(physician);
@@ -123,11 +123,11 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
     @Override
     @Transactional
-    public Physician PhysicianEditProfile(Physician physician , Long nationalCode) {
+    public Physician PhysicianEditProfile(Physician physician) {
 
         try{
 
-            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(nationalCode).orElseThrow(PhysicianNotFoundException::new);
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physician.getNationalCode()).orElseThrow(PhysicianNotFoundException::new);
 
 
                 physicianEntity.setDateOfBirth(physician.getDateOfBirth());
@@ -191,6 +191,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Physician findPhysicianByUser(UserEntity userEntity) {
         try{
 
