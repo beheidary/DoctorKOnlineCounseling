@@ -22,7 +22,6 @@ public class Physician {
 
     private String description;
     private String lastName;
-
     private State state;
     private LocalDate dateOfBirth;
     private EducationLevel educationLevel;

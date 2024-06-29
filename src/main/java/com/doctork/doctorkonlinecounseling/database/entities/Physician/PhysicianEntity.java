@@ -35,7 +35,7 @@ public class PhysicianEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "dateOfBirth")
+    @Column(name = "dateOfBirth" , nullable = true)
     private LocalDate dateOfBirth;
 
     @Column(name = "businessWeight" , nullable = false)
@@ -75,7 +75,7 @@ public class PhysicianEntity {
     private State state;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id" , nullable = false)
     private UserEntity user;
 
     @Column(name = "mainImage")

@@ -70,6 +70,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     }
 
     @Override
+    @Transactional
     public Physician PhysicianCompleteProfile(Physician physician) {
 
         try{

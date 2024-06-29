@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -39,6 +40,10 @@ public class PhysicianInputDto {
     private Gender gender;
 
     private String mainImage;
+
+    public PhysicianInputDto() {
+    }
+
 
 
     public PhysicianInputDto(Long nationalCode,String mainImage,Gender gender, String description, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode) {
