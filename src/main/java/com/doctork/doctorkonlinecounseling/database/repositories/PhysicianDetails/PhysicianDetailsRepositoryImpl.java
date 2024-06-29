@@ -4,12 +4,14 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.Physic
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.SicknessNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.SicknessMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianDetailsEntityMapper;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -20,6 +22,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -69,6 +72,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     try {
         PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
         physicianEntity.setSicknessEntities(physicianDetailsEntityMapper.sicknessModelToEntity(sickness));
+        physicianMySqlRepository.save(physicianEntity);
         return sickness;
     } catch (
     QueryTimeoutException ex) {
@@ -94,7 +98,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
             CriteriaQuery<SicknessEntity> cq = cb.createQuery(SicknessEntity.class);
             Root<SicknessEntity> root = cq.from(SicknessEntity.class);
 
-            Predicate approvedStatePredicate = cb.equal(root.get("state"), "Approved");
+            Predicate approvedStatePredicate = cb.equal(root.get("state"), State.Approved);
             cq.where(approvedStatePredicate);
 
             List<SicknessEntity> resultList = entityManager.createQuery(cq).getResultList();
@@ -119,6 +123,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Set<Sickness> allPhysicianSicknesses(Long physicianId) {
 
         try {
@@ -138,6 +143,29 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
         throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
     }
+    }
+
+    @Override
+    public void sicknessChangeState(Long sicknessId, State state) {
+        try {
+
+            SicknessEntity sicknessEntity = sicknessMySqlRepository.findById(sicknessId).orElseThrow(SicknessNotFoundException::new);
+            sicknessEntity.setState(state);
+            sicknessMySqlRepository.save(sicknessEntity);
+        }catch (
+                QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+
+        } catch (
+                DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
     }
 
 }

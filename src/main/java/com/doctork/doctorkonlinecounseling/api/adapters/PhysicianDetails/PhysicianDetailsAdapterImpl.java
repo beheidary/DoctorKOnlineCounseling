@@ -61,4 +61,9 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         return physicianDetailsMapper.sicknessModelToDto(physicianDetailsService.allPhysicianSicknesses(physician.getNationalCode()));
     }
 
+    @Override
+    public void sicknessChangeState(Long sicknessId, State state) {
+        physicianDetailsService.sicknessChangeState(sicknessId,state);
+    }
+
 }

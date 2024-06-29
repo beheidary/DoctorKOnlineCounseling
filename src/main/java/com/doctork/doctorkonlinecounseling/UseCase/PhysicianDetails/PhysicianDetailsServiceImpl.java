@@ -3,6 +3,7 @@ package com.doctork.doctorkonlinecounseling.UseCase.PhysicianDetails;
 import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.PhysicianDetailsRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import org.springframework.stereotype.Service;
 import java.util.Set;
@@ -39,5 +40,13 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
         if (physicianId == null)
             throw new IdInputException();
         return physicianDetailsRepository.allPhysicianSicknesses(physicianId);
+    }
+
+    @Override
+    public void sicknessChangeState(Long sicknessId, State state) {
+        if (sicknessId == null)
+            throw new IdInputException();
+
+        physicianDetailsRepository.sicknessChangeState(sicknessId,state);
     }
 }

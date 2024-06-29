@@ -1,5 +1,6 @@
 package com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails;
 
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 
 import java.util.List;
@@ -12,5 +13,7 @@ public interface PhysicianDetailsRepository {
 
     Set<Sickness> allSicknesses();
     Set<Sickness> allPhysicianSicknesses(Long physicianId);
+
+    void sicknessChangeState (Long sicknessId , State state);
 
 }

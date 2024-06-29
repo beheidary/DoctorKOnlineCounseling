@@ -4,6 +4,7 @@ import com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails.Physici
 import com.doctork.doctorkonlinecounseling.api.controllers.BaseController;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -82,5 +83,14 @@ public class PhysicianDetailsController extends BaseController {
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(sicknessOutputDtos));
 
         return result;
+    }
+
+    @Operation(summary = "Sickness change state")
+    // Todo change Authorize To Support Role
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping(value = "sickness/changeState")
+    public ResponseEntity<Void> sicknessChangeState(@RequestParam Long sicknessId , State state ) {
+        physicianDetailsAdapter.sicknessChangeState(sicknessId,state);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

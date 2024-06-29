@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -31,6 +32,8 @@ public class PhysicianInputDto {
 
     private LocalDate dateOfBirth;
 
+
+
     private EducationLevel educationLevel;
 
     @NotNull
@@ -41,27 +44,59 @@ public class PhysicianInputDto {
 
     private String mainImage;
 
+    private String bankAccountNumber;
+    private String bankCardNumber;
+    private String bankShebaNumber;
+
+
     public PhysicianInputDto() {
     }
 
 
-
-    public PhysicianInputDto(Long nationalCode,String mainImage,Gender gender, String description, String firstName, String lastName, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode) {
+    public PhysicianInputDto(String firstName, String lastName, Long nationalCode, String description, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode, Gender gender, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.firstName = firstName;
-        this.mainImage = mainImage;
-        this.gender = gender;
+        this.lastName = lastName;
         this.nationalCode = nationalCode;
         this.description = description;
-        this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
+        this.gender = gender;
+        this.mainImage = mainImage;
+        this.bankAccountNumber = bankAccountNumber;
+        this.bankCardNumber = bankCardNumber;
+        this.bankShebaNumber = bankShebaNumber;
     }
-    public PhysicianInputDto(Long nationalCode,String firstName, String lastName,String physicianSystemCode) {
+
+    public PhysicianInputDto(Long nationalCode, String firstName, String lastName, String physicianSystemCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
         this.physicianSystemCode = physicianSystemCode;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankShebaNumber() {
+        return bankShebaNumber;
+    }
+
+    public void setBankShebaNumber(String bankShebaNumber) {
+        this.bankShebaNumber = bankShebaNumber;
     }
 
     public String getFirstName() {

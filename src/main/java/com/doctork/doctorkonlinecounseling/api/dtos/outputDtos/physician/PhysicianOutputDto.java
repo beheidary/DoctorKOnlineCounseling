@@ -25,30 +25,59 @@ public class PhysicianOutputDto {
 
     private Boolean profileNecessaryInfoInserted;
 
+    private String bankAccountNumber;
+    private String bankCardNumber;
+    private String bankShebaNumber;
+
+
+
 
 //    private List<AddressOutputDTO> addresses;
 //    private UUID userId;
 
 
-
-
-    public PhysicianOutputDto(String mainImage,Gender gender, State state, String description, String firstName, PhysicianStatus status, String lastName, EducationLevel educationLevel, String physicianSystemCode,Boolean profileNecessaryInfoInserted, LocalDateTime updated_At, Long id) {
+    public PhysicianOutputDto(String firstName, String lastName, String description, EducationLevel educationLevel, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, Long nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.firstName = firstName;
-        this.profileNecessaryInfoInserted = Boolean.TRUE;
-        this.mainImage = mainImage;
-        this.state =state;
-        this.gender = gender;
-        this.description = description;
         this.lastName = lastName;
-        this.status = status;
+        this.description = description;
         this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
         this.updated_At = updated_At;
-        this.nationalCode = id;
-//        this.addresses = addresses;
-//        this.userId = userId;
+        this.status = status;
+        this.nationalCode = nationalCode;
+        this.gender = gender;
+        this.state = state;
+        this.mainImage = mainImage;
+        this.profileNecessaryInfoInserted = profileNecessaryInfoInserted;
+        this.bankAccountNumber = bankAccountNumber;
+        this.bankCardNumber = bankCardNumber;
+        this.bankShebaNumber = bankShebaNumber;
     }
 
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankShebaNumber() {
+        return bankShebaNumber;
+    }
+
+    public void setBankShebaNumber(String bankShebaNumber) {
+        this.bankShebaNumber = bankShebaNumber;
+    }
 
     public String getFirstName() {
         return firstName;
