@@ -11,7 +11,7 @@ public class BillExpiredException extends ExpirationException{
 
     public BillExpiredException()
     {
-        super(87,"Bill.Expired", HttpStatus.BAD_REQUEST);
+        super(51,"Bill.Expired", HttpStatus.BAD_REQUEST);
     }
 
 }

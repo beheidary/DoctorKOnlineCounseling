@@ -76,9 +76,10 @@ public class OnlineCounselingRepositoryImpl implements OnlineCounselingRepositor
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
 
@@ -105,9 +106,10 @@ public class OnlineCounselingRepositoryImpl implements OnlineCounselingRepositor
 
         }
             catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
     }

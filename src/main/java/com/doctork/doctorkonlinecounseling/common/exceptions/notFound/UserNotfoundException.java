@@ -12,7 +12,7 @@ public class UserNotfoundException extends NotFoundException{
 
     public UserNotfoundException()
     {
-        super(46,"User.NotFound", HttpStatus.BAD_REQUEST);
+        super(88,"User.NotFound", HttpStatus.BAD_REQUEST);
     }
 
 

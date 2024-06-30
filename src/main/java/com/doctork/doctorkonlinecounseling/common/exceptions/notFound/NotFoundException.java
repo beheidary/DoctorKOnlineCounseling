@@ -14,7 +14,7 @@ public class NotFoundException extends BaseException {
 
     public NotFoundException()
     {
-        super(8,"Not.Found", HttpStatus.BAD_REQUEST);
+        super(80,"Not.Found", HttpStatus.BAD_REQUEST);
     }
 
 }

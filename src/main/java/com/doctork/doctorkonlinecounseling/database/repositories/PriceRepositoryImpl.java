@@ -78,9 +78,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
     }
 
@@ -115,9 +116,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
     }
@@ -152,9 +154,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
     }
 
@@ -192,9 +195,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
     }
 
@@ -219,9 +223,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
 
@@ -251,9 +256,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
     }
 

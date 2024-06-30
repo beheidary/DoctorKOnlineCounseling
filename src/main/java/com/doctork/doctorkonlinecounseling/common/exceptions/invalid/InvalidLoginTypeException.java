@@ -11,7 +11,7 @@ public class InvalidLoginTypeException extends InvalidException{
 
     public InvalidLoginTypeException()
     {
-        super(101,"Invalid Login type", HttpStatus.FORBIDDEN);
+        super(72,"Invalid Login type", HttpStatus.FORBIDDEN);
     }
 
 

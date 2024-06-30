@@ -12,7 +12,7 @@ public class InvalidOtpException extends InvalidException{
 
     public InvalidOtpException()
     {
-        super(101,"Otp.Invalid or Expired", HttpStatus.BAD_REQUEST);
+        super(73,"Otp.Invalid or Expired", HttpStatus.BAD_REQUEST);
     }
 
 

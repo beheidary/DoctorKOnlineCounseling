@@ -12,7 +12,7 @@ public class ExpirationException extends BaseException {
 
     public ExpirationException()
     {
-        super(8,"Expired", HttpStatus.BAD_REQUEST);
+        super(50,"Expired", HttpStatus.BAD_REQUEST);
     }
 
 

@@ -13,7 +13,7 @@ public class OtpNotFoundException extends BaseException {
 
     public OtpNotFoundException()
     {
-        super(36,"Otp.NotFound", HttpStatus.BAD_REQUEST);
+        super(81,"Otp.NotFound", HttpStatus.BAD_REQUEST);
     }
 
 }

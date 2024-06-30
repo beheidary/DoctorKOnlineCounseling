@@ -14,5 +14,8 @@ public interface PhysicianMySqlRepository extends JpaRepository <PhysicianEntity
 
     PhysicianEntity findPhysicianEntityByNationalCode(Long NationalCode);
 
+    PhysicianEntity findPhysicianEntityByPhysicianSystemCode(String physicianSystemCode);
+    PhysicianEntity findPhysicianEntityByPhysicianSystemCodeOrNationalCode(String physicianSystemCode,Long NationalCode);
+
 
 }

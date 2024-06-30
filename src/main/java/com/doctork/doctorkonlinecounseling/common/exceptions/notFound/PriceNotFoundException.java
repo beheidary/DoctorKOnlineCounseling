@@ -12,6 +12,6 @@ public class PriceNotFoundException extends NotFoundException{
 
     public PriceNotFoundException()
     {
-        super(47,"Patient.NotFound", HttpStatus.BAD_REQUEST);
+        super(86,"Patient.NotFound", HttpStatus.BAD_REQUEST);
     }
 }

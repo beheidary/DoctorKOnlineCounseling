@@ -13,6 +13,6 @@ public class IdInputException extends InputException
 
     public IdInputException()
     {
-        super(81,"id.null", HttpStatus.BAD_REQUEST);
+        super(61,"id.null", HttpStatus.BAD_REQUEST);
     }
 }

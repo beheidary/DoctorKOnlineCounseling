@@ -12,7 +12,7 @@ public class WalletNotfoundException extends NotFoundException{
 
     public WalletNotfoundException()
     {
-        super(46,"Wallet.NotFound", HttpStatus.BAD_REQUEST);
+        super(89,"Wallet.NotFound", HttpStatus.BAD_REQUEST);
     }
 
 }

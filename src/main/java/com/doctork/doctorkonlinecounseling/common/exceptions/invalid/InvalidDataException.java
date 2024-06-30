@@ -12,7 +12,7 @@ public class InvalidDataException extends InvalidException{
 
     public InvalidDataException()
     {
-        super(101,"Data.Invalid", HttpStatus.BAD_REQUEST);
+        super(71,"Data.Invalid", HttpStatus.BAD_REQUEST);
     }
 
 

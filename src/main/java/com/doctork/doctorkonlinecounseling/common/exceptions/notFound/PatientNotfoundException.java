@@ -12,7 +12,7 @@ public class PatientNotfoundException extends NotFoundException{
 
     public PatientNotfoundException()
     {
-        super(46,"Patient.NotFound", HttpStatus.BAD_REQUEST);
+        super(84,"Patient.NotFound", HttpStatus.BAD_REQUEST);
     }
 
 }

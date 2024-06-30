@@ -13,7 +13,7 @@ public class InvalidException extends BaseException {
 
     public InvalidException()
     {
-        super(80,"not valid error", HttpStatus.BAD_REQUEST);
+        super(70,"not valid error", HttpStatus.BAD_REQUEST);
     }
 
 

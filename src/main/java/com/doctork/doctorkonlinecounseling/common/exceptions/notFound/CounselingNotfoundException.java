@@ -11,7 +11,7 @@ public class CounselingNotfoundException extends NotFoundException{
 
     public CounselingNotfoundException()
     {
-        super(91,"Counseling.NotFound", HttpStatus.BAD_REQUEST);
+        super(82,"Counseling.NotFound", HttpStatus.BAD_REQUEST);
     }
 
 }

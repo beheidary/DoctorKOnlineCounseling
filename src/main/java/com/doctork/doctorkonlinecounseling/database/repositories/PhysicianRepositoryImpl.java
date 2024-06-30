@@ -2,6 +2,8 @@ package com.doctork.doctorkonlinecounseling.database.repositories;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.Physician.PhysicianRepository;
 import com.doctork.doctorkonlinecounseling.boundary.exit.searchEngine.ElasticRepository;
+import com.doctork.doctorkonlinecounseling.common.exceptions.BaseException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.Duplicate.DuplicateFormInfoException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
@@ -78,7 +80,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
             UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            if (physicianMySqlRepository.findPhysicianEntityByNationalCode(physician.getNationalCode())== null && physicianMySqlRepository.findPhysicianEntityByUser(userEntity) == null ){
+            if (physicianMySqlRepository.findPhysicianEntityByPhysicianSystemCodeOrNationalCode(physician.getPhysicianSystemCode(),physician.getNationalCode())== null && physicianMySqlRepository.findPhysicianEntityByUser(userEntity) == null){
 
                 if(Objects.equals(userEntity.getRole().toString(), "Physician")){
                     PhysicianEntity physicianEntity = physicianEntityMapper.modelToEntity(physician);
@@ -96,7 +98,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
                     throw new PhysicianNotFoundException();
                 }
             }else {
-                throw new InvalidDataException();
+                throw new DuplicateFormInfoException(41,"nationalCode OR physicianSystemCode are duplicate", HttpStatus.BAD_REQUEST);
 
             }
         }catch (QueryTimeoutException ex){
@@ -110,9 +112,10 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
 
@@ -150,9 +153,10 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
 
@@ -183,9 +187,10 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
 
@@ -211,9 +216,10 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
         }
 
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
     }
@@ -244,9 +250,10 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
 
@@ -276,9 +283,10 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         }
         catch (Exception ex){
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+            
         }
 
     }

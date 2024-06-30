@@ -12,6 +12,6 @@ public class SicknessNotFoundException extends BaseException {
 
     public SicknessNotFoundException()
     {
-        super(37,"Sickness.NotFound", HttpStatus.BAD_REQUEST);
+        super(87,"Sickness.NotFound", HttpStatus.BAD_REQUEST);
     }
 }
