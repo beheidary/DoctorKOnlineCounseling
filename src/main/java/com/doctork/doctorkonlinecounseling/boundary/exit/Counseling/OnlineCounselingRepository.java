@@ -5,7 +5,7 @@ import com.doctork.doctorkonlinecounseling.domain.Counseling.OnlineCounseling;
 public interface OnlineCounselingRepository {
 
 
-    OnlineCounseling createCounseling (Long patientId, Long physicianId, Long priceId);
+    OnlineCounseling createCounseling (String patientId, String physicianId, Long priceId);
 
     OnlineCounseling findCounseling (Long counselingId);
 

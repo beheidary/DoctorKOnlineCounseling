@@ -11,9 +11,9 @@ public interface PriceAdapter {
 
 
     ServicesOutputDto addServices(ServicesInputDto servicesInputDto);
-    PriceOutputDto addPrice(PriceInputDto priceInputDto, Long physicianId , Long servicesId);
+    PriceOutputDto addPrice(PriceInputDto priceInputDto, String physicianId , Long servicesId);
     PriceOutputDto editPrice(Long priceId, PriceInputDto priceInputDto);
-    List<PriceOutputDto> readPrices(Long physicianId);
+    List<PriceOutputDto> readPrices(String physicianId);
 
     Long deletePrice (Long priceId);
 

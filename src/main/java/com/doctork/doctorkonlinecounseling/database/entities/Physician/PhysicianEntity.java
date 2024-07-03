@@ -28,7 +28,7 @@ import java.util.*;
 public class PhysicianEntity {
 
     @Id
-    private Long nationalCode;
+    private String nationalCode;
 
     @Column(name = "firstName",nullable = false)
     private String firstName;
@@ -63,7 +63,7 @@ public class PhysicianEntity {
     @ManyToMany(cascade = {  }, fetch = FetchType.LAZY)
     @JoinTable(
             name = "physician_sickness",
-            joinColumns = @JoinColumn(name = "phisician_id"),
+            joinColumns = @JoinColumn(name = "physician_id"),
             inverseJoinColumns = @JoinColumn(name = "sickess_id")
     )
     private Set<SicknessEntity> sicknessEntities = new HashSet<>();
@@ -103,7 +103,7 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(Long nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknessEntities, Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknessEntities, Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -226,11 +226,11 @@ public class PhysicianEntity {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
 
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

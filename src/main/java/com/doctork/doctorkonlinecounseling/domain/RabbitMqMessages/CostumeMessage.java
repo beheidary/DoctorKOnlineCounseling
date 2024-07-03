@@ -14,7 +14,7 @@ public class CostumeMessage implements Serializable  {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Long nationalCode;
+    private String nationalCode;
     private MessageType messageType;
     private PhysicianStatus status;
     private long timestamp;
@@ -37,11 +37,10 @@ public class CostumeMessage implements Serializable  {
         this.messageType = messageType;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

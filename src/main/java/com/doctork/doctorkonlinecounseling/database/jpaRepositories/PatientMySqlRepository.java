@@ -4,9 +4,9 @@ import com.doctork.doctorkonlinecounseling.database.entities.Patient.PatientEnti
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PatientMySqlRepository extends JpaRepository<PatientEntity, Long> {
+public interface PatientMySqlRepository extends JpaRepository<PatientEntity, String> {
 
-    PatientEntity findPatientEntityByNationalCode(Long nationalCode);
+    PatientEntity findPatientEntityByNationalCode(String nationalCode);
 
     PatientEntity findPatientEntityByUser(UserEntity user);
 

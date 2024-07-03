@@ -29,7 +29,7 @@ public class UserEntity implements UserDetails {
     private String password;
 
     @Column(nullable = true)
-    private Long nationalCode;
+    private String nationalCode;
 
     @Column(name = "mobileNumber",nullable = false)
     private String mobileNumber;
@@ -62,7 +62,7 @@ public class UserEntity implements UserDetails {
         this.authorities = new ArrayList<>(authorities);
     }
 
-    public UserEntity(Long nationalCode , UUID id,String mobileNumber, UserType userType, String email, String password, Date createdAt, Date updatedAt) {
+    public UserEntity(String nationalCode , UUID id,String mobileNumber, UserType userType, String email, String password, Date createdAt, Date updatedAt) {
         this.id = id;
         this.email = email;
         this.mobileNumber = mobileNumber;
@@ -95,11 +95,10 @@ public class UserEntity implements UserDetails {
         this.id = id;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

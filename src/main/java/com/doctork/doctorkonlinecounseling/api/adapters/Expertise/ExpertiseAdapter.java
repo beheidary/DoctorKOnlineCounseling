@@ -18,7 +18,7 @@ public interface ExpertiseAdapter {
     ExpertiseOutputDto addExpertise(ExpertiseInputDto expertiseInputDto);
     ExpertiseOutputDto editExpertise(Long expertiseId , ExpertiseInputDto expertiseInputDto);
 
-    ExpertiseOutputDto addPhysicianExpertise (Long nationalCode, ExpertiseInputDto expertiseInputDto);
+    ExpertiseOutputDto addPhysicianExpertise (String nationalCode, ExpertiseInputDto expertiseInputDto);
 
 
     List<TopExpertisesDto> findBestExpertisePhysicians();

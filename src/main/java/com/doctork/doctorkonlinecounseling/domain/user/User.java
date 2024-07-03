@@ -18,7 +18,7 @@ public class User implements UserDetails {
     private String mobileNumber;
     private List<GrantedAuthority> authorities = new ArrayList<>();
 
-    private Long nationalCode;
+    private String nationalCode;
     private Date createdAt;
     private Date updatedAt;
     private UserType role;
@@ -59,7 +59,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(Long nationalCode, UUID id, String email, String password, String mobileNumber, UserType role, Date createdAt, Date updatedAt) {
+    public User(String nationalCode, UUID id, String email, String password, String mobileNumber, UserType role, Date createdAt, Date updatedAt) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -78,11 +78,10 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

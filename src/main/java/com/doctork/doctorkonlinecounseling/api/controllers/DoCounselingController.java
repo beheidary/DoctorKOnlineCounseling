@@ -34,8 +34,8 @@ public class DoCounselingController {
     @Operation(summary = "create a new counseling")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = OnlineCounselingOutputDto.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> createCounseling(@RequestParam() Long patientId,
-                                                       @RequestParam() Long physicianId,
+    DeferredResult<ResponseEntity<?>> createCounseling(@RequestParam() String patientId,
+                                                       @RequestParam() String physicianId,
                                                        @RequestParam() Long priceId)
     {
 

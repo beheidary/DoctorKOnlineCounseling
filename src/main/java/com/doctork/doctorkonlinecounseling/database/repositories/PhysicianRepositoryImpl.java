@@ -167,7 +167,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Physician findPhysicianById(Long nationalCode) {
+    public Physician findPhysicianById(String nationalCode) {
 
 
         try{
@@ -226,7 +226,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
 
     @Override
-    public Physician changeStatus(Long nationalCode, PhysicianStatus status) {
+    public Physician changeStatus(String nationalCode, PhysicianStatus status) {
 
 
         try{
@@ -260,7 +260,7 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
     }
 
     @Override
-    public Physician changeState(Long nationalCode, State state) {
+    public Physician changeState(String nationalCode, State state) {
 
         try{
 

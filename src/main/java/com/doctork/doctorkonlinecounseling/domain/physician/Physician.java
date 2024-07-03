@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class Physician {
 
-    private Long nationalCode;
+    private String nationalCode;
     private String firstName;
 
     private String description;
@@ -44,7 +44,7 @@ public class Physician {
     private Set<PhysicianSocialMedia> physicianSocialMedia;
 
 
-    public Physician(Long nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses,Set<PhysicianSocialMedia> physicianSocialMedia) {
+    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses,Set<PhysicianSocialMedia> physicianSocialMedia) {
         this.nationalCode = nationalCode;
         this.physicianSocialMedia = physicianSocialMedia;
         this.firstName = firstName;
@@ -73,10 +73,9 @@ public class Physician {
 
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
     public String getMainImage() {
         return mainImage;
     }
@@ -85,7 +84,7 @@ public class Physician {
         this.mainImage = mainImage;
     }
 
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

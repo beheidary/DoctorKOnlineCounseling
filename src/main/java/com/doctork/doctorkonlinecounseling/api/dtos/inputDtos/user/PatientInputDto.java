@@ -9,7 +9,7 @@ public class PatientInputDto {
 
 
     @NotNull
-    private Long nationalCode;
+    private String nationalCode;
     @NotNull
     private Gender gender;
     @NotNull
@@ -19,7 +19,7 @@ public class PatientInputDto {
     @NotNull
     private LocalDate dateOfBirth;
 
-    public PatientInputDto(Long nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth) {
+    public PatientInputDto(String nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth) {
         this.nationalCode = nationalCode;
         this.gender = gender;
         this.firstName = firstName;
@@ -28,11 +28,10 @@ public class PatientInputDto {
     }
 
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

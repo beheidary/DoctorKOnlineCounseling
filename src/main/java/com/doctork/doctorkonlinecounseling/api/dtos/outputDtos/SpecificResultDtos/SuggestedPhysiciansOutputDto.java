@@ -4,7 +4,7 @@ import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 
 public class SuggestedPhysiciansOutputDto {
-    private Long nationalCode;
+    private String nationalCode;
     private String fullName;
     private State state;
     private String expertise;
@@ -12,11 +12,10 @@ public class SuggestedPhysiciansOutputDto {
     private PhysicianStatus status;
     private String imageName;
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

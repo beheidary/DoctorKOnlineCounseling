@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class PatientOutputDto {
 
 
-    private Long nationalCode;
+    private String nationalCode;
 
     private Gender gender;
 
@@ -23,7 +23,7 @@ public class PatientOutputDto {
     private Boolean profileNecessaryInfoInserted;
 
 
-    public PatientOutputDto(Long nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth,Boolean profileNecessaryInfoInserted, LocalDateTime updated_At) {
+    public PatientOutputDto(String nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth,Boolean profileNecessaryInfoInserted, LocalDateTime updated_At) {
         this.nationalCode = nationalCode;
         this.profileNecessaryInfoInserted = Boolean.TRUE;
         this.gender = gender;
@@ -42,11 +42,10 @@ public class PatientOutputDto {
         this.profileNecessaryInfoInserted = profileNecessaryInfoInserted;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

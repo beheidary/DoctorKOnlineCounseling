@@ -13,7 +13,7 @@ public class Patient {
 
 
 
-    private Long nationalCode;
+    private String nationalCode;
 
     private Gender gender;
 
@@ -27,7 +27,7 @@ public class Patient {
 
     private User user;
 
-    public Patient(User user, Long nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth, LocalDateTime updated_At) {
+    public Patient(User user, String nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth, LocalDateTime updated_At) {
         this.nationalCode = nationalCode;
         this.user = user;
         this.gender = gender;
@@ -42,10 +42,9 @@ public class Patient {
     }
 
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
     public User getUser() {
         return user;
     }
@@ -54,7 +53,7 @@ public class Patient {
         this.user = user;
     }
 
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

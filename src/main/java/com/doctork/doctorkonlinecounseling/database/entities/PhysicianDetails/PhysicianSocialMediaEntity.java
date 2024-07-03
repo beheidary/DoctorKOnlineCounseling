@@ -13,7 +13,7 @@ public class PhysicianSocialMediaEntity {
 
     @Id
     @Column(name = "physician_id")
-    private Long physicianId;
+    private String physicianId;
 
     @Id
     @Column(name = "social_media_id")
@@ -34,11 +34,11 @@ public class PhysicianSocialMediaEntity {
     public PhysicianSocialMediaEntity() {
     }
 
-    public Long getPhysicianId() {
+    public String getPhysicianId() {
         return physicianId;
     }
 
-    public void setPhysicianId(Long physicianId) {
+    public void setPhysicianId(String physicianId) {
         this.physicianId = physicianId;
     }
 

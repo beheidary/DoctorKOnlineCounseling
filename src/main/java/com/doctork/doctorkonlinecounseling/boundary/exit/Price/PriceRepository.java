@@ -11,9 +11,9 @@ public interface PriceRepository {
 
     Services addServices(Services services);
 
-    Price addPrice(Price price, Long physicianId, Long ServicesId);
+    Price addPrice(Price price, String physicianId, Long ServicesId);
     Price editPrice(Long priceId , Price price);
-    List<Price> readPrices(Long physicianId);
+    List<Price> readPrices(String physicianId);
 
     Price findPriceById (Long priceId);
 

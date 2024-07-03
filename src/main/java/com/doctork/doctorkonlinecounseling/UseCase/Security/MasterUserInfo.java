@@ -20,7 +20,7 @@ public class MasterUserInfo {
     private String mobileNumber;
 
     @Value("3241751139")
-    private Long nationalCode;
+    private String nationalCode;
 
     @Value("4")
     private Long adminWalletId;
@@ -33,11 +33,10 @@ public class MasterUserInfo {
         this.adminWalletId = adminWalletId;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

@@ -29,7 +29,7 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public Price addPrice(Price price, Long physicianId, Long servicesId) {
+    public Price addPrice(Price price, String physicianId, Long servicesId) {
         if(physicianId == null || servicesId == null)
             throw new IdInputException();
         UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -45,7 +45,7 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public List<Price> readPrices(Long physicianId) {
+    public List<Price> readPrices(String physicianId) {
         if(physicianId == null)
             throw new IdInputException();
         return priceRepository.readPrices(physicianId);

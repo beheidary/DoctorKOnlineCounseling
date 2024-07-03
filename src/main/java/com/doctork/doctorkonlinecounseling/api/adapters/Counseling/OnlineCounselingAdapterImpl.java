@@ -18,7 +18,7 @@ public class OnlineCounselingAdapterImpl implements OnlineCounselingAdapter {
     }
 
     @Override
-    public OnlineCounselingOutputDto createCounseling(Long patientId, Long physicianId, Long priceId) {
+    public OnlineCounselingOutputDto createCounseling(String patientId, String physicianId, Long priceId) {
 
         OnlineCounseling onlineCounseling = onlineCounselingService.createCounseling(patientId,physicianId,priceId);
         OnlineCounselingOutputDto onlineCounselingOutputDto = counselingMapper.onlineCounselingModelToOutputDto(onlineCounseling);

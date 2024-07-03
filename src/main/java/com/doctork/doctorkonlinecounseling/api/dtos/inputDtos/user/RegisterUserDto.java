@@ -20,14 +20,14 @@ public class RegisterUserDto {
     @NotNull
     private String mobileNumber;
 
-    private Long nationalCode;
+    private String nationalCode;
 
 
     public RegisterUserDto() {
     }
 
 
-    public RegisterUserDto(String email, String mobileNumber, String password, UserType role,Long nationalCode) {
+    public RegisterUserDto(String email, String mobileNumber, String password, UserType role,String nationalCode) {
         this.email = email;
         this.nationalCode = nationalCode;
         this.mobileNumber=mobileNumber;
@@ -49,11 +49,10 @@ public class RegisterUserDto {
         this.email = email;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

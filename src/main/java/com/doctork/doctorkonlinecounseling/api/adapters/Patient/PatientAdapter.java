@@ -9,7 +9,7 @@ public interface PatientAdapter {
 
     PatientOutputDto patientCompleteProfile(PatientInputDto patientInputDto);
 
-    PatientOutputDto fetchPatient (Long nationalCode);
+    PatientOutputDto fetchPatient (String nationalCode);
 
     PatientOutputDto patientCheckProfile (UserEntity userEntity);
 

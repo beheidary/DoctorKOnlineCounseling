@@ -156,7 +156,7 @@ public class ElasticAdapterImpl implements ElasticAdapter {
                 if (physiciansSearchHitsList.size()>0){
                 suggestedPhysiciansOutputDto.setFullName(physiciansSearchHitsList.get(i).getContent().getFullName());
                 suggestedPhysiciansOutputDto.setExpertise(physiciansSearchHitsList.get(i).getContent().getExpertise());
-                suggestedPhysiciansOutputDto.setNationalCode(55L);
+                suggestedPhysiciansOutputDto.setNationalCode("test55");
                 suggestedPhysiciansOutputDtos.add(suggestedPhysiciansOutputDto);
                 }
 

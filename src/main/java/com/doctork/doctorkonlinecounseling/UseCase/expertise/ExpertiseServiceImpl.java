@@ -31,12 +31,12 @@ public class ExpertiseServiceImpl implements ExpertiseService {
     }
 
     @Override
-    public Expertise addPhysicianExpertise(Long nationalCode, Expertise expertise) {
+    public Expertise addPhysicianExpertise(String nationalCode, Expertise expertise) {
 
         if(nationalCode == null )
             throw new IdInputException();
 
-        Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+        String tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
         if (!nationalCode.equals(tokenNationalCode))
             throw new AccessDeniedException("You do not have the required access");
 

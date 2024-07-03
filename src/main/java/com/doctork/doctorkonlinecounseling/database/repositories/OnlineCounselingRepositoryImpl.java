@@ -49,7 +49,7 @@ public class OnlineCounselingRepositoryImpl implements OnlineCounselingRepositor
 
     @Override
     @Transactional
-    public OnlineCounseling createCounseling(Long patientId, Long physicianId, Long priceId) {
+    public OnlineCounseling createCounseling(String patientId, String physicianId, Long priceId) {
 
         try{
 

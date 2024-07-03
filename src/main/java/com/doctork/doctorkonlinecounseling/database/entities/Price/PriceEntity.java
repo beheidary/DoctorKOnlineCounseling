@@ -30,12 +30,12 @@ public class PriceEntity {
     private PriceStatus priceStatus;
     @Column(name = "state", nullable = false)
     private State state;
+
     @Column(name = "description",nullable = false)
     private String description;
-    // Todo migrate rename doctor to physician
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_id")
-    private PhysicianEntity doctor;
+    @JoinColumn(name = "physician_id")
+    private PhysicianEntity physician;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
     private ServicesEntity service;
@@ -47,14 +47,14 @@ public class PriceEntity {
     private LocalDateTime updateDateTime;
 
 
-    public PriceEntity(Long id, Long time, Double cost, PriceStatus priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
+    public PriceEntity(Long id, Long time, Double cost, PriceStatus priceStatus, State state, String description, PhysicianEntity physician, ServicesEntity service, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
         this.id = id;
         this.time = time;
         setCost(cost);
         this.priceStatus = priceStatus;
         this.state = state;
         this.description = description;
-        this.doctor = doctor;
+        this.physician = physician;
         this.service = service;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
@@ -117,12 +117,21 @@ public class PriceEntity {
         this.description = description;
     }
 
-    public PhysicianEntity getDoctor() {
-        return doctor;
+
+    public PriceStatus getPriceStatus() {
+        return priceStatus;
     }
 
-    public void setDoctor(PhysicianEntity doctor) {
-        this.doctor = doctor;
+    public void setPriceStatus(PriceStatus priceStatus) {
+        this.priceStatus = priceStatus;
+    }
+
+    public PhysicianEntity getPhysician() {
+        return physician;
+    }
+
+    public void setPhysician(PhysicianEntity physician) {
+        this.physician = physician;
     }
 
     public ServicesEntity getService() {

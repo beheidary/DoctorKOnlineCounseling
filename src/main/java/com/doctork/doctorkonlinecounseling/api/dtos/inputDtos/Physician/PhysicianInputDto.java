@@ -24,7 +24,7 @@ public class PhysicianInputDto {
     private String lastName;
     @NotNull
     @NotBlank
-    private Long nationalCode;
+    private String nationalCode;
 
 
     private String description;
@@ -53,7 +53,7 @@ public class PhysicianInputDto {
     }
 
 
-    public PhysicianInputDto(String firstName, String lastName, Long nationalCode, String description, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode, Gender gender, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianInputDto(String firstName, String lastName, String nationalCode, String description, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode, Gender gender, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
@@ -68,7 +68,7 @@ public class PhysicianInputDto {
         this.bankShebaNumber = bankShebaNumber;
     }
 
-    public PhysicianInputDto(Long nationalCode, String firstName, String lastName, String physicianSystemCode) {
+    public PhysicianInputDto(String nationalCode, String firstName, String lastName, String physicianSystemCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
@@ -159,11 +159,10 @@ public class PhysicianInputDto {
         return physicianSystemCode;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

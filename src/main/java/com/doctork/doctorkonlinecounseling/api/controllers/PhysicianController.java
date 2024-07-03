@@ -42,7 +42,7 @@ public class PhysicianController extends BaseController {
     @Operation(summary = "Fetch a Physician")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> fetchPhysician(@PathVariable Long nationalCode)
+    DeferredResult<ResponseEntity<?>> fetchPhysician(@PathVariable String nationalCode)
     {
 
 
@@ -137,7 +137,7 @@ public class PhysicianController extends BaseController {
     @PreAuthorize("hasRole('ROLE_Support')")
     @Operation(summary = "Change Physician State")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
-    DeferredResult<ResponseEntity<?>> changeState(@Validated @PathVariable Long nationalCode , @Validated @PathVariable State state)
+    DeferredResult<ResponseEntity<?>> changeState(@Validated @PathVariable String nationalCode , @Validated @PathVariable State state)
     {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
@@ -159,7 +159,7 @@ public class PhysicianController extends BaseController {
     @PreAuthorize("hasRole('ROLE_Physician')")
     @Operation(summary = "Change Physician Status")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
-    DeferredResult<ResponseEntity<?>> changeStatus(@Validated @PathVariable Long nationalCode , @Validated @PathVariable PhysicianStatus status)
+    DeferredResult<ResponseEntity<?>> changeStatus(@Validated @PathVariable String nationalCode , @Validated @PathVariable PhysicianStatus status)
     {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();

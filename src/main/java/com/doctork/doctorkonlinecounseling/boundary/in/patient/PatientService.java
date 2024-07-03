@@ -7,7 +7,7 @@ public interface PatientService {
 
     Patient patientCompleteProfile (Patient patient);
 
-    Patient fetchPatient (Long nationalCode);
+    Patient fetchPatient (String nationalCode);
 
     Patient fetchPatient (UserEntity userEntity);
 

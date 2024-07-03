@@ -87,7 +87,7 @@ public class PatientRepositoryImpl implements PatientRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Patient findPatientById(Long nationalCode) {
+    public Patient findPatientById(String nationalCode) {
         try{
         PatientEntity patientEntity = patientMySqlRepository.findById(nationalCode).orElseThrow(PatientNotfoundException::new);
 

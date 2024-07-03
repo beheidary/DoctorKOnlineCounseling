@@ -42,7 +42,7 @@ public class ElasticRepositoryImpl implements ElasticRepository {
     }
 
     @Override
-    public ElasticPhysicianEntity changeStatus(Long id, PhysicianStatus physicianStatus) {
+    public ElasticPhysicianEntity changeStatus(String id, PhysicianStatus physicianStatus) {
         Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(id);
 
         if (optionalPhysician.isPresent()) {
@@ -55,7 +55,7 @@ public class ElasticRepositoryImpl implements ElasticRepository {
     }
 
     @Override
-    public ElasticPhysicianEntity changeState(Long id, State state) {
+    public ElasticPhysicianEntity changeState(String id, State state) {
         Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(id);
 
         if (optionalPhysician.isPresent()) {
@@ -109,7 +109,7 @@ public class ElasticRepositoryImpl implements ElasticRepository {
     }
 
     @Override
-    public Long deletePhysician(Long id) {
+    public String deletePhysician(String id) {
 
         physicianElasticRepository.deleteById(id);
         return id;
@@ -118,7 +118,7 @@ public class ElasticRepositoryImpl implements ElasticRepository {
 
 
     @Override
-    public ElasticPhysicianEntity editPhysician(Long nationalCode , PhysicianEntity updatedPhysician) {
+    public ElasticPhysicianEntity editPhysician(String nationalCode , PhysicianEntity updatedPhysician) {
         Optional<ElasticPhysicianEntity> optionalPhysician = physicianElasticRepository.findById(nationalCode);
 
         if (optionalPhysician.isPresent()) {

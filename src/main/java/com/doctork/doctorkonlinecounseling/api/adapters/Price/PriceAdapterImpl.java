@@ -35,7 +35,7 @@ public class PriceAdapterImpl implements PriceAdapter {
     }
 
     @Override
-    public PriceOutputDto addPrice(PriceInputDto priceInputDto, Long physicianId, Long servicesId) {
+    public PriceOutputDto addPrice(PriceInputDto priceInputDto, String physicianId, Long servicesId) {
         Price price =  priceMapper.priceDtoToModel(priceInputDto);
         return priceMapper.priceModelToDto(priceService.addPrice(price , physicianId, servicesId));
     }
@@ -47,7 +47,7 @@ public class PriceAdapterImpl implements PriceAdapter {
     }
 
     @Override
-    public List<PriceOutputDto> readPrices(Long physicianId) {
+    public List<PriceOutputDto> readPrices(String physicianId) {
         List<PriceOutputDto> priceOutputDtos = new ArrayList<>();
         for (Price price : priceService.readPrices(physicianId)){
             priceOutputDtos.add(priceMapper.priceModelToDto(price));

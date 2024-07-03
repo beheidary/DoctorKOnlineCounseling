@@ -24,7 +24,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient fetchPatient(Long nationalCode) {
+    public Patient fetchPatient(String nationalCode) {
         if(nationalCode == null)
             throw new IdInputException();
         return patientRepository.findPatientById(nationalCode);

@@ -64,7 +64,7 @@ public class ExpertiseAdapterImpl implements ExpertiseAdapter {
     }
 
     @Override
-    public ExpertiseOutputDto addPhysicianExpertise(Long nationalCode, ExpertiseInputDto expertiseInputDto) {
+    public ExpertiseOutputDto addPhysicianExpertise(String nationalCode, ExpertiseInputDto expertiseInputDto) {
         Expertise expertise = expertiseMapper.inputToModelWithoutDoctor(expertiseInputDto);
         expertise = expertiseService.addPhysicianExpertise( nationalCode, expertise);
         return expertiseMapper.modelToOutput(expertise);

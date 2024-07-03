@@ -7,7 +7,7 @@ public interface PatientRepository{
 
     Patient patientCompleteProfile (Patient patient);
 
-    Patient findPatientById (Long nationalCode);
+    Patient findPatientById (String nationalCode);
 
     Patient fetchPatient (UserEntity userEntity);
 

@@ -13,7 +13,7 @@ public class PatientEntity {
 
 
     @Id
-    private Long nationalCode;
+    private String nationalCode;
 
     @Column(name = "gender" , nullable = false)
     private Gender gender;
@@ -35,7 +35,7 @@ public class PatientEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    public PatientEntity(UserEntity user, Long nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth, LocalDateTime updated_At) {
+    public PatientEntity(UserEntity user, String nationalCode, Gender gender, String firstName, String lastName, LocalDate dateOfBirth, LocalDateTime updated_At) {
         this.nationalCode = nationalCode;
         this.gender = gender;
         this.firstName = firstName;
@@ -50,11 +50,10 @@ public class PatientEntity {
     }
 
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

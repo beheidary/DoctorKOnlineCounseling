@@ -88,7 +88,7 @@ public class PhysicianAdapterImpl implements PhysicianAdapter {
     }
 
     @Override
-    public PhysicianOutputDto fetchPhysician(Long nationalCode) {
+    public PhysicianOutputDto fetchPhysician(String nationalCode) {
 
 
         return physicianMapper.modelToOutput(physicianService.fetchPhysician(nationalCode));
@@ -102,7 +102,7 @@ public class PhysicianAdapterImpl implements PhysicianAdapter {
 
 
     @Override
-    public PhysicianOutputDto changeStatus(Long nationalCode, PhysicianStatus status) {
+    public PhysicianOutputDto changeStatus(String nationalCode, PhysicianStatus status) {
 
         return physicianMapper.modelToOutput(physicianService.changeStatus(nationalCode,status));
 
@@ -110,7 +110,7 @@ public class PhysicianAdapterImpl implements PhysicianAdapter {
     }
 
     @Override
-    public PhysicianOutputDto changeState(Long nationalCode, State state) {
+    public PhysicianOutputDto changeState(String nationalCode, State state) {
 
         return physicianMapper.modelToOutput(physicianService.changeState(nationalCode,state));
 

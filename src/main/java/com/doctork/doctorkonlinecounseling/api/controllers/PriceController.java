@@ -42,7 +42,7 @@ public class PriceController {
     @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PriceOutputDto.class))})
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> addPrice(@PathVariable Long servicesId,
-                                                  @PathVariable Long physicianId,
+                                                  @PathVariable String physicianId,
                                                   @RequestBody @Validated PriceInputDto priceInputDto,
                                                   BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -110,7 +110,7 @@ public class PriceController {
     @Operation(summary = "physician all prices")
     @ApiResponse(content = {@Content(schema = @Schema(implementation = PriceOutputDto.class))})
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> readPrices(@PathVariable Long physicianId) {
+    DeferredResult<ResponseEntity<?>> readPrices(@PathVariable String physicianId) {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 

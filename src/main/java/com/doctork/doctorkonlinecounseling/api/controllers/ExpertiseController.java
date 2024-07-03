@@ -93,7 +93,7 @@ public class ExpertiseController {
     @Operation(summary = "Add Physician Expertise")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDto.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> addPhysicianExpertise(@PathVariable Long nationalCode, @RequestBody @Validated ExpertiseInputDto expertiseInputDTO)
+    DeferredResult<ResponseEntity<?>> addPhysicianExpertise(@PathVariable String nationalCode, @RequestBody @Validated ExpertiseInputDto expertiseInputDTO)
     {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();

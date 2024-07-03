@@ -13,17 +13,17 @@ import java.util.Set;
 public interface PhysicianDetailsService {
 
     void addSickness (Sickness sickness);
-    Set<Sickness> uploadSickness (Long physicianId, Set<Sickness> sicknesses );
+    Set<Sickness> uploadSickness (String physicianId, Set<Sickness> sicknesses );
     Set<Sickness> allSicknesses ();
-    Set<Sickness> allPhysicianSicknesses (Long physicianId);
+    Set<Sickness> allPhysicianSicknesses (String physicianId);
 
 
     void sicknessChangeState (Long sicknessId , State state);
 
-    Set<PhysicianSocialMedia> allPhysicianSocialMedias(Long physicianId);
+    Set<PhysicianSocialMedia> allPhysicianSocialMedias(String physicianId);
 
     Set<SocialMedia> allSocialMedias();
-    Set<PhysicianSocialMedia> uploadSocialMedias (Long physicianId, Set<PhysicianSocialMedia> physicianSocialMedia);
+    Set<PhysicianSocialMedia> uploadSocialMedias (String physicianId, Set<PhysicianSocialMedia> physicianSocialMedia);
     void addSocialMedia(SocialMedia socialMedia);
 
 

@@ -64,7 +64,7 @@ public class PhysicianServiceImpl implements PhysicianService {
     @Override
     public Physician PhysicianEditProfile(Physician physician) {
 
-        Long tokenNationalCode =((UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+        String tokenNationalCode =((UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
         if (!physician.getNationalCode().equals(tokenNationalCode))
             throw new AccessDeniedException("You do not have the required access");
         physician = physicianRepository.PhysicianEditProfile(physician);
@@ -86,7 +86,7 @@ public class PhysicianServiceImpl implements PhysicianService {
     }
 
     @Override
-    public Physician fetchPhysician(Long nationalCode) {
+    public Physician fetchPhysician(String nationalCode) {
         if(nationalCode == null)
             throw new IdInputException();
 
@@ -106,12 +106,12 @@ public class PhysicianServiceImpl implements PhysicianService {
 
 
     @Override
-    public Physician changeStatus(Long nationalCode, PhysicianStatus status) {
+    public Physician changeStatus(String nationalCode, PhysicianStatus status) {
 
         if(nationalCode == null || status == null)
             throw new IdInputException();
 
-        Long tokenNationalCode =((UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+        String tokenNationalCode =((UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
         if (!nationalCode.equals(tokenNationalCode))
             throw new AccessDeniedException("You do not have the required access");
         Physician physician = physicianRepository.changeStatus(nationalCode,status);
@@ -129,7 +129,7 @@ public class PhysicianServiceImpl implements PhysicianService {
     }
 
     @Override
-    public Physician changeState(Long nationalCode, State state) {
+    public Physician changeState(String nationalCode, State state) {
 
         if(nationalCode == null || state == null)
             throw new IdInputException();

@@ -59,7 +59,7 @@ public class PatientController {
     @PreAuthorize("hasRole('ROLE_Patient')")
     @Operation(summary = "fetch a Patient")
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> fetchPatient(@Validated @PathVariable Long nationalCode )
+    DeferredResult<ResponseEntity<?>> fetchPatient(@Validated @PathVariable String nationalCode )
     {
 
 

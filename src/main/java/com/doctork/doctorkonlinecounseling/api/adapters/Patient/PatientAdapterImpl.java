@@ -30,7 +30,7 @@ public class PatientAdapterImpl implements PatientAdapter {
     }
 
     @Override
-    public PatientOutputDto fetchPatient(Long nationalCode) {
+    public PatientOutputDto fetchPatient(String nationalCode) {
         return patientMapper.modelToOutput(patientService.fetchPatient(nationalCode));
     }
 

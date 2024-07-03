@@ -25,7 +25,7 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     }
 
     @Override
-    public Set<Sickness> uploadSickness(Long physicianId, Set<Sickness> sicknesses) {
+    public Set<Sickness> uploadSickness(String physicianId, Set<Sickness> sicknesses) {
         if (physicianId == null)
             throw new IdInputException();
         return physicianDetailsRepository.uploadSickness(physicianId,sicknesses);
@@ -38,7 +38,7 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     }
 
     @Override
-    public Set<Sickness> allPhysicianSicknesses(Long physicianId) {
+    public Set<Sickness> allPhysicianSicknesses(String physicianId) {
         if (physicianId == null)
             throw new IdInputException();
         return physicianDetailsRepository.allPhysicianSicknesses(physicianId);
@@ -53,7 +53,7 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     }
 
     @Override
-    public Set<PhysicianSocialMedia> allPhysicianSocialMedias(Long physicianId) {
+    public Set<PhysicianSocialMedia> allPhysicianSocialMedias(String physicianId) {
         if (physicianId == null)
             throw new IdInputException();
         return physicianDetailsRepository.allPhysicianSocialMedias(physicianId);
@@ -66,7 +66,7 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     }
 
     @Override
-    public Set<PhysicianSocialMedia> uploadSocialMedias(Long physicianId, Set<PhysicianSocialMedia> physicianSocialMedia) {
+    public Set<PhysicianSocialMedia> uploadSocialMedias(String physicianId, Set<PhysicianSocialMedia> physicianSocialMedia) {
         if (physicianId == null)
             throw new IdInputException();
         return physicianDetailsRepository.uploadSocialMedias(physicianId,physicianSocialMedia);

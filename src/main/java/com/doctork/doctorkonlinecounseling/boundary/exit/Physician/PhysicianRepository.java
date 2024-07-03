@@ -12,11 +12,11 @@ public interface PhysicianRepository {
     Physician PhysicianCompleteProfile(Physician physician);
     Physician PhysicianEditProfile(Physician physician);
     List<Physician> topPhysician();
-    Physician findPhysicianById (Long nationalCode);
+    Physician findPhysicianById (String nationalCode);
 
     Physician findPhysicianByUser (UserEntity userEntity);
-    Physician changeStatus (Long nationalCode, PhysicianStatus status);
-    Physician changeState (Long nationalCode, State state);
+    Physician changeStatus (String nationalCode, PhysicianStatus status);
+    Physician changeState (String nationalCode, State state);
 
 
 }

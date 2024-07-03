@@ -18,12 +18,12 @@ public interface PhysicianService {
 
 //    List<Physician> getPhysiciansForSync();
 
-    Physician fetchPhysician(Long nationalCode);
+    Physician fetchPhysician(String nationalCode);
 
     Physician fetchPhysician(UserEntity userEntity);
 
-    Physician changeStatus (Long nationalCode , PhysicianStatus status);
+    Physician changeStatus (String nationalCode , PhysicianStatus status);
 
-    Physician changeState (Long nationalCode, State state);
+    Physician changeState (String nationalCode, State state);
 
 }

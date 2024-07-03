@@ -12,18 +12,18 @@ import java.util.Set;
 public interface PhysicianDetailsRepository {
 
     Sickness addSickness (Sickness sickness);
-    Set<Sickness> uploadSickness (Long physicianId, Set<Sickness> sickness);
+    Set<Sickness> uploadSickness (String physicianId, Set<Sickness> sickness);
 
     Set<Sickness> allSicknesses();
 
 
     void sicknessChangeState (Long sicknessId , State state);
 
-    Set<Sickness> allPhysicianSicknesses(Long physicianId);
-    Set<PhysicianSocialMedia> allPhysicianSocialMedias(Long physicianId);
+    Set<Sickness> allPhysicianSicknesses(String physicianId);
+    Set<PhysicianSocialMedia> allPhysicianSocialMedias(String physicianId);
 
     Set<SocialMedia> allSocialMedias();
-    Set<PhysicianSocialMedia> uploadSocialMedias (Long physicianId, Set<PhysicianSocialMedia> physicianSocialMedia);
+    Set<PhysicianSocialMedia> uploadSocialMedias (String physicianId, Set<PhysicianSocialMedia> physicianSocialMedia);
 
     SocialMedia addSocialMedia(SocialMedia socialMedia);
 

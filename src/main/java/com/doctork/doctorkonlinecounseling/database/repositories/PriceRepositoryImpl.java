@@ -87,7 +87,7 @@ public class PriceRepositoryImpl implements PriceRepository {
     }
 
     @Override
-    public Price addPrice(Price price, Long physicianId, Long servicesId) {
+    public Price addPrice(Price price, String physicianId, Long servicesId) {
 
 
 
@@ -99,7 +99,7 @@ public class PriceRepositoryImpl implements PriceRepository {
             if(physicianEntity != null){
 
                 PriceEntity newPrice = priceEntityMapper.priceModelToEntity(price);
-                newPrice.setDoctor(physicianEntity);
+                newPrice.setPhysician(physicianEntity);
                 newPrice.setService(servicesEntity);
                 return  priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(newPrice));
 
@@ -134,8 +134,8 @@ public class PriceRepositoryImpl implements PriceRepository {
 
 
 
-                Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
-                if (!priceEntity.getDoctor().getNationalCode().equals(tokenNationalCode))
+                String tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+                if (!priceEntity.getPhysician().getNationalCode().equals(tokenNationalCode))
                     throw new AccessDeniedException("You do not have the required access");
                 priceEntity.setCost(price.getCost());
                 priceEntity.setState(price.getState());
@@ -163,7 +163,7 @@ public class PriceRepositoryImpl implements PriceRepository {
     }
 
     @Override
-    public List<Price> readPrices(Long physicianId) {
+    public List<Price> readPrices(String physicianId) {
 
         try {
 
@@ -239,8 +239,8 @@ public class PriceRepositoryImpl implements PriceRepository {
 
             PriceEntity priceEntity = priceMySqlRepository.findById(priceId).orElseThrow(PriceNotFoundException::new);
 
-            Long tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
-            if (!priceEntity.getDoctor().getNationalCode().equals(tokenNationalCode))
+            String tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
+            if (!priceEntity.getPhysician().getNationalCode().equals(tokenNationalCode))
                 throw new AccessDeniedException("You do not have the required access");
             priceMySqlRepository.delete(priceEntity);
             return priceId;

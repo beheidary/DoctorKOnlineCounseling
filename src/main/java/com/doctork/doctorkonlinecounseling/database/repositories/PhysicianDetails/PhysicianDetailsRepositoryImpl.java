@@ -79,7 +79,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     }
 
     @Override
-    public Set<Sickness> uploadSickness(Long physicianId, Set<Sickness> sickness) {
+    public Set<Sickness> uploadSickness(String physicianId, Set<Sickness> sickness) {
     try {
         PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
         physicianEntity.setSicknessEntities(physicianDetailsEntityMapper.sicknessModelToEntity(sickness));
@@ -135,7 +135,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
     @Override
     @Transactional(readOnly = true)
-    public Set<Sickness> allPhysicianSicknesses(Long physicianId) {
+    public Set<Sickness> allPhysicianSicknesses(String physicianId) {
 
         try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
@@ -158,7 +158,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
     @Override
     @Transactional(readOnly = true)
-    public Set<PhysicianSocialMedia> allPhysicianSocialMedias(Long physicianId) {
+    public Set<PhysicianSocialMedia> allPhysicianSocialMedias(String physicianId) {
         try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
             return physicianDetailsEntityMapper.physicianSocialMediaEntityToModel(physicianEntity.getPhysicianSocialMediaEntities());
@@ -210,7 +210,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
     @Override
     @Transactional
-    public Set<PhysicianSocialMedia> uploadSocialMedias(Long physicianId, Set<PhysicianSocialMedia> physicianSocialMedia) {
+    public Set<PhysicianSocialMedia> uploadSocialMedias(String physicianId, Set<PhysicianSocialMedia> physicianSocialMedia) {
         try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
 

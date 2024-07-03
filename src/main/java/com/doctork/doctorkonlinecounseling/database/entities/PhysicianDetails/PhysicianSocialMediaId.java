@@ -4,22 +4,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class PhysicianSocialMediaId implements Serializable {
-    private Long physicianId;
+    private String physicianId;
     private Long socialMediaId;
 
     public PhysicianSocialMediaId() {}
 
-    public PhysicianSocialMediaId(Long physicianId, Long socialMediaId) {
+    public PhysicianSocialMediaId(String physicianId, Long socialMediaId) {
         this.physicianId = physicianId;
         this.socialMediaId = socialMediaId;
     }
 
     // Getters and Setters
-    public Long getPhysicianId() {
+    public String getPhysicianId() {
         return physicianId;
     }
 
-    public void setPhysicianId(Long physicianId) {
+    public void setPhysicianId(String physicianId) {
         this.physicianId = physicianId;
     }
 

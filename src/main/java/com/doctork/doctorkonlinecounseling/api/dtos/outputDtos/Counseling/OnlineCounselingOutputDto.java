@@ -18,9 +18,9 @@ public class OnlineCounselingOutputDto {
 
     private Long priceId;
 
-    private Long patientId;
+    private String patientId;
 
-    private Long physicianId;
+    private String physicianId;
 
     private CounselingState counselingState;
 
@@ -34,7 +34,7 @@ public class OnlineCounselingOutputDto {
     private String paymentExpirationId;
 
 
-    public OnlineCounselingOutputDto(Long id, UUID creatorUserId, Long priceId, Long patientId, Long physicianId, CounselingState counselingState, LocalDateTime createdAt, LocalDateTime updatedAt, Double userWalletBalance, Double counselingPrice, Double totalPayablePrice, String paymentExpirationId) {
+    public OnlineCounselingOutputDto(Long id, UUID creatorUserId, Long priceId, String patientId, String physicianId, CounselingState counselingState, LocalDateTime createdAt, LocalDateTime updatedAt, Double userWalletBalance, Double counselingPrice, Double totalPayablePrice, String paymentExpirationId) {
         this.id = id;
         CreatorUserId = creatorUserId;
         this.priceId = priceId;
@@ -73,19 +73,19 @@ public class OnlineCounselingOutputDto {
         this.priceId = priceId;
     }
 
-    public Long getPatientId() {
+    public String getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(Long patientId) {
+    public void setPatientId(String patientId) {
         this.patientId = patientId;
     }
 
-    public Long getPhysicianId() {
+    public String getPhysicianId() {
         return physicianId;
     }
 
-    public void setPhysicianId(Long physicianId) {
+    public void setPhysicianId(String physicianId) {
         this.physicianId = physicianId;
     }
 

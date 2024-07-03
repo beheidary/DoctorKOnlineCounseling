@@ -13,7 +13,7 @@ public class ElasticPhysicianEntity {
 
 
     @Id
-    private Long id;
+    private String id;
     @NotNull
     private String fullName;
     @NotNull
@@ -25,11 +25,12 @@ public class ElasticPhysicianEntity {
     @NotNull
     private State state;
 
-    public Long getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -9,9 +9,9 @@ public interface PriceService {
 
 
     Services addServices(Services services);
-    Price addPrice(Price price, Long physicianId, Long servicesId);
+    Price addPrice(Price price, String physicianId, Long servicesId);
     Price editPrice(Long priceId , Price price);
-    List<Price> readPrices(Long physicianId);
+    List<Price> readPrices(String physicianId);
     Long deletePrice (Long priceId);
 
 }

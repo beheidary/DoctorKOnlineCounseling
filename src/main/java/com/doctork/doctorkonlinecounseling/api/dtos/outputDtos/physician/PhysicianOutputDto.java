@@ -18,7 +18,7 @@ public class PhysicianOutputDto {
     private String physicianSystemCode;
     private LocalDateTime updated_At;
     private PhysicianStatus status;
-    private Long nationalCode;
+    private String nationalCode;
     private Gender gender;
     private State state;
     private String mainImage;
@@ -36,7 +36,7 @@ public class PhysicianOutputDto {
 //    private UUID userId;
 
 
-    public PhysicianOutputDto(String firstName, String lastName, String description, EducationLevel educationLevel, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, Long nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianOutputDto(String firstName, String lastName, String description, EducationLevel educationLevel, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, String nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
@@ -159,11 +159,10 @@ public class PhysicianOutputDto {
         this.status = status;
     }
 
-    public Long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
-
-    public void setNationalCode(Long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 }

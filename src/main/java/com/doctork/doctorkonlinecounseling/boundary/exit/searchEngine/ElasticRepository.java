@@ -19,15 +19,15 @@ public interface ElasticRepository {
 
     PhysicianEntity addPhysician(CostumeMessage message);
 
-    Long deletePhysician(Long id);
+    String deletePhysician(String id);
 
     <T> SearchHits<T> search(Query query, Class<T> clazz) ;
 
-    ElasticPhysicianEntity changeStatus (Long id  , PhysicianStatus physicianStatus);
+    ElasticPhysicianEntity changeStatus (String id  , PhysicianStatus physicianStatus);
 
-    ElasticPhysicianEntity changeState (Long id  , State state);
+    ElasticPhysicianEntity changeState (String id  , State state);
 
 
-    ElasticPhysicianEntity editPhysician(Long id , PhysicianEntity physicianEntity );
+    ElasticPhysicianEntity editPhysician(String id , PhysicianEntity physicianEntity );
 
 }

@@ -99,7 +99,7 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
     }
 
     @Override
-    public Expertise addPhysicianExpertise(Long nationalCode, Expertise newExpertise) {
+    public Expertise addPhysicianExpertise(String nationalCode, Expertise newExpertise) {
 
         try{
 

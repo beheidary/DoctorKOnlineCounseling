@@ -20,12 +20,12 @@ public interface PhysicianAdapter {
     PhysicianOutputDto physicianCheckProfile(UserEntity userEntity);
 
 
-    PhysicianOutputDto fetchPhysician(Long nationalCode);
+    PhysicianOutputDto fetchPhysician(String nationalCode);
     PhysicianOutputDto fetchPhysician(UserEntity userEntity);
 
 
-    PhysicianOutputDto changeStatus (Long nationalCode , PhysicianStatus status);
-    PhysicianOutputDto changeState (Long nationalCode , State state);
+    PhysicianOutputDto changeStatus (String nationalCode , PhysicianStatus status);
+    PhysicianOutputDto changeState (String nationalCode , State state);
 
 
 }

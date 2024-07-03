@@ -48,7 +48,7 @@ public class OnlineCounselingServiceImpl implements OnlineCounselingService {
     }
 
     @Override
-    public OnlineCounseling createCounseling(Long patientId, Long physicianId, Long priceId) {
+    public OnlineCounseling createCounseling(String patientId, String physicianId, Long priceId) {
 
         if(patientId == null | physicianId == null | priceId == null)
             throw new IdInputException();

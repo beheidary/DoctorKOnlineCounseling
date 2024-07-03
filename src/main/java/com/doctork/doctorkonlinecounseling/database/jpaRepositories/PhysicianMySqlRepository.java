@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface PhysicianMySqlRepository extends JpaRepository <PhysicianEntity, Long> {
+public interface PhysicianMySqlRepository extends JpaRepository <PhysicianEntity, String> {
 
     PhysicianEntity findPhysicianEntityByUser(UserEntity user);
 
-    PhysicianEntity findPhysicianEntityByNationalCode(Long NationalCode);
+    PhysicianEntity findPhysicianEntityByNationalCode(String nationalCode);
 
     PhysicianEntity findPhysicianEntityByPhysicianSystemCode(String physicianSystemCode);
-    PhysicianEntity findPhysicianEntityByPhysicianSystemCodeOrNationalCode(String physicianSystemCode,Long NationalCode);
+    PhysicianEntity findPhysicianEntityByPhysicianSystemCodeOrNationalCode(String physicianSystemCode,String nationalCode);
 
 
 }
