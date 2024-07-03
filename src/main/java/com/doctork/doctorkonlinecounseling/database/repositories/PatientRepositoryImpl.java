@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.repositories;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.patient.PatientRepository;
+import com.doctork.doctorkonlinecounseling.common.exceptions.BaseException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PatientNotfoundException;
