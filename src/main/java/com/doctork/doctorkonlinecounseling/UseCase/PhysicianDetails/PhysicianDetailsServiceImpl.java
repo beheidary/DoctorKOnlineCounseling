@@ -4,7 +4,9 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.Physic
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
 import org.springframework.stereotype.Service;
 import java.util.Set;
 
@@ -18,8 +20,8 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     }
 
     @Override
-    public void crateSickness(Sickness sickness) {
-        physicianDetailsRepository.crateSickness(sickness);
+    public void addSickness(Sickness sickness) {
+        physicianDetailsRepository.addSickness(sickness);
     }
 
     @Override
@@ -48,5 +50,30 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
             throw new IdInputException();
 
         physicianDetailsRepository.sicknessChangeState(sicknessId,state);
+    }
+
+    @Override
+    public Set<PhysicianSocialMedia> allPhysicianSocialMedias(Long physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allPhysicianSocialMedias(physicianId);
+    }
+
+    @Override
+    public Set<SocialMedia> allSocialMedias() {
+
+        return physicianDetailsRepository.allSocialMedias();
+    }
+
+    @Override
+    public Set<PhysicianSocialMedia> uploadSocialMedias(Long physicianId, Set<PhysicianSocialMedia> physicianSocialMedia) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.uploadSocialMedias(physicianId,physicianSocialMedia);
+    }
+
+    @Override
+    public void addSocialMedia(SocialMedia socialMedia) {
+        physicianDetailsRepository.addSocialMedia(socialMedia);
     }
 }

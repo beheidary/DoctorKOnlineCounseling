@@ -2,12 +2,15 @@ package com.doctork.doctorkonlinecounseling.database.entities.Physician;
 
 
 import com.doctork.doctorkonlinecounseling.database.entities.Expertise.ExpertiseEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SocialMediaEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -57,7 +60,7 @@ public class PhysicianEntity {
     @JoinTable(name = "physician_expertise", joinColumns = @JoinColumn(name = "physician_id"), inverseJoinColumns = @JoinColumn(name = "expertise_id"))
     private Set<ExpertiseEntity> expertises = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {  }, fetch = FetchType.LAZY)
     @JoinTable(
             name = "physician_sickness",
             joinColumns = @JoinColumn(name = "phisician_id"),
@@ -65,7 +68,11 @@ public class PhysicianEntity {
     )
     private Set<SicknessEntity> sicknessEntities = new HashSet<>();
 
-    @Column(name = "physicianSystemCode", nullable = false)
+    @OneToMany(mappedBy = "physician", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities = new HashSet<>();
+
+
+    @Column(name = "physicianSystemCode", nullable = false,unique = true)
     private String physicianSystemCode;
 
     @Column(name = "status", nullable = false)
@@ -75,7 +82,7 @@ public class PhysicianEntity {
     private State state;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id" , nullable = false)
+    @JoinColumn(name = "user_id" , nullable = false,unique = true)
     private UserEntity user;
 
     @Column(name = "mainImage")
@@ -96,7 +103,7 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(Long nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknessEntities, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(Long nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknessEntities, Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -110,6 +117,7 @@ public class PhysicianEntity {
         this.sicknessEntities = sicknessEntities;
         this.physicianSystemCode = physicianSystemCode;
         this.status = status;
+        this.physicianSocialMediaEntities = physicianSocialMediaEntities;
         this.state = state;
         this.user = user;
         this.mainImage = mainImage;
@@ -272,6 +280,14 @@ public class PhysicianEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public Set<PhysicianSocialMediaEntity> getPhysicianSocialMediaEntities() {
+        return physicianSocialMediaEntities;
+    }
+
+    public void setPhysicianSocialMediaEntities(Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities) {
+        this.physicianSocialMediaEntities = physicianSocialMediaEntities;
     }
 
     //    public UUID getUserId() {

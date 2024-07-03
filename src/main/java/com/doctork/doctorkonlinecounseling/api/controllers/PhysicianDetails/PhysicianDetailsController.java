@@ -2,8 +2,11 @@ package com.doctork.doctorkonlinecounseling.api.controllers.PhysicianDetails;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails.PhysicianDetailsAdapter;
 import com.doctork.doctorkonlinecounseling.api.controllers.BaseController;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.PhysicianSocialMediaInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.PhysicianSocialMediaOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SocialMediaOutputDto;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,16 +36,24 @@ public class PhysicianDetailsController extends BaseController {
         this.physicianDetailsAdapter = physicianDetailsAdapter;
     }
 
-    @Operation(summary = "create new Sickness")
+    @Operation(summary = "add new Sickness")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PostMapping(value = "sickness/create")
-    public ResponseEntity<Void> crateSickness(@RequestParam String sicknessName ) {
-        physicianDetailsAdapter.crateSickness(sicknessName);
+    @PostMapping(value = "sickness/add")
+    public ResponseEntity<Void> addSickness(@RequestParam String sicknessName ) {
+        physicianDetailsAdapter.addSickness(sicknessName);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    @Operation(summary = "add new socialMedia")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    // Todo change Authorize To Support Role
+    @PostMapping(value = "socialMedia/add")
+    public ResponseEntity<Void> addSocialMedia(@RequestParam String persianName , String latinName ) {
+        physicianDetailsAdapter.addSocialMedia(persianName , latinName);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("sickness/")
-    @Operation(summary = "Upload Sicknesses Set")
+    @Operation(summary = "Upload sicknesses Set")
     @PreAuthorize("hasRole('ROLE_Physician')")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SicknessOutputDto.class)) })
     public DeferredResult<ResponseEntity<?>> uploadSickneses(@RequestBody Set<SicknessInputDto> sicknessInputDtos) {
@@ -52,6 +63,21 @@ public class PhysicianDetailsController extends BaseController {
         Set<SicknessOutputDto> sicknessOutputDtos = physicianDetailsAdapter.uploadSickness(getCurrentUser().getId() , sicknessInputDtos);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(sicknessOutputDtos));
+
+        return result;
+    }
+
+    @PutMapping("socialMedias/")
+    @Operation(summary = "Upload socialMedia Set")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianSocialMediaOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> uploadSocialMedias(@RequestBody Set<PhysicianSocialMediaInputDto> physicianSocialMediaInputDtos) {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        Set<PhysicianSocialMediaOutputDto> physicianSocialMediaOutputDtos = physicianDetailsAdapter.uploadSocialMedias(getCurrentUser().getId() , physicianSocialMediaInputDtos);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianSocialMediaOutputDtos));
 
         return result;
     }
@@ -70,6 +96,22 @@ public class PhysicianDetailsController extends BaseController {
 
         return result;
     }
+
+    @GetMapping("socialMedia/all")
+    @Operation(summary = "Get All SocialMedias")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SocialMediaOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allSocialMedias() {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        Set<SocialMediaOutputDto> socialMediaOutputDtos = physicianDetailsAdapter.allSocialMedias();
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(socialMediaOutputDtos));
+
+        return result;
+    }
+
     @GetMapping("sickness/allByPhysician")
     @Operation(summary = "Get All Physician Sicknesses")
     @PreAuthorize("hasRole('ROLE_Physician')")
@@ -81,6 +123,20 @@ public class PhysicianDetailsController extends BaseController {
         Set<SicknessOutputDto> sicknessOutputDtos = physicianDetailsAdapter.allPhysicianSicknesses(getCurrentUser().getId());
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(sicknessOutputDtos));
+
+        return result;
+    }
+    @GetMapping("socialMedia/allByPhysician")
+    @Operation(summary = "Get All Physician SocialMedias")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianSocialMediaOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allPhysicianSocialMedias() {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        Set<PhysicianSocialMediaOutputDto> physicianSocialMediaOutputDtos = physicianDetailsAdapter.allPhysicianSocialMedias(getCurrentUser().getId());
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianSocialMediaOutputDtos));
 
         return result;
     }

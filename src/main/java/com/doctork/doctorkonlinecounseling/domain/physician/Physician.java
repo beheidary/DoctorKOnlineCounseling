@@ -5,6 +5,7 @@ import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.user.User;
 import jakarta.persistence.Column;
@@ -40,9 +41,12 @@ public class Physician {
     private String bankShebaNumber;
     private Set<Sickness> sicknesses;
 
+    private Set<PhysicianSocialMedia> physicianSocialMedia;
 
-    public Physician(Long nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses) {
+
+    public Physician(Long nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses,Set<PhysicianSocialMedia> physicianSocialMedia) {
         this.nationalCode = nationalCode;
+        this.physicianSocialMedia = physicianSocialMedia;
         this.firstName = firstName;
         this.description = description;
         this.lastName = lastName;

@@ -48,34 +48,9 @@ public class PhysicianOutputDto {
         this.gender = gender;
         this.state = state;
         this.mainImage = mainImage;
-        this.profileNecessaryInfoInserted = profileNecessaryInfoInserted;
+        this.profileNecessaryInfoInserted = Boolean.TRUE;
         this.bankAccountNumber = bankAccountNumber;
         this.bankCardNumber = bankCardNumber;
-        this.bankShebaNumber = bankShebaNumber;
-    }
-
-
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
-    }
-
-    public void setBankAccountNumber(String bankAccountNumber) {
-        this.bankAccountNumber = bankAccountNumber;
-    }
-
-    public String getBankCardNumber() {
-        return bankCardNumber;
-    }
-
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
-    }
-
-    public String getBankShebaNumber() {
-        return bankShebaNumber;
-    }
-
-    public void setBankShebaNumber(String bankShebaNumber) {
         this.bankShebaNumber = bankShebaNumber;
     }
 
