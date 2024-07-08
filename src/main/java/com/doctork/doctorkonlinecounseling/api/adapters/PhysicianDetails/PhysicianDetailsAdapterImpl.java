@@ -52,7 +52,12 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
 
     @Override
     public Set<SicknessOutputDto> allSicknesses() {
-        return physicianDetailsMapper.sicknessModelToDto(physicianDetailsService.allSicknesses());
+        return physicianDetailsMapper.sicknessModelToDto(physicianDetailsService.allSicknesses(State.Approved));
+    }
+
+    @Override
+    public Set<SicknessOutputDto> allSicknessesWithState(State state) {
+        return physicianDetailsMapper.sicknessModelToDto(physicianDetailsService.allSicknesses(state));
     }
 
     @Override

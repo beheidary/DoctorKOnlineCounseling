@@ -14,7 +14,7 @@ public interface PhysicianDetailsRepository {
     Sickness addSickness (Sickness sickness);
     Set<Sickness> uploadSickness (String physicianId, Set<Sickness> sickness);
 
-    Set<Sickness> allSicknesses();
+    Set<Sickness> allSicknesses(State statea);
 
 
     void sicknessChangeState (Long sicknessId , State state);

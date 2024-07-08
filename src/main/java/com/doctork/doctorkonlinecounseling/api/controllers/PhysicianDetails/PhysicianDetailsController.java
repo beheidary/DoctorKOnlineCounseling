@@ -96,6 +96,21 @@ public class PhysicianDetailsController extends BaseController {
 
         return result;
     }
+    @GetMapping("/support/sickness/all")
+    //Todo access for support only
+    @Operation(summary = "Get All Sicknesses")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SicknessOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allSicknesses(@RequestParam State state ) {
+
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+
+        Set<SicknessOutputDto> sicknessOutputDtos = physicianDetailsAdapter.allSicknessesWithState(state);
+
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(sicknessOutputDtos));
+
+        return result;
+    }
 
     @GetMapping("socialMedia/all")
     @Operation(summary = "Get All SocialMedias")

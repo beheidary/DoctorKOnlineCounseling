@@ -14,7 +14,7 @@ public interface PhysicianDetailsService {
 
     void addSickness (Sickness sickness);
     Set<Sickness> uploadSickness (String physicianId, Set<Sickness> sicknesses );
-    Set<Sickness> allSicknesses ();
+    Set<Sickness> allSicknesses (State stats);
     Set<Sickness> allPhysicianSicknesses (String physicianId);
 
 

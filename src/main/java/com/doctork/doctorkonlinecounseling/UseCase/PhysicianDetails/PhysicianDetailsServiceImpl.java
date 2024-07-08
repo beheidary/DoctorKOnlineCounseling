@@ -32,9 +32,9 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     }
 
     @Override
-    public Set<Sickness> allSicknesses() {
+    public Set<Sickness> allSicknesses(State state) {
 
-        return physicianDetailsRepository.allSicknesses();
+        return physicianDetailsRepository.allSicknesses(state);
     }
 
     @Override

@@ -102,14 +102,14 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     }
 
     @Override
-    public Set<Sickness> allSicknesses() {
+    public Set<Sickness> allSicknesses(State state) {
         try {
 
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             CriteriaQuery<SicknessEntity> cq = cb.createQuery(SicknessEntity.class);
             Root<SicknessEntity> root = cq.from(SicknessEntity.class);
 
-            Predicate approvedStatePredicate = cb.equal(root.get("state"), State.Approved);
+            Predicate approvedStatePredicate = cb.equal(root.get("state"), state);
             cq.where(approvedStatePredicate);
 
             List<SicknessEntity> resultList = entityManager.createQuery(cq).getResultList();

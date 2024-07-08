@@ -16,6 +16,7 @@ public interface PhysicianDetailsAdapter {
     Set<SicknessOutputDto> uploadSickness (UUID userId,Set<SicknessInputDto> sicknessInputDtos);
 
     Set<SicknessOutputDto> allSicknesses ();
+    Set<SicknessOutputDto> allSicknessesWithState (State state);
     Set<SicknessOutputDto> allPhysicianSicknesses (UUID userId);
 
     void sicknessChangeState (Long sicknessId , State state);

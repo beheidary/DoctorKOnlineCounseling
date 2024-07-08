@@ -78,7 +78,7 @@ public class ExpertiseController extends BaseController {
     @Operation(summary = "Get All Expertise")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExpertiseOutputDto.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> getExpertises(/*@RequestParam(required = false) String city */){
+    DeferredResult<ResponseEntity<?>> AllExpertises(/*@RequestParam(required = false) String city */){
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
@@ -145,7 +145,7 @@ public class ExpertiseController extends BaseController {
     @PreAuthorize("hasRole('ROLE_Physician')")
     @PostMapping(value = "expertise/requestToAdd")
     @SecurityRequirement(name = "security_auth")
-    public ResponseEntity<Void> addSickness(@RequestParam String expertiseName ) {
+    public ResponseEntity<Void> addExpertises(@RequestParam String expertiseName ) {
         expertiseAdapter.requestToAddExpertise(getCurrentUser().getId() , expertiseName);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
