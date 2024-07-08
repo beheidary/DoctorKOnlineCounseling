@@ -1,24 +1,39 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.Physician;
 
-import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
+
+import java.time.LocalDateTime;
 
 public class ExpertiseInputDto {
 
 
+    private Long id;
+
     private String name;
 
-    private ExpertiseLatinNames latinName;
+       private String latinName;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     private String imageName;
 
 
-
-    public ExpertiseInputDto(String imageName, String name, ExpertiseLatinNames latinName) {
+    public ExpertiseInputDto(Long id, String name, String latinName, LocalDateTime createdAt, LocalDateTime updatedAt, String imageName) {
+        this.id = id;
         this.name = name;
-        this.imageName = imageName;
         this.latinName = latinName;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.imageName = imageName;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -28,12 +43,28 @@ public class ExpertiseInputDto {
         this.name = name;
     }
 
-    public ExpertiseLatinNames getLatinName() {
+    public String getLatinName() {
         return latinName;
     }
 
-    public void setLatinName(ExpertiseLatinNames latinName) {
+    public void setLatinName(String latinName) {
         this.latinName = latinName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getImageName() {

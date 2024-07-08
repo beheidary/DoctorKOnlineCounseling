@@ -16,7 +16,7 @@ public class ExpertiseNotFoundException extends NotFoundException{
 
     public ExpertiseNotFoundException()
     {
-        super(83,"Physician.NotFound", HttpStatus.BAD_REQUEST);
+        super(83,"Expertise.NotFound", HttpStatus.BAD_REQUEST);
     }
 
 }

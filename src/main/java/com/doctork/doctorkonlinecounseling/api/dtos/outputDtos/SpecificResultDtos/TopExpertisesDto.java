@@ -1,20 +1,19 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos;
 
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician.PhysicianOutputDto;
-import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 import java.util.List;
 
 public class TopExpertisesDto{
         private String name;
-        private ExpertiseLatinNames latinName;
+           private String latinName;
 
         private String imageName;
         private List<PhysicianOutputDto> physicians;
 
 
 
-        public TopExpertisesDto(String imageName, String name, ExpertiseLatinNames latinName, List<PhysicianOutputDto> physicians) {
+        public TopExpertisesDto(String imageName, String name, String latinName, List<PhysicianOutputDto> physicians) {
             this.name = name;
             this.imageName = imageName;
             this.latinName = latinName;
@@ -40,11 +39,11 @@ public class TopExpertisesDto{
             this.name = name;
         }
 
-        public ExpertiseLatinNames getLatinName() {
+        public String getLatinName() {
             return latinName;
         }
 
-        public void setLatinName(ExpertiseLatinNames latinName) {
+        public void setLatinName(String latinName) {
             this.latinName = latinName;
         }
 

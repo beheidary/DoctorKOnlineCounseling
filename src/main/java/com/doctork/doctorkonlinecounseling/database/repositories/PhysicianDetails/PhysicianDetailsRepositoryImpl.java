@@ -82,7 +82,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     public Set<Sickness> uploadSickness(String physicianId, Set<Sickness> sickness) {
     try {
         PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
-        physicianEntity.setSicknessEntities(physicianDetailsEntityMapper.sicknessModelToEntity(sickness));
+        physicianEntity.setSicknesses(physicianDetailsEntityMapper.sicknessModelToEntity(sickness));
         physicianMySqlRepository.save(physicianEntity);
         return sickness;
     } catch (
@@ -139,7 +139,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
         try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
-            return physicianDetailsEntityMapper.sicknessEntityToModel(physicianEntity.getSicknessEntities());
+            return physicianDetailsEntityMapper.sicknessEntityToModel(physicianEntity.getSicknesses());
         } catch (
     QueryTimeoutException ex) {
         throw new DatabaseTimeOutException();
@@ -161,7 +161,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     public Set<PhysicianSocialMedia> allPhysicianSocialMedias(String physicianId) {
         try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
-            return physicianDetailsEntityMapper.physicianSocialMediaEntityToModel(physicianEntity.getPhysicianSocialMediaEntities());
+            return physicianDetailsEntityMapper.physicianSocialMediaEntityToModel(physicianEntity.getPhysicianSocialMedia());
         } catch (
                 QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();
@@ -223,7 +223,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
                 newEntity.setSocialMediaId(newEntity.getSocialMedia().getId());
             });
 
-            Set<PhysicianSocialMediaEntity> currentPhysicianSocialMediaEntities = physicianEntity.getPhysicianSocialMediaEntities();
+            Set<PhysicianSocialMediaEntity> currentPhysicianSocialMediaEntities = physicianEntity.getPhysicianSocialMedia();
 
             Set<PhysicianSocialMediaEntity> entitiesToRemove = currentPhysicianSocialMediaEntities.stream()
                     .filter(entity -> newPhysicianSocialMediaEntities.stream().noneMatch(newEntity -> newEntity.getSocialMediaId().equals(entity.getSocialMediaId())))
@@ -234,12 +234,12 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
                 physicianSocialMediaMySqlRepository.delete(entity);
             });
 
-            physicianEntity.getPhysicianSocialMediaEntities().clear();
-            physicianEntity.getPhysicianSocialMediaEntities().addAll(newPhysicianSocialMediaEntities);
+            physicianEntity.getPhysicianSocialMedia().clear();
+            physicianEntity.getPhysicianSocialMedia().addAll(newPhysicianSocialMediaEntities);
 
             physicianEntity = physicianMySqlRepository.save(physicianEntity);
 
-            return physicianDetailsEntityMapper.physicianSocialMediaEntityToModel(physicianEntity.getPhysicianSocialMediaEntities());
+            return physicianDetailsEntityMapper.physicianSocialMediaEntityToModel(physicianEntity.getPhysicianSocialMedia());
         } catch (QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();
         } catch (DataIntegrityViolationException ex) {

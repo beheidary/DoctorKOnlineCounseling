@@ -223,4 +223,12 @@ public class Physician {
     public void setBankShebaNumber(String bankShebaNumber) {
         this.bankShebaNumber = bankShebaNumber;
     }
+
+    public Set<PhysicianSocialMedia> getPhysicianSocialMedia() {
+        return physicianSocialMedia;
+    }
+
+    public void setPhysicianSocialMedia(Set<PhysicianSocialMedia> physicianSocialMedia) {
+        this.physicianSocialMedia = physicianSocialMedia;
+    }
 }

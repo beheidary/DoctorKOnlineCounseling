@@ -4,14 +4,15 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.expertise.ExpertiseRepo
 import com.doctork.doctorkonlinecounseling.boundary.in.expertise.ExpertiseService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
+import com.doctork.doctorkonlinecounseling.domain.Expertise.RequestedExpertise;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
-import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ExpertiseServiceImpl implements ExpertiseService {
@@ -23,30 +24,11 @@ public class ExpertiseServiceImpl implements ExpertiseService {
     }
 
     @Override
-    public Expertise getExpertise(ExpertiseLatinNames latinName) {
+    public Expertise getExpertise(String latinName) {
 
 
         return expertiseRepository.getExpertise(latinName);
 
-    }
-
-    @Override
-    public Expertise addPhysicianExpertise(String nationalCode, Expertise expertise) {
-
-        if(nationalCode == null )
-            throw new IdInputException();
-
-        String tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
-        if (!nationalCode.equals(tokenNationalCode))
-            throw new AccessDeniedException("You do not have the required access");
-
-
-        return expertiseRepository.addPhysicianExpertise(nationalCode,expertise);
-    }
-
-    @Override
-    public Expertise addExpertise(Expertise expertise) {
-        return expertiseRepository.addExpertise(expertise);
     }
 
     @Override
@@ -62,5 +44,35 @@ public class ExpertiseServiceImpl implements ExpertiseService {
     @Override
     public List<TopExpertises> findBestExpertisePhysicians() {
         return expertiseRepository.findBestExpertisePhysicians();
+    }
+
+    @Override
+    public Set<Expertise> uploadExpertise(String physicianId, Set<Expertise> expertise) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return expertiseRepository.uploadExpertise(physicianId,expertise);
+    }
+
+    @Override
+    public Set<Expertise> allPhysicianExpertises(String physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return expertiseRepository.allPhysicianExpertises(physicianId);
+
+    }
+
+    @Override
+    public void requestToAddExpertise(RequestedExpertise requestedExpertise) {
+        expertiseRepository.requestToAddExpertise(requestedExpertise);
+    }
+
+    @Override
+    public List<RequestedExpertise> waitingExpertises() {
+        return expertiseRepository.waitingExpertises();
+    }
+
+    @Override
+    public RequestedExpertise expertiseChangeState(RequestedExpertise requestedExpertise) {
+        return expertiseRepository.expertiseChangeState(requestedExpertise);
     }
 }

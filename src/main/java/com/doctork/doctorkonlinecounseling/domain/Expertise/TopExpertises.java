@@ -1,7 +1,6 @@
 package com.doctork.doctorkonlinecounseling.domain.Expertise;
 
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
-import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +9,13 @@ public class TopExpertises {
 
     private String name;
 
-    private ExpertiseLatinNames latinName;
+   private String latinName;
 
     private String imageName;
 
     private List<Physician> physicians = new ArrayList<>();
 
-    public TopExpertises(String imageName,String name, ExpertiseLatinNames latinName, List<Physician> physicians) {
+    public TopExpertises(String imageName,String name, String latinName, List<Physician> physicians) {
         this.name = name;
         this.imageName = imageName;
         this.latinName = latinName;
@@ -32,11 +31,11 @@ public class TopExpertises {
         this.name = name;
     }
 
-    public ExpertiseLatinNames getLatinName() {
+    public String getLatinName() {
         return latinName;
     }
 
-    public void setLatinName(ExpertiseLatinNames latinName) {
+    public void setLatinName(String latinName) {
         this.latinName = latinName;
     }
 

@@ -66,10 +66,10 @@ public class PhysicianEntity {
             joinColumns = @JoinColumn(name = "physician_id"),
             inverseJoinColumns = @JoinColumn(name = "sickess_id")
     )
-    private Set<SicknessEntity> sicknessEntities = new HashSet<>();
+    private Set<SicknessEntity> sicknesses = new HashSet<>();
 
     @OneToMany(mappedBy = "physician", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities = new HashSet<>();
+    private Set<PhysicianSocialMediaEntity> physicianSocialMedia = new HashSet<>();
 
 
     @Column(name = "physicianSystemCode", nullable = false,unique = true)
@@ -103,7 +103,7 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknessEntities, Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -114,10 +114,10 @@ public class PhysicianEntity {
         this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;
-        this.sicknessEntities = sicknessEntities;
+        this.sicknesses = sicknesses;
         this.physicianSystemCode = physicianSystemCode;
         this.status = status;
-        this.physicianSocialMediaEntities = physicianSocialMediaEntities;
+        this.physicianSocialMedia = physicianSocialMedia;
         this.state = state;
         this.user = user;
         this.mainImage = mainImage;
@@ -130,12 +130,13 @@ public class PhysicianEntity {
 
     }
 
-    public Set<SicknessEntity> getSicknessEntities() {
-        return sicknessEntities;
+
+    public Set<SicknessEntity> getSicknesses() {
+        return sicknesses;
     }
 
-    public void setSicknessEntities(Set<SicknessEntity> sicknessEntities) {
-        this.sicknessEntities = sicknessEntities;
+    public void setSicknesses(Set<SicknessEntity> sicknesses) {
+        this.sicknesses = sicknesses;
     }
 
     public String getBankAccountNumber() {
@@ -282,12 +283,12 @@ public class PhysicianEntity {
         this.user = user;
     }
 
-    public Set<PhysicianSocialMediaEntity> getPhysicianSocialMediaEntities() {
-        return physicianSocialMediaEntities;
+    public Set<PhysicianSocialMediaEntity> getPhysicianSocialMedia() {
+        return physicianSocialMedia;
     }
 
-    public void setPhysicianSocialMediaEntities(Set<PhysicianSocialMediaEntity> physicianSocialMediaEntities) {
-        this.physicianSocialMediaEntities = physicianSocialMediaEntities;
+    public void setPhysicianSocialMedia(Set<PhysicianSocialMediaEntity> physicianSocialMedia) {
+        this.physicianSocialMedia = physicianSocialMedia;
     }
 
     //    public UUID getUserId() {

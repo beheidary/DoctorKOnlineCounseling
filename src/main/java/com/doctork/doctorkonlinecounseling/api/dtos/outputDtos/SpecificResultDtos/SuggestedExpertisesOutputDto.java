@@ -1,6 +1,5 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.SpecificResultDtos;
 
-import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 public class SuggestedExpertisesOutputDto {
 
@@ -8,7 +7,7 @@ public class SuggestedExpertisesOutputDto {
 
     private String name;
 
-    private ExpertiseLatinNames latinName;
+       private String latinName;
 
     private String imageName;
 
@@ -38,11 +37,11 @@ public class SuggestedExpertisesOutputDto {
         this.name = name;
     }
 
-    public ExpertiseLatinNames getLatinName() {
+    public String getLatinName() {
         return latinName;
     }
 
-    public void setLatinName(ExpertiseLatinNames latinName) {
+    public void setLatinName(String latinName) {
         this.latinName = latinName;
     }
 

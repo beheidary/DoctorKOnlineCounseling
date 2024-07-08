@@ -1,6 +1,5 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.physician;
 
-import com.doctork.doctorkonlinecounseling.domain.Enums.ExpertiseLatinNames;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,21 +11,21 @@ public class ExpertiseOutputDto {
 
     private String name;
 
-    private LocalDateTime saveDateTime;
-    private LocalDateTime updateDateTime;
-    private ExpertiseLatinNames latinName;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+       private String latinName;
     private List<PhysicianOutputDto> physicians;
 
     private String imageName;
 
 
 
-    public ExpertiseOutputDto(Long id, String name, LocalDateTime saveDateTime, LocalDateTime updateDateTime, ExpertiseLatinNames latinName, List<PhysicianOutputDto> physicians,String imageName) {
+    public ExpertiseOutputDto(Long id, String name, LocalDateTime createdAt, LocalDateTime updatedAt, String latinName, List<PhysicianOutputDto> physicians,String imageName) {
         this.id = id;
         this.name = name;
         this.imageName = imageName;
-        this.saveDateTime = saveDateTime;
-        this.updateDateTime = updateDateTime;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.latinName = latinName;
         this.physicians = physicians;
     }
@@ -52,27 +51,27 @@ public class ExpertiseOutputDto {
         this.name = name;
     }
 
-    public LocalDateTime getSaveDateTime() {
-        return saveDateTime;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setSaveDateTime(LocalDateTime saveDateTime) {
-        this.saveDateTime = saveDateTime;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public ExpertiseLatinNames getLatinName() {
+    public String getLatinName() {
         return latinName;
     }
 
-    public void setLatinName(ExpertiseLatinNames latinName) {
+    public void setLatinName(String latinName) {
         this.latinName = latinName;
     }
 
