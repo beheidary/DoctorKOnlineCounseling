@@ -1,9 +1,11 @@
 package com.doctork.doctorkonlinecounseling.database.mappers;
 
 
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.EducationEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SocialMediaEntity;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
@@ -33,6 +35,11 @@ public interface PhysicianDetailsEntityMapper {
     SocialMediaEntity socialMediaModelToEntity(SocialMedia socialMedia);
 
     SocialMedia socialMediaEntityToModel(SocialMediaEntity socialMediaEntity);
+
+    Education educationEntityToModel(EducationEntity educationEntity);
+    List<Education> educationEntityToModel(List<EducationEntity> educationEntity);
+
+    EducationEntity educationModelToEntity (Education education);
 
 
 }

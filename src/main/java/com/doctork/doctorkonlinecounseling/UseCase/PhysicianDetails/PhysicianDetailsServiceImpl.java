@@ -4,10 +4,13 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.Physic
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -75,5 +78,35 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     @Override
     public void addSocialMedia(SocialMedia socialMedia) {
         physicianDetailsRepository.addSocialMedia(socialMedia);
+    }
+
+    @Override
+    public void addEducation(String physicianId, Education education) {
+        if (physicianId == null)
+            throw new IdInputException();
+        physicianDetailsRepository.addEducation(physicianId,education);
+
+    }
+
+    @Override
+    public Long deleteEducation(String physicianId, Long educationId) {
+        if (physicianId == null || educationId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.deleteEducation(physicianId,educationId);
+    }
+
+    @Override
+    public void editEducation(String physicianId, Education education, Long educationId) {
+        if (physicianId == null || educationId == null)
+            throw new IdInputException();
+        physicianDetailsRepository.editEducation(physicianId,education,educationId);
+
+    }
+
+    @Override
+    public List<Education> allPhysicianEducations(String physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allPhysicianEducations(physicianId);
     }
 }

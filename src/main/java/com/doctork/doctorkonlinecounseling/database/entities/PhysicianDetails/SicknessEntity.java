@@ -21,7 +21,7 @@ public class SicknessEntity {
 
     public SicknessEntity(Long id, String sicknessName, State state) {
         this.id = id;
-        SicknessName = sicknessName;
+        this.SicknessName = sicknessName;
         this.state = state;
     }
 

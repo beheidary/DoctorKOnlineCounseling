@@ -3,19 +3,19 @@ package com.doctork.doctorkonlinecounseling.database.repositories.PhysicianDetai
 import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.PhysicianDetailsRepository;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.EducationNotfoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.SicknessNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.EducationEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SocialMediaEntity;
-import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMySqlRepository;
-import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianSocialMediaMySqlRepository;
-import com.doctork.doctorkonlinecounseling.database.jpaRepositories.SicknessMySqlRepository;
-import com.doctork.doctorkonlinecounseling.database.jpaRepositories.SocialMediaMySqlRepository;
+import com.doctork.doctorkonlinecounseling.database.jpaRepositories.*;
 import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianDetailsEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
@@ -44,8 +44,11 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     private final PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository;
     private final SocialMediaMySqlRepository socialMediaMySqlRepository;
 
-    public PhysicianDetailsRepositoryImpl(PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
+    private final EducationMySqlRepository educationMySqlRepository;
+
+    public PhysicianDetailsRepositoryImpl(EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
         this.physicianDetailsEntityMapper = physicianDetailsEntityMapper;
+        this.educationMySqlRepository = educationMySqlRepository;
         this.socialMediaMySqlRepository = socialMediaMySqlRepository;
         this.physicianMySqlRepository = physicianMySqlRepository;
         this.entityManager = entityManager;
@@ -261,6 +264,106 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
         } catch (
                 QueryTimeoutException ex) {
 
+            throw new DatabaseTimeOutException();
+
+        } catch (
+                DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    public void addEducation(String physicianId, Education education) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+
+            EducationEntity educationEntity = physicianDetailsEntityMapper.educationModelToEntity(education);
+            educationEntity.setPhysician(physicianEntity);
+            educationEntity = educationMySqlRepository.save(educationEntity);
+        } catch (
+                QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (
+                DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public Long deleteEducation(String physicianId, Long educationId) {
+        try {
+        EducationEntity educationEntity = educationMySqlRepository.findById(educationId).orElseThrow(EducationNotfoundException::new);
+        educationMySqlRepository.delete(educationEntity);
+        return educationId;
+
+        } catch (
+        QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (
+        DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public void editEducation(String physicianId, Education education, Long educationId) {
+        try {
+            EducationEntity educationEntity = educationMySqlRepository.findById(educationId).orElseThrow(EducationNotfoundException::new);
+            educationEntity.setEducationLevel(education.getEducationLevel());
+            educationEntity.setEducationPlace(education.getEducationPlace());
+            educationEntity.setFieldOfStudy(education.getFieldOfStudy());
+            educationEntity.setGraduationDate(education.getGraduationDate());
+            educationMySqlRepository.save(educationEntity);
+        } catch (
+                QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (
+                DataIntegrityViolationException ex) {
+
+            throw new InvalidDataException();
+
+        } catch (Exception ex) {
+
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Education> allPhysicianEducations(String physicianId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            return physicianDetailsEntityMapper.educationEntityToModel(physicianEntity.getEducations());
+        }catch (
+                QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();
 
         } catch (

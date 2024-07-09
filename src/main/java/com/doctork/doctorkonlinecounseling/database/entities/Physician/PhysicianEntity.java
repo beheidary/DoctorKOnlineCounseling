@@ -2,6 +2,7 @@ package com.doctork.doctorkonlinecounseling.database.entities.Physician;
 
 
 import com.doctork.doctorkonlinecounseling.database.entities.Expertise.ExpertiseEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.EducationEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SocialMediaEntity;
@@ -47,11 +48,6 @@ public class PhysicianEntity {
     @Column(name = "gender" )
     private Gender gender;
 
-
-
-    @Column(name = "educationLevel")
-    private EducationLevel educationLevel;
-
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updated_At;
@@ -74,6 +70,10 @@ public class PhysicianEntity {
 
     @Column(name = "physicianSystemCode", nullable = false,unique = true)
     private String physicianSystemCode;
+
+    @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<EducationEntity> educations ;
+
 
     @Column(name = "status", nullable = false)
     private PhysicianStatus status;
@@ -103,7 +103,7 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, EducationLevel educationLevel, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -111,7 +111,7 @@ public class PhysicianEntity {
         this.dateOfBirth = dateOfBirth;
         this.businessWeight = businessWeight;
         this.gender = gender;
-        this.educationLevel = educationLevel;
+        this.educations = educations;
         this.updated_At = updated_At;
         this.expertises = expertises;
         this.sicknesses = sicknesses;
@@ -130,6 +130,13 @@ public class PhysicianEntity {
 
     }
 
+    public List<EducationEntity> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<EducationEntity> educations) {
+        this.educations = educations;
+    }
 
     public Set<SicknessEntity> getSicknesses() {
         return sicknesses;
@@ -234,15 +241,6 @@ public class PhysicianEntity {
     public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
-
-    public EducationLevel getEducationLevel() {
-        return educationLevel;
-    }
-
-    public void setEducationLevel(EducationLevel educationLevel) {
-        this.educationLevel = educationLevel;
-    }
-
     public LocalDateTime getUpdated_At() {
         return updated_At;
     }

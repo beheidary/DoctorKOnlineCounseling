@@ -135,7 +135,6 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
 
                 physicianEntity.setDateOfBirth(physician.getDateOfBirth());
-                physicianEntity.setEducationLevel(physician.getEducationLevel());
                 physicianEntity.setMainImage(physician.getMainImage());
                 physicianEntity = physicianMySqlRepository.save(physicianEntity);
 

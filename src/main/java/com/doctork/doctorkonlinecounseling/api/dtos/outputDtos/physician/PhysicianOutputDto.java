@@ -14,7 +14,6 @@ public class PhysicianOutputDto {
     private String firstName;
     private String lastName;
     private String description;
-    private EducationLevel educationLevel;
     private String physicianSystemCode;
     private LocalDateTime updated_At;
     private PhysicianStatus status;
@@ -36,11 +35,10 @@ public class PhysicianOutputDto {
 //    private UUID userId;
 
 
-    public PhysicianOutputDto(String firstName, String lastName, String description, EducationLevel educationLevel, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, String nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianOutputDto(String firstName, String lastName, String description, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, String nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
-        this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
         this.updated_At = updated_At;
         this.status = status;
@@ -102,20 +100,12 @@ public class PhysicianOutputDto {
         this.lastName = lastName;
     }
 
-    public EducationLevel getEducationLevel() {
-        return educationLevel;
-    }
-
     public Boolean getProfileNecessaryInfoInserted() {
         return profileNecessaryInfoInserted;
     }
 
     public void setProfileNecessaryInfoInserted(Boolean profileNecessaryInfoInserted) {
         this.profileNecessaryInfoInserted = profileNecessaryInfoInserted;
-    }
-
-    public void setEducationLevel(EducationLevel educationLevel) {
-        this.educationLevel = educationLevel;
     }
 
     public String getPhysicianSystemCode() {

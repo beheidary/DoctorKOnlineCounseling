@@ -25,7 +25,6 @@ public class Physician {
     private String lastName;
     private State state;
     private LocalDate dateOfBirth;
-    private EducationLevel educationLevel;
     private LocalDateTime updated_At;
     private Set<Expertise> expertises = new HashSet<>();
     private String physicianSystemCode;
@@ -44,7 +43,7 @@ public class Physician {
     private Set<PhysicianSocialMedia> physicianSocialMedia;
 
 
-    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, EducationLevel educationLevel, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses,Set<PhysicianSocialMedia> physicianSocialMedia) {
+    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses,Set<PhysicianSocialMedia> physicianSocialMedia) {
         this.nationalCode = nationalCode;
         this.physicianSocialMedia = physicianSocialMedia;
         this.firstName = firstName;
@@ -52,7 +51,6 @@ public class Physician {
         this.lastName = lastName;
         this.state = state;
         this.dateOfBirth = dateOfBirth;
-        this.educationLevel = educationLevel;
         this.updated_At = updated_At;
         this.expertises = expertises;
         this.physicianSystemCode = physicianSystemCode;
@@ -134,14 +132,6 @@ public class Physician {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public EducationLevel getEducationLevel() {
-        return educationLevel;
-    }
-
-    public void setEducationLevel(EducationLevel educationLevel) {
-        this.educationLevel = educationLevel;
     }
 
     public LocalDateTime getUpdated_At() {

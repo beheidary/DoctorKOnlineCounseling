@@ -34,7 +34,6 @@ public class PhysicianInputDto {
 
 
 
-    private EducationLevel educationLevel;
 
     @NotNull
     private String physicianSystemCode;
@@ -53,13 +52,12 @@ public class PhysicianInputDto {
     }
 
 
-    public PhysicianInputDto(String firstName, String lastName, String nationalCode, String description, LocalDate dateOfBirth, EducationLevel educationLevel, String physicianSystemCode, Gender gender, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianInputDto(String firstName, String lastName, String nationalCode, String description, LocalDate dateOfBirth, String physicianSystemCode, Gender gender, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
         this.description = description;
         this.dateOfBirth = dateOfBirth;
-        this.educationLevel = educationLevel;
         this.physicianSystemCode = physicianSystemCode;
         this.gender = gender;
         this.mainImage = mainImage;
@@ -145,14 +143,6 @@ public class PhysicianInputDto {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public EducationLevel getEducationLevel() {
-        return educationLevel;
-    }
-
-    public void setEducationLevel(EducationLevel educationLevel) {
-        this.educationLevel = educationLevel;
     }
 
     public String getPhysicianSystemCode() {

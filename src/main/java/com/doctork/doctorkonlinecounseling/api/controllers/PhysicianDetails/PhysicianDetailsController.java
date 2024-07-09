@@ -2,7 +2,9 @@ package com.doctork.doctorkonlinecounseling.api.controllers.PhysicianDetails;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails.PhysicianDetailsAdapter;
 import com.doctork.doctorkonlinecounseling.api.controllers.BaseController;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.EducationInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.PhysicianSocialMediaInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.EducationOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.PhysicianSocialMediaOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
@@ -20,6 +22,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -163,5 +166,42 @@ public class PhysicianDetailsController extends BaseController {
     public ResponseEntity<Void> sicknessChangeState(@RequestParam Long sicknessId , State state ) {
         physicianDetailsAdapter.sicknessChangeState(sicknessId,state);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "add Education")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PostMapping(value = "education/add")
+    public ResponseEntity<Void> addEducation(@RequestBody EducationInputDto educationInputDto) {
+        physicianDetailsAdapter.addEducation(getCurrentUser().getId(),educationInputDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "edit Education")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping(value = "education/edit")
+    public ResponseEntity<Void> editEducation(@RequestParam Long educationId, @RequestBody EducationInputDto educationInputDto) {
+        physicianDetailsAdapter.editEducation(getCurrentUser().getId(),educationInputDto,educationId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "delete Education")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @DeleteMapping(value = "education/delete")
+    public DeferredResult<ResponseEntity<?>> deleteEducation(@RequestParam Long educationId) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        educationId = physicianDetailsAdapter.deleteEducation(getCurrentUser().getId(),educationId);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(educationId));
+        return result;
+    }
+
+    @Operation(summary = "all physician Educations")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping(value = "education/allPhysicianEducations")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EducationOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allPhysicianEducations() {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<EducationOutputDto> educationOutputDtos = physicianDetailsAdapter.allPhysicianEducations(getCurrentUser().getId());
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(educationOutputDtos));
+        return result;
     }
 }

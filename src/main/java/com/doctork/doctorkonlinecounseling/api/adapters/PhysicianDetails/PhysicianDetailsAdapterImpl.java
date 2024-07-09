@@ -1,6 +1,8 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails;
 
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.EducationInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.PhysicianSocialMediaInputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.EducationOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.PhysicianSocialMediaOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
@@ -10,12 +12,14 @@ import com.doctork.doctorkonlinecounseling.boundary.in.Physician.PhysicianServic
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -100,6 +104,40 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         SocialMedia socialMedia = new SocialMedia(null,persianName,latinName,State.Approved);
 
         physicianDetailsService.addSocialMedia(socialMedia);
+    }
+
+    @Override
+    public void addEducation(UUID userId, EducationInputDto educationInputDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.addEducation(physician.getNationalCode(),physicianDetailsMapper.educationDtoToModel(educationInputDto));
+
+    }
+
+    @Override
+    public Long deleteEducation(UUID userId, Long educationId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsService.deleteEducation(physician.getNationalCode(),educationId);
+    }
+
+    @Override
+    public void editEducation(UUID userId, EducationInputDto educationInputDto, Long educationId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.editEducation(physician.getNationalCode(),physicianDetailsMapper.educationDtoToModel(educationInputDto),educationId);
+
+    }
+
+    @Override
+    public List<EducationOutputDto> allPhysicianEducations(UUID userId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsMapper.educationModelToDto(physicianDetailsService.allPhysicianEducations(physician.getNationalCode()));
     }
 
 }
