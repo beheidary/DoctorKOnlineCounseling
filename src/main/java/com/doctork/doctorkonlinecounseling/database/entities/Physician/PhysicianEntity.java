@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.entities.Physician;
 
 
+import com.doctork.doctorkonlinecounseling.database.entities.CareCenter.CareCenterEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Expertise.ExpertiseEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
@@ -80,6 +81,14 @@ public class PhysicianEntity {
     @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<AwardsAndHonorsEntity> awardsAndHonors ;
 
+    @ManyToMany(cascade = {  }, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "physician_careCenter",
+            joinColumns = @JoinColumn(name = "physician_id"),
+            inverseJoinColumns = @JoinColumn(name = "careCenter_id")
+    )
+    private Set<CareCenterEntity> careCenters = new HashSet<>();;
+
 
 
 
@@ -111,7 +120,7 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences, List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,Set<CareCenterEntity> careCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
         this.awardsAndHonors = awardsAndHonors;
         this.firstName = firstName;
@@ -126,6 +135,7 @@ public class PhysicianEntity {
         this.updated_At = updated_At;
         this.expertises = expertises;
         this.sicknesses = sicknesses;
+        this.careCenters = careCenters;
         this.physicianSystemCode = physicianSystemCode;
         this.status = status;
         this.physicianSocialMedia = physicianSocialMedia;
@@ -191,6 +201,15 @@ public class PhysicianEntity {
 
     public String getPhysicianSystemCode() {
         return physicianSystemCode;
+    }
+
+
+    public Set<CareCenterEntity> getCareCenters() {
+        return careCenters;
+    }
+
+    public void setCareCenters(Set<CareCenterEntity> careCenters) {
+        this.careCenters = careCenters;
     }
 
     public String getMainImage() {
