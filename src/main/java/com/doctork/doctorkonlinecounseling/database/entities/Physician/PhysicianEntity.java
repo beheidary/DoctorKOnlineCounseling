@@ -77,6 +77,10 @@ public class PhysicianEntity {
     @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<MembershipEntity> memberships ;
 
+    @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<AwardsAndHonorsEntity> awardsAndHonors ;
+
+
 
 
     @Column(name = "status", nullable = false)
@@ -107,8 +111,9 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences, List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
+        this.awardsAndHonors = awardsAndHonors;
         this.firstName = firstName;
         this.lastName = lastName;
         this.experiences = experiences;
@@ -146,6 +151,14 @@ public class PhysicianEntity {
 
     public Set<SicknessEntity> getSicknesses() {
         return sicknesses;
+    }
+
+    public List<AwardsAndHonorsEntity> getAwardsAndHonors() {
+        return awardsAndHonors;
+    }
+
+    public void setAwardsAndHonors(List<AwardsAndHonorsEntity> awardsAndHonors) {
+        this.awardsAndHonors = awardsAndHonors;
     }
 
     public void setSicknesses(Set<SicknessEntity> sicknesses) {

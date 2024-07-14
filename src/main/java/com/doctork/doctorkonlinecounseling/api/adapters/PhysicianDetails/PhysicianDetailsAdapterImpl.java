@@ -197,6 +197,39 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         return physicianDetailsMapper.membershipModelToDto(physicianDetailsService.allPhysicianMemberships(physician.getNationalCode()));
     }
 
+    @Override
+    public void addAwardOrHonor(UUID userId, AwardsAndHonorsInputDto awardsAndHonorsInputDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.addAwardOrHonor(physician.getNationalCode(), physicianDetailsMapper.awardsAndHonorsDtoToModel(awardsAndHonorsInputDto));
+    }
+
+    @Override
+    public Long deleteAwardOrHonor(UUID userId, Long awardOrHonorId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsService.deleteAwardOrHonor(physician, awardOrHonorId);
+    }
+
+    @Override
+    public void editAwardOrHonor(UUID userId, AwardsAndHonorsInputDto awardsAndHonorsInputDto, Long awardOrHonorId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.editAwardOrHonor(physician, physicianDetailsMapper.awardsAndHonorsDtoToModel(awardsAndHonorsInputDto), awardOrHonorId);
+    }
+
+    @Override
+    public List<AwardsAndHonorsOutputDto> allPhysicianAwardsAndHonors(UUID userId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsMapper.awardsAndHonorsModelToDto(physicianDetailsService.allPhysicianAwardsAndHonors(physician.getNationalCode()));
+    }
+
+
 
 
 

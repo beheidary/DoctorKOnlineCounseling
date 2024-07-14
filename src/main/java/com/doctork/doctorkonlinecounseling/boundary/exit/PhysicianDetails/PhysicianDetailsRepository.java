@@ -50,6 +50,16 @@ public interface PhysicianDetailsRepository {
 
     List<Membership> allPhysicianMemberships(String physicianId);
 
+    void addAwardOrHonor(String physicianId, AwardsAndHonors awardsAndHonors);
+
+    Long deleteAwardOrHonor(Physician physician, Long awardOrHonorId);
+
+    void editAwardOrHonor(Physician physician, AwardsAndHonors awardsAndHonors, Long awardOrHonorId);
+
+    List<AwardsAndHonors> allPhysicianAwardsAndHonors(String physicianId);
+
+
+
 
 
 }

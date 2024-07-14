@@ -42,4 +42,10 @@ public interface PhysicianDetailsMapper {
 
     List<MembershipOutputDto> membershipModelToDto(List<Membership> membership);
 
+    AwardsAndHonors awardsAndHonorsDtoToModel(AwardsAndHonorsInputDto awardsAndHonorsInputDto);
+
+    AwardsAndHonorsOutputDto awardsAndHonorsModelToDto(AwardsAndHonors awardsAndHonors);
+
+    List<AwardsAndHonorsOutputDto> awardsAndHonorsModelToDto(List<AwardsAndHonors> awardsAndHonors);
+
 }

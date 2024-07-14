@@ -152,4 +152,29 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
             throw new IdInputException();
         return physicianDetailsRepository.allPhysicianMemberships(physicianId);
     }
+
+    @Override
+    public void addAwardOrHonor(String physicianId, AwardsAndHonors awardsAndHonors) {
+        if (physicianId == null)
+            throw new IdInputException();
+        physicianDetailsRepository.addAwardOrHonor(physicianId, awardsAndHonors);
+    }
+
+    @Override
+    public Long deleteAwardOrHonor(Physician physician, Long awardOrHonorId) {
+        return physicianDetailsRepository.deleteAwardOrHonor(physician, awardOrHonorId);
+    }
+
+    @Override
+    public void editAwardOrHonor(Physician physician, AwardsAndHonors awardsAndHonors, Long awardOrHonorId) {
+        physicianDetailsRepository.editAwardOrHonor(physician, awardsAndHonors, awardOrHonorId);
+    }
+
+    @Override
+    public List<AwardsAndHonors> allPhysicianAwardsAndHonors(String physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allPhysicianAwardsAndHonors(physicianId);
+    }
+
 }

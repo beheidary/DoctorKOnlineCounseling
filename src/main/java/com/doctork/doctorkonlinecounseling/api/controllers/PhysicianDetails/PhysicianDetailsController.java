@@ -277,5 +277,42 @@ public class PhysicianDetailsController extends BaseController {
         return result;
     }
 
+    @Operation(summary = "Add Award or Honor")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PostMapping("awardsAndHonors/add")
+    public ResponseEntity<Void> addAwardOrHonor(@RequestBody AwardsAndHonorsInputDto awardsAndHonorsInputDto) {
+        physicianDetailsAdapter.addAwardOrHonor(getCurrentUser().getId(), awardsAndHonorsInputDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Edit Award or Honor")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping("awardsAndHonors/edit")
+    public ResponseEntity<Void> editAwardOrHonor(@RequestParam Long awardOrHonorId, @RequestBody AwardsAndHonorsInputDto awardsAndHonorsInputDto) {
+        physicianDetailsAdapter.editAwardOrHonor(getCurrentUser().getId(), awardsAndHonorsInputDto, awardOrHonorId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Delete Award or Honor")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @DeleteMapping("awardsAndHonors/delete")
+    public DeferredResult<ResponseEntity<?>> deleteAwardOrHonor(@RequestParam Long awardOrHonorId) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        awardOrHonorId = physicianDetailsAdapter.deleteAwardOrHonor(getCurrentUser().getId(), awardOrHonorId);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(awardOrHonorId));
+        return result;
+    }
+
+    @Operation(summary = "All Physician Awards and Honors")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping("awardsAndHonors/all")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AwardsAndHonorsOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allPhysicianAwardsAndHonors() {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<AwardsAndHonorsOutputDto> awardsAndHonorsOutputDtos = physicianDetailsAdapter.allPhysicianAwardsAndHonors(getCurrentUser().getId());
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(awardsAndHonorsOutputDtos));
+        return result;
+    }
+
 
 }

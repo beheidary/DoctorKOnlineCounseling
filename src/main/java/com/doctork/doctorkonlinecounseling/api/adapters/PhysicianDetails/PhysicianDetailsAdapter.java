@@ -54,4 +54,12 @@ public interface PhysicianDetailsAdapter {
 
     List<MembershipOutputDto> allPhysicianMemberships(UUID userId);
 
+    void addAwardOrHonor(UUID userId, AwardsAndHonorsInputDto awardsAndHonorsInputDto);
+
+    Long deleteAwardOrHonor(UUID userId, Long awardOrHonorId);
+
+    void editAwardOrHonor(UUID userId, AwardsAndHonorsInputDto awardsAndHonorsInputDto, Long awardOrHonorId);
+
+    List<AwardsAndHonorsOutputDto> allPhysicianAwardsAndHonors(UUID userId);
+
 }

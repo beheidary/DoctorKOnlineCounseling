@@ -47,6 +47,12 @@ public interface PhysicianDetailsEntityMapper {
 
     MembershipEntity membershipModelToEntity(Membership membership);
 
+    AwardsAndHonors awardsAndHonorsEntityToModel(AwardsAndHonorsEntity awardsAndHonorsEntity);
+
+    List<AwardsAndHonors> awardsAndHonorsEntityToModel(List<AwardsAndHonorsEntity> awardsAndHonorsEntities);
+
+    AwardsAndHonorsEntity awardsAndHonorsModelToEntity(AwardsAndHonors awardsAndHonors);
+
 
 
 
