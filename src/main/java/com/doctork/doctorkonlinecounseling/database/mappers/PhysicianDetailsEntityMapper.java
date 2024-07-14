@@ -1,14 +1,8 @@
 package com.doctork.doctorkonlinecounseling.database.mappers;
 
 
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.EducationEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SocialMediaEntity;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.*;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -40,6 +34,22 @@ public interface PhysicianDetailsEntityMapper {
     List<Education> educationEntityToModel(List<EducationEntity> educationEntity);
 
     EducationEntity educationModelToEntity (Education education);
+
+    Experiences experiencesEntityToModel(ExperiencesEntity experiencesEntity);
+
+    List<Experiences> experiencesEntityToModel(List<ExperiencesEntity> experiencesEntities);
+
+   ExperiencesEntity experiencesModelToEntity(Experiences experiences);
+
+    Membership membershipEntityToModel(MembershipEntity membershipEntity);
+
+    List<Membership> membershipEntityToModel(List<MembershipEntity> membershipEntities);
+
+    MembershipEntity membershipModelToEntity(Membership membership);
+
+
+
+
 
 
 }

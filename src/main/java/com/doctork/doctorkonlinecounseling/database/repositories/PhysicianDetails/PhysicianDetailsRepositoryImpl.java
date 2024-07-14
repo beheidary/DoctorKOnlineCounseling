@@ -1,24 +1,23 @@
 package com.doctork.doctorkonlinecounseling.database.repositories.PhysicianDetails;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.PhysicianDetailsRepository;
+import com.doctork.doctorkonlinecounseling.common.exceptions.BaseException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.EducationNotfoundException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.ExperienceNotfoundException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.MembershipNotfoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.SicknessNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.EducationEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SocialMediaEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.*;
 import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianDetailsEntityMapper;
+import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -44,11 +43,18 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     private final PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository;
     private final SocialMediaMySqlRepository socialMediaMySqlRepository;
 
-    private final EducationMySqlRepository educationMySqlRepository;
+    private final PhysicianEntityMapper physicianEntityMapper;
 
-    public PhysicianDetailsRepositoryImpl(EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
+    private final EducationMySqlRepository educationMySqlRepository;
+    private final ExperiencesMySqlRepository experiencesMySqlRepository;
+    private final MembershipMySqlRepository membershipMySqlRepository;
+
+    public PhysicianDetailsRepositoryImpl(MembershipMySqlRepository membershipMySqlRepository,PhysicianEntityMapper physicianEntityMapper,ExperiencesMySqlRepository experiencesMySqlRepository , EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
         this.physicianDetailsEntityMapper = physicianDetailsEntityMapper;
+        this.physicianEntityMapper = physicianEntityMapper;
+        this.membershipMySqlRepository = membershipMySqlRepository;
         this.educationMySqlRepository = educationMySqlRepository;
+        this.experiencesMySqlRepository = experiencesMySqlRepository;
         this.socialMediaMySqlRepository = socialMediaMySqlRepository;
         this.physicianMySqlRepository = physicianMySqlRepository;
         this.entityManager = entityManager;
@@ -74,9 +80,10 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -174,9 +181,10 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -204,9 +212,10 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -271,9 +280,10 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -296,18 +306,19 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
 
     @Override
     @Transactional
-    public Long deleteEducation(String physicianId, Long educationId) {
+    public Long deleteEducation(Physician physician, Long educationId) {
         try {
-        EducationEntity educationEntity = educationMySqlRepository.findById(educationId).orElseThrow(EducationNotfoundException::new);
+        EducationEntity educationEntity = educationMySqlRepository.findEducationEntityByPhysicianAndId(physicianEntityMapper.modelToEntity(physician),educationId).orElseThrow(EducationNotfoundException::new);
         educationMySqlRepository.delete(educationEntity);
         return educationId;
 
@@ -321,18 +332,19 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
 
     @Override
     @Transactional
-    public void editEducation(String physicianId, Education education, Long educationId) {
+    public void editEducation(Physician physician, Education education, Long educationId) {
         try {
-            EducationEntity educationEntity = educationMySqlRepository.findById(educationId).orElseThrow(EducationNotfoundException::new);
+            EducationEntity educationEntity = educationMySqlRepository.findEducationEntityByPhysicianAndId(physicianEntityMapper.modelToEntity(physician),educationId).orElseThrow(EducationNotfoundException::new);
             educationEntity.setEducationLevel(education.getEducationLevel());
             educationEntity.setEducationPlace(education.getEducationPlace());
             educationEntity.setFieldOfStudy(education.getFieldOfStudy());
@@ -348,9 +360,10 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
 
@@ -371,9 +384,10 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -394,9 +408,162 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public void addExperiences(String physicianId, Experiences experiences) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+
+            ExperiencesEntity experiencesEntity = physicianDetailsEntityMapper.experiencesModelToEntity(experiences);
+            experiencesEntity.setPhysician(physicianEntity);
+            experiencesEntity = experiencesMySqlRepository.save(experiencesEntity);
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public Long deleteExperiences(Physician physician, Long experiencesId) {
+        try {
+            ExperiencesEntity experiencesEntity = experiencesMySqlRepository.findExperiencesEntityByPhysicianAndId(physicianEntityMapper.modelToEntity(physician),experiencesId).orElseThrow(ExperienceNotfoundException::new);
+            experiencesMySqlRepository.delete(experiencesEntity);
+            return experiencesId;
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public void editExperiences(Physician physician, Experiences experiences, Long experiencesId) {
+        try {
+            ExperiencesEntity experiencesEntity = experiencesMySqlRepository.findExperiencesEntityByPhysicianAndId(physicianEntityMapper.modelToEntity(physician),experiencesId).orElseThrow(ExperienceNotfoundException::new);
+            experiencesEntity.setExperienceTitle(experiences.getExperienceTitle());
+            experiencesMySqlRepository.save(experiencesEntity);
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Experiences> allPhysicianExperiences(String physicianId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            return physicianDetailsEntityMapper.experiencesEntityToModel(physicianEntity.getExperiences());
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    public void addMembership(String physicianId, Membership membership) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+
+            MembershipEntity membershipEntity = physicianDetailsEntityMapper.membershipModelToEntity(membership);
+            membershipEntity.setPhysician(physicianEntity);
+            membershipEntity = membershipMySqlRepository.save(membershipEntity);
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public Long deleteMembership(Physician physician, Long membershipId) {
+        try {
+            MembershipEntity membershipEntity = membershipMySqlRepository.findMembershipEntityByPhysicianAndId(physicianEntityMapper.modelToEntity(physician),membershipId).orElseThrow(MembershipNotfoundException::new);
+            membershipMySqlRepository.delete(membershipEntity);
+            return membershipId;
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public void editMembership(Physician physician, Membership membership, Long membershipId) {
+        try {
+            MembershipEntity membershipEntity = membershipMySqlRepository.findMembershipEntityByPhysicianAndId(physicianEntityMapper.modelToEntity(physician),membershipId).orElseThrow(MembershipNotfoundException::new);
+            membershipEntity.setMemberOf(membership.getMemberOf());
+            membershipMySqlRepository.save(membershipEntity);
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Membership> allPhysicianMemberships(String physicianId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            return physicianDetailsEntityMapper.membershipEntityToModel(physicianEntity.getMemberships());
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }

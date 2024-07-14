@@ -3,10 +3,8 @@ package com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 
 import java.util.List;
 import java.util.Set;
@@ -29,11 +27,30 @@ public interface PhysicianDetailsService {
 
     void addEducation (String physicianId , Education education);
 
-    Long deleteEducation ( String physicianId ,Long educationId);
+    Long deleteEducation ( Physician physician ,Long educationId);
 
-    void editEducation ( String physicianId , Education education ,Long educationId );
+    void editEducation (Physician physician, Education education , Long educationId );
 
     List<Education> allPhysicianEducations(String physicianId);
+
+
+    void addExperiences(String physicianId, Experiences experiences);
+
+    Long deleteExperiences(Physician physician, Long experiencesId);
+
+    void editExperiences(Physician physician, Experiences experiences, Long experiencesId);
+
+    List<Experiences> allPhysicianExperiences(String physicianId);
+
+
+    void addMembership(String physicianId, Membership membership);
+
+    Long deleteMembership(Physician physician, Long membershipId);
+
+    void editMembership(Physician physician, Membership membership, Long membershipId);
+
+    List<Membership> allPhysicianMemberships(String physicianId);
+
 
 
 

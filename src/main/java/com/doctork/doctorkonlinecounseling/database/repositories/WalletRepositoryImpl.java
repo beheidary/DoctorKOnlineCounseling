@@ -97,9 +97,10 @@ public class WalletRepositoryImpl implements WalletRepository {
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
 
@@ -134,9 +135,10 @@ public class WalletRepositoryImpl implements WalletRepository {
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
 
@@ -160,9 +162,10 @@ public class WalletRepositoryImpl implements WalletRepository {
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -184,9 +187,10 @@ public class WalletRepositoryImpl implements WalletRepository {
 
             throw new InvalidDataException();
 
-        } catch (Exception ex) {
-
-            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
 
         }
     }

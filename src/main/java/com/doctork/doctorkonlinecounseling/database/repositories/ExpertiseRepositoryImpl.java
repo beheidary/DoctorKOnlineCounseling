@@ -191,16 +191,18 @@ public class ExpertiseRepositoryImpl implements ExpertiseRepository {
         try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
             Set<PhysicianEntity> physicians = new HashSet<>();
+            Set<Expertise> updatedExpertiseSet = new HashSet<>();
             physicians.add(physicianEntity);
             for (ExpertiseEntity expertiseEntity : expertiseEntityMapper.modelToEntity(expertise)){
+                expertiseEntity = expertiseMySqlRepository.findById(expertiseEntity.getId()).orElseThrow(ExpertiseNotFoundException::new);
                 expertiseEntity.setPhysicians(physicians);
-                expertiseMySqlRepository.save(expertiseEntity);
+                updatedExpertiseSet.add(expertiseEntityMapper.entityToModel(expertiseMySqlRepository.save(expertiseEntity)));
             }
             //Todo change state physician
             //Todo sync with elastic
-            physicianEntity.setExpertises(expertiseEntityMapper.modelToEntity(expertise));
+            physicianEntity.setExpertises(expertiseEntityMapper.modelToEntity(updatedExpertiseSet));
             physicianMySqlRepository.save(physicianEntity);
-            return expertise;
+            return updatedExpertiseSet;
         } catch (
                 QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();

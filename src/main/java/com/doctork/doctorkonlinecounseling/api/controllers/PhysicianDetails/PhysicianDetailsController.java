@@ -2,13 +2,8 @@ package com.doctork.doctorkonlinecounseling.api.controllers.PhysicianDetails;
 
 import com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails.PhysicianDetailsAdapter;
 import com.doctork.doctorkonlinecounseling.api.controllers.BaseController;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.EducationInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.PhysicianSocialMediaInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.EducationOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.PhysicianSocialMediaOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SocialMediaOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.*;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -204,4 +199,83 @@ public class PhysicianDetailsController extends BaseController {
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(educationOutputDtos));
         return result;
     }
+
+
+    @Operation(summary = "Add Experiences")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PostMapping("experiences/add")
+    public ResponseEntity<Void> addExperiences(@RequestBody ExperiencesInputDto experiencesInputDto) {
+        physicianDetailsAdapter.addExperiences(getCurrentUser().getId(), experiencesInputDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Edit Experiences")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping("experiences/edit")
+    public ResponseEntity<Void> editExperiences(@RequestParam Long experiencesId, @RequestBody ExperiencesInputDto experiencesInputDto) {
+        physicianDetailsAdapter.editExperiences(getCurrentUser().getId(), experiencesInputDto, experiencesId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Delete Experiences")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @DeleteMapping("experiences/delete")
+    public DeferredResult<ResponseEntity<?>> deleteExperiences(@RequestParam Long experiencesId) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        experiencesId = physicianDetailsAdapter.deleteExperiences(getCurrentUser().getId(), experiencesId);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(experiencesId));
+        return result;
+    }
+
+    @Operation(summary = "All Physician Experiences")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping("experiences/allPhysicianExperiences")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ExperiencesOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allPhysicianExperiences() {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<ExperiencesOutputDto> experiencesOutputDtos = physicianDetailsAdapter.allPhysicianExperiences(getCurrentUser().getId());
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(experiencesOutputDtos));
+        return result;
+    }
+
+
+
+    @Operation(summary = "Add Membership")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PostMapping("membership/add")
+    public ResponseEntity<Void> addMembership(@RequestBody MembershipInputDto membershipInputDto) {
+        physicianDetailsAdapter.addMembership(getCurrentUser().getId(), membershipInputDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Edit Membership")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping("membership/edit")
+    public ResponseEntity<Void> editMembership(@RequestParam Long membershipId, @RequestBody MembershipInputDto membershipInputDto) {
+        physicianDetailsAdapter.editMembership(getCurrentUser().getId(), membershipInputDto, membershipId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Delete Membership")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @DeleteMapping("membership/delete")
+    public DeferredResult<ResponseEntity<?>> deleteMembership(@RequestParam Long membershipId) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        membershipId = physicianDetailsAdapter.deleteMembership(getCurrentUser().getId(), membershipId);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(membershipId));
+        return result;
+    }
+
+    @Operation(summary = "All Physician Memberships")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping("membership/allPhysicianMemberships")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MembershipOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allPhysicianMemberships() {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<MembershipOutputDto> membershipOutputDtos = physicianDetailsAdapter.allPhysicianMemberships(getCurrentUser().getId());
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(membershipOutputDtos));
+        return result;
+    }
+
+
 }

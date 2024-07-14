@@ -1,12 +1,7 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.EducationInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.PhysicianSocialMediaInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.EducationOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.PhysicianSocialMediaOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SocialMediaOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.*;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 
@@ -41,7 +36,22 @@ public interface PhysicianDetailsAdapter {
     List<EducationOutputDto> allPhysicianEducations(UUID userId);
 
 
+    void addExperiences(UUID userId, ExperiencesInputDto experiencesInputDto);
+
+    Long deleteExperiences(UUID userId, Long experiencesId);
+
+    void editExperiences(UUID userId, ExperiencesInputDto experiencesInputDto, Long experiencesId);
+
+    List<ExperiencesOutputDto> allPhysicianExperiences(UUID userId);
 
 
+
+    void addMembership(UUID userId, MembershipInputDto membershipInputDto);
+
+    Long deleteMembership(UUID userId, Long membershipId);
+
+    void editMembership(UUID userId, MembershipInputDto membershipInputDto, Long membershipId);
+
+    List<MembershipOutputDto> allPhysicianMemberships(UUID userId);
 
 }

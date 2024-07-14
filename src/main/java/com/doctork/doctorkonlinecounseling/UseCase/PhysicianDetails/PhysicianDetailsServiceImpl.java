@@ -4,10 +4,8 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.Physic
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
+import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -89,17 +87,13 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
     }
 
     @Override
-    public Long deleteEducation(String physicianId, Long educationId) {
-        if (physicianId == null || educationId == null)
-            throw new IdInputException();
-        return physicianDetailsRepository.deleteEducation(physicianId,educationId);
+    public Long deleteEducation(Physician physician, Long educationId) {
+        return physicianDetailsRepository.deleteEducation(physician,educationId);
     }
 
     @Override
-    public void editEducation(String physicianId, Education education, Long educationId) {
-        if (physicianId == null || educationId == null)
-            throw new IdInputException();
-        physicianDetailsRepository.editEducation(physicianId,education,educationId);
+    public void editEducation(Physician physician, Education education, Long educationId) {
+        physicianDetailsRepository.editEducation(physician,education,educationId);
 
     }
 
@@ -108,5 +102,54 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
         if (physicianId == null)
             throw new IdInputException();
         return physicianDetailsRepository.allPhysicianEducations(physicianId);
+    }
+
+
+    @Override
+    public void addExperiences(String physicianId, Experiences experiences) {
+        if (physicianId == null)
+            throw new IdInputException();
+        physicianDetailsRepository.addExperiences(physicianId, experiences);
+    }
+
+    @Override
+    public Long deleteExperiences(Physician physician, Long experiencesId) {
+        return physicianDetailsRepository.deleteExperiences(physician, experiencesId);
+    }
+
+    @Override
+    public void editExperiences(Physician physician, Experiences experiences, Long experiencesId) {
+        physicianDetailsRepository.editExperiences(physician, experiences, experiencesId);
+    }
+
+    @Override
+    public List<Experiences> allPhysicianExperiences(String physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allPhysicianExperiences(physicianId);
+    }
+
+    @Override
+    public void addMembership(String physicianId, Membership membership) {
+        if (physicianId == null)
+            throw new IdInputException();
+        physicianDetailsRepository.addMembership(physicianId, membership);
+    }
+
+    @Override
+    public Long deleteMembership(Physician physician, Long membershipId) {
+        return physicianDetailsRepository.deleteMembership(physician, membershipId);
+    }
+
+    @Override
+    public void editMembership(Physician physician, Membership membership, Long membershipId) {
+        physicianDetailsRepository.editMembership(physician, membership, membershipId);
+    }
+
+    @Override
+    public List<Membership> allPhysicianMemberships(String physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allPhysicianMemberships(physicianId);
     }
 }

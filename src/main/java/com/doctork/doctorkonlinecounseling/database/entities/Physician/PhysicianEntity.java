@@ -2,10 +2,7 @@ package com.doctork.doctorkonlinecounseling.database.entities.Physician;
 
 
 import com.doctork.doctorkonlinecounseling.database.entities.Expertise.ExpertiseEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.EducationEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SicknessEntity;
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.SocialMediaEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
@@ -74,6 +71,13 @@ public class PhysicianEntity {
     @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<EducationEntity> educations ;
 
+    @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<ExperiencesEntity> experiences ;
+
+    @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<MembershipEntity> memberships ;
+
+
 
     @Column(name = "status", nullable = false)
     private PhysicianStatus status;
@@ -103,10 +107,12 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.experiences = experiences;
+        this.memberships = memberships;
         this.description = description;
         this.dateOfBirth = dateOfBirth;
         this.businessWeight = businessWeight;
@@ -275,6 +281,22 @@ public class PhysicianEntity {
 
     public UserEntity getUser() {
         return user;
+    }
+
+    public List<ExperiencesEntity> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<ExperiencesEntity> experiences) {
+        this.experiences = experiences;
+    }
+
+    public List<MembershipEntity> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(List<MembershipEntity> memberships) {
+        this.memberships = memberships;
     }
 
     public void setUser(UserEntity user) {

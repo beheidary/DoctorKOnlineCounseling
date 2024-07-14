@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CounselingEntityMapper {
 
-    @Mappings({@Mapping(target = "physician.expertises",expression = "java(null)")})
+//    @Mappings({@Mapping(target = "physician.expertises",expression = "java(null)")})
 
     OnlineCounseling  onlineCounselingEntityToModel (OnlineCounselingEntity onlineCounselingEntity);
 

@@ -14,7 +14,7 @@ public interface PhysicianEntityMapper {
     @Named("entityToModelWithExpertise")
     Physician entityToModelWithExpertise(PhysicianEntity physicianEntity);
 
-    @Mappings({@Mapping(target = "expertises",expression = "java(null)")})
+//    @Mappings({@Mapping(target = "expertises",expression = "java(null)")})
     Physician entityToModel(PhysicianEntity physicianEntity);
 
 }

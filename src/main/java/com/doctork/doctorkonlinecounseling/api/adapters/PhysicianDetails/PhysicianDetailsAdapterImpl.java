@@ -1,18 +1,12 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.EducationInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.PhysicianSocialMediaInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.EducationOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.PhysicianSocialMediaOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.SicknessInputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SicknessOutputDto;
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.SocialMediaOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.*;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.api.mappers.PhysicianDetailsMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.Physician.PhysicianService;
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
@@ -120,7 +114,7 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(userId);
         Physician physician = physicianService.fetchPhysician(userEntity);
-        return physicianDetailsService.deleteEducation(physician.getNationalCode(),educationId);
+        return physicianDetailsService.deleteEducation(physician,educationId);
     }
 
     @Override
@@ -128,7 +122,7 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(userId);
         Physician physician = physicianService.fetchPhysician(userEntity);
-        physicianDetailsService.editEducation(physician.getNationalCode(),physicianDetailsMapper.educationDtoToModel(educationInputDto),educationId);
+        physicianDetailsService.editEducation(physician,physicianDetailsMapper.educationDtoToModel(educationInputDto),educationId);
 
     }
 
@@ -139,5 +133,71 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         Physician physician = physicianService.fetchPhysician(userEntity);
         return physicianDetailsMapper.educationModelToDto(physicianDetailsService.allPhysicianEducations(physician.getNationalCode()));
     }
+
+    @Override
+    public void addExperiences(UUID userId, ExperiencesInputDto experiencesInputDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.addExperiences(physician.getNationalCode(), physicianDetailsMapper.experiencesDtoToModel(experiencesInputDto));
+    }
+
+    @Override
+    public Long deleteExperiences(UUID userId, Long experiencesId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsService.deleteExperiences(physician, experiencesId);
+    }
+
+    @Override
+    public void editExperiences(UUID userId, ExperiencesInputDto experiencesInputDto, Long experiencesId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.editExperiences(physician, physicianDetailsMapper.experiencesDtoToModel(experiencesInputDto), experiencesId);
+    }
+
+    @Override
+    public List<ExperiencesOutputDto> allPhysicianExperiences(UUID userId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsMapper.experiencesModelToDto(physicianDetailsService.allPhysicianExperiences(physician.getNationalCode()));
+    }
+    @Override
+    public void addMembership(UUID userId, MembershipInputDto membershipInputDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.addMembership(physician.getNationalCode(), physicianDetailsMapper.membershipDtoToModel(membershipInputDto));
+    }
+
+    @Override
+    public Long deleteMembership(UUID userId, Long membershipId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsService.deleteMembership(physician, membershipId);
+    }
+
+    @Override
+    public void editMembership(UUID userId, MembershipInputDto membershipInputDto, Long membershipId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.editMembership(physician, physicianDetailsMapper.membershipDtoToModel(membershipInputDto), membershipId);
+    }
+
+    @Override
+    public List<MembershipOutputDto> allPhysicianMemberships(UUID userId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsMapper.membershipModelToDto(physicianDetailsService.allPhysicianMemberships(physician.getNationalCode()));
+    }
+
+
+
 
 }

@@ -10,7 +10,7 @@ public class ExpertiseInputDto {
 
     private String name;
 
-       private String latinName;
+    private String latinName;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -26,6 +26,14 @@ public class ExpertiseInputDto {
         this.updatedAt = updatedAt;
         this.imageName = imageName;
     }
+    public ExpertiseInputDto(Long id, String name){
+        this.id = id;
+        this.name = name;
+    }
+    public ExpertiseInputDto(){
+
+    }
+
 
     public Long getId() {
         return id;

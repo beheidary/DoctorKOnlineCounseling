@@ -3,7 +3,6 @@ package com.doctork.doctorkonlinecounseling.domain.PhysicianDetails;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Education {
 

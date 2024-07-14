@@ -26,7 +26,6 @@ public class Physician {
     private State state;
     private LocalDate dateOfBirth;
     private LocalDateTime updated_At;
-    private Set<Expertise> expertises = new HashSet<>();
     private String physicianSystemCode;
     private Double businessWeight;
     private PhysicianStatus status;
@@ -38,21 +37,15 @@ public class Physician {
     private String bankAccountNumber;
     private String bankCardNumber;
     private String bankShebaNumber;
-    private Set<Sickness> sicknesses;
 
-    private Set<PhysicianSocialMedia> physicianSocialMedia;
-
-
-    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, LocalDateTime updated_At, Set<Expertise> expertises, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber, Set<Sickness> sicknesses,Set<PhysicianSocialMedia> physicianSocialMedia) {
+    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, LocalDateTime updated_At, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
-        this.physicianSocialMedia = physicianSocialMedia;
         this.firstName = firstName;
         this.description = description;
         this.lastName = lastName;
         this.state = state;
         this.dateOfBirth = dateOfBirth;
         this.updated_At = updated_At;
-        this.expertises = expertises;
         this.physicianSystemCode = physicianSystemCode;
         this.businessWeight = businessWeight;
         this.status = status;
@@ -62,7 +55,6 @@ public class Physician {
         this.bankAccountNumber = bankAccountNumber;
         this.bankCardNumber = bankCardNumber;
         this.bankShebaNumber = bankShebaNumber;
-        this.sicknesses = sicknesses;
     }
 
     public Physician(){
@@ -141,15 +133,6 @@ public class Physician {
     public void setUpdated_At(LocalDateTime updated_At) {
         this.updated_At = updated_At;
     }
-
-    public Set<Expertise> getExpertises() {
-        return expertises;
-    }
-
-    public void setExpertises(Set<Expertise> expertises) {
-        this.expertises = expertises;
-    }
-
     public String getPhysicianSystemCode() {
         return physicianSystemCode;
     }
@@ -182,14 +165,6 @@ public class Physician {
         this.businessWeight = businessWeight;
     }
 
-    public Set<Sickness> getSicknesses() {
-        return sicknesses;
-    }
-
-    public void setSicknesses(Set<Sickness> sicknesses) {
-        this.sicknesses = sicknesses;
-    }
-
     public String getBankAccountNumber() {
         return bankAccountNumber;
     }
@@ -212,13 +187,5 @@ public class Physician {
 
     public void setBankShebaNumber(String bankShebaNumber) {
         this.bankShebaNumber = bankShebaNumber;
-    }
-
-    public Set<PhysicianSocialMedia> getPhysicianSocialMedia() {
-        return physicianSocialMedia;
-    }
-
-    public void setPhysicianSocialMedia(Set<PhysicianSocialMedia> physicianSocialMedia) {
-        this.physicianSocialMedia = physicianSocialMedia;
     }
 }
