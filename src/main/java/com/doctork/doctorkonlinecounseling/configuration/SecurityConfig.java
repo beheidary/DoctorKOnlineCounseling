@@ -48,6 +48,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**","auth/login/admin",
                                 "auth/sendOtp","auth/login","elastic/**",
                                 "/expertise/TopExpertisesPhysicians",
+                                "/api/map/**",
                                 "/expertise/{lotinName}",
                                 "/expertise","/miscellaneous/**","/file-management/minio/**").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll()

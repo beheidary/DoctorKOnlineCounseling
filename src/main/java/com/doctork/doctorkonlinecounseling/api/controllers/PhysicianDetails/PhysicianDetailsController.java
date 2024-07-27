@@ -211,8 +211,8 @@ public class PhysicianDetailsController extends BaseController {
 
     @Operation(summary = "Edit Experiences")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PutMapping("experiences/edit")
-    public ResponseEntity<Void> editExperiences(@RequestParam Long experiencesId, @RequestBody ExperiencesInputDto experiencesInputDto) {
+    @PutMapping("experiences/edit/{experiencesId}")
+    public ResponseEntity<Void> editExperiences(@PathVariable Long experiencesId, @RequestBody ExperiencesInputDto experiencesInputDto) {
         physicianDetailsAdapter.editExperiences(getCurrentUser().getId(), experiencesInputDto, experiencesId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
