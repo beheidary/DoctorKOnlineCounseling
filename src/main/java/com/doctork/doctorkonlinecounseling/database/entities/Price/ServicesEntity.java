@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.database.entities.Price;
 
-import com.doctork.doctorkonlinecounseling.domain.Enums.PriceStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,10 +26,10 @@ public class ServicesEntity {
     @Column(name = "updateDateTime", nullable = true)
     private LocalDateTime updateDateTime;
     @Column(name = "Status", nullable = false)
-    private PriceStatus priceStatus;
+    private Status priceStatus;
 
 
-    public ServicesEntity(Long id, String description, String title, LocalDateTime saveDateTime, LocalDateTime updateDateTime, PriceStatus priceStatus) {
+    public ServicesEntity(Long id, String description, String title, LocalDateTime saveDateTime, LocalDateTime updateDateTime, Status priceStatus) {
         this.id = id;
         this.description = description;
         this.title = title;
@@ -83,11 +83,11 @@ public class ServicesEntity {
         this.updateDateTime = updateDateTime;
     }
 
-    public PriceStatus getStatus() {
+    public Status getPriceStatus() {
         return priceStatus;
     }
 
-    public void setStatus(PriceStatus priceStatus) {
+    public void setPriceStatus(Status priceStatus) {
         this.priceStatus = priceStatus;
     }
 }

@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.domain.Price;
 
-import com.doctork.doctorkonlinecounseling.domain.Enums.PriceStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 
 import java.time.LocalDateTime;
 
@@ -14,10 +14,10 @@ public class Services {
     private LocalDateTime saveDateTime;
 
     private LocalDateTime updateDateTime;
-    private PriceStatus priceStatus;
+    private Status priceStatus;
 
 
-    public Services(Long id, String description, String title, LocalDateTime saveDateTime, LocalDateTime updateDateTime, PriceStatus priceStatus) {
+    public Services(Long id, String description, String title, LocalDateTime saveDateTime, LocalDateTime updateDateTime, Status priceStatus) {
         this.id = id;
         this.description = description;
         this.title = title;
@@ -71,11 +71,11 @@ public class Services {
         this.updateDateTime = updateDateTime;
     }
 
-    public PriceStatus getStatus() {
+    public Status getPriceStatus() {
         return priceStatus;
     }
 
-    public void setStatus(PriceStatus priceStatus) {
+    public void setPriceStatus(Status priceStatus) {
         this.priceStatus = priceStatus;
     }
 

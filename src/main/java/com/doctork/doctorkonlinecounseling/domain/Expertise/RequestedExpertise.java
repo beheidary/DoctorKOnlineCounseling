@@ -10,15 +10,12 @@ public class RequestedExpertise {
 
 
     private org.bson.types.ObjectId _id;
-
     private String pid;
     private String name;
     private State state;
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
     private String description;
-
     private String latinName;
 
 

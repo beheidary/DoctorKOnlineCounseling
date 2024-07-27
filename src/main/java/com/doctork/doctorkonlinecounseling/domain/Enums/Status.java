@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.domain.Enums;
 
-public enum PriceStatus {
+public enum Status {
 
     Active, DeActive
 

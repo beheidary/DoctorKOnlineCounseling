@@ -1,7 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.entities.CareCenter;
 
 
-import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,11 +25,14 @@ public class CareCenterEntity {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "centerName")
+    private String centerName;
     @Column(name = "callNumber")
     private String callNumber;
 
     @Column(name = "latitude")
-    private String latitude;
+    private Double latitude;
 
     @Column(name = "cityTitle")
     private String cityTitle;
@@ -37,7 +40,10 @@ public class CareCenterEntity {
     @Column(name = "provinceTitle")
     private String provinceTitle;
     @Column(name = "longitude")
-    private String longitude;
+    private Double longitude;
+
+    @Column(name = "status")
+    private Status status;
     @Column(name = "imageName")
     private String imageName;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -48,16 +54,17 @@ public class CareCenterEntity {
     private LocalDateTime updated_At;
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
-    private Date createdAt;
-    @ManyToMany(mappedBy = "careCenters" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private Set<PhysicianEntity> physicians = new HashSet<>();
+    private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "careCenter" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<PhysicianCareCenterEntity> physicianCareCenters = new HashSet<>();
 
     public CareCenterEntity() {
 
     }
 
-    public CareCenterEntity(Long id, String descriptions, String address, String callNumber, String latitude, String cityTitle, String provinceTitle, String longitude, String imageName, CareCenterTypeEntity careCenterType, LocalDateTime updated_At, Date createdAt, Set<PhysicianEntity> physicians) {
+    public CareCenterEntity(Long id, String descriptions, String address, String callNumber, Double latitude, String cityTitle, String provinceTitle, Double longitude, String imageName, CareCenterTypeEntity careCenterType, LocalDateTime updated_At, LocalDateTime createdAt, Set<PhysicianCareCenterEntity> physicianCareCenters,Status status,String centerName) {
         this.id = id;
+        this.status = status;
         this.descriptions = descriptions;
         this.address = address;
         this.callNumber = callNumber;
@@ -68,8 +75,9 @@ public class CareCenterEntity {
         this.imageName = imageName;
         CareCenterType = careCenterType;
         this.updated_At = updated_At;
+        this.centerName = centerName;
         this.createdAt = createdAt;
-        this.physicians = physicians;
+        this.physicianCareCenters = physicianCareCenters;
     }
 
 
@@ -121,24 +129,40 @@ public class CareCenterEntity {
         this.callNumber = callNumber;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
     public String getImageName() {
         return imageName;
+    }
+
+    public String getCenterName() {
+        return centerName;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setCenterName(String centerName) {
+        this.centerName = centerName;
     }
 
     public void setImageName(String imageName) {
@@ -161,19 +185,19 @@ public class CareCenterEntity {
         this.updated_At = updated_At;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Set<PhysicianEntity> getPhysicians() {
-        return physicians;
+    public Set<PhysicianCareCenterEntity> getPhysicianCareCenters() {
+        return physicianCareCenters;
     }
 
-    public void setPhysicians(Set<PhysicianEntity> physicians) {
-        this.physicians = physicians;
+    public void setPhysicianCareCenters(Set<PhysicianCareCenterEntity> physicianCareCenters) {
+        this.physicianCareCenters = physicianCareCenters;
     }
 }

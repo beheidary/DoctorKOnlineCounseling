@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Table(name = "provinceCities")
 @Entity
-public class provinceCitiesEntity {
+public class ProvinceCitiesEntity {
 
 
 
@@ -19,13 +19,13 @@ public class provinceCitiesEntity {
     @Column(name = "title")
     private String title;
 
-    public provinceCitiesEntity(Long id, Integer parent, String title) {
+    public ProvinceCitiesEntity(Long id, Integer parent, String title) {
         this.id = id;
         this.parent = parent;
         this.title = title;
     }
 
-    public provinceCitiesEntity(){
+    public ProvinceCitiesEntity(){
 
     }
 

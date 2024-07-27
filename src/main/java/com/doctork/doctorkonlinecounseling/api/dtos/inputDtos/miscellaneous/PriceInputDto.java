@@ -1,19 +1,19 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.miscellaneous;
 
-import com.doctork.doctorkonlinecounseling.domain.Enums.PriceStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 
 public class PriceInputDto {
 
     private Long time;
     private Double cost;
-    private PriceStatus priceStatus;
+    private Status priceStatus;
     private State state;
     private String description;
 
 
 
-    public PriceInputDto(Long time, Double cost, PriceStatus priceStatus, State state, String description) {
+    public PriceInputDto(Long time, Double cost, Status priceStatus, State state, String description) {
         this.time = time;
         this.cost = cost;
         this.priceStatus = priceStatus;
@@ -38,19 +38,11 @@ public class PriceInputDto {
         this.cost = cost;
     }
 
-    public PriceStatus getPriceStatus() {
+    public Status getPriceStatus() {
         return priceStatus;
     }
 
-    public void setPriceStatus(PriceStatus priceStatus) {
-        this.priceStatus = priceStatus;
-    }
-
-    public PriceStatus getStatus() {
-        return priceStatus;
-    }
-
-    public void setStatus(PriceStatus priceStatus) {
+    public void setPriceStatus(Status priceStatus) {
         this.priceStatus = priceStatus;
     }
 

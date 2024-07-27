@@ -3,12 +3,9 @@ package com.doctork.doctorkonlinecounseling.UseCase.expertise;
 import com.doctork.doctorkonlinecounseling.boundary.exit.expertise.ExpertiseRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.expertise.ExpertiseService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
-import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.RequestedExpertise;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.TopExpertises;
 import com.doctork.doctorkonlinecounseling.domain.Expertise.Expertise;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -14,7 +14,6 @@ public class PhysicianSocialMediaId implements Serializable {
         this.socialMediaId = socialMediaId;
     }
 
-    // Getters and Setters
     public String getPhysicianId() {
         return physicianId;
     }

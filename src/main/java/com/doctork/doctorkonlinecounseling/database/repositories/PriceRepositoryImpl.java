@@ -139,7 +139,7 @@ public class PriceRepositoryImpl implements PriceRepository {
                     throw new AccessDeniedException("You do not have the required access");
                 priceEntity.setCost(price.getCost());
                 priceEntity.setState(price.getState());
-                priceEntity.setStatus(price.getStatus());
+                priceEntity.setPriceStatus(price.getPriceStatus());
                 priceEntity.setTime(price.getTime());
                 return  priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(priceEntity));
 

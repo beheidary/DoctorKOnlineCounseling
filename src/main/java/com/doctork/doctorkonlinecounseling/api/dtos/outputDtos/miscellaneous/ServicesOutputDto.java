@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous;
 
-import com.doctork.doctorkonlinecounseling.domain.Enums.PriceStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 
 public class ServicesOutputDto {
 
@@ -8,10 +8,10 @@ public class ServicesOutputDto {
     private Long Id;
     private String description;
     private String title;
-    private PriceStatus priceStatus;
+    private Status priceStatus;
 
 
-    public ServicesOutputDto(Long Id, String description, String title, PriceStatus priceStatus) {
+    public ServicesOutputDto(Long Id, String description, String title, Status priceStatus) {
         this.description = description;
         this.Id = Id;
         this.title = title;
@@ -47,11 +47,11 @@ public class ServicesOutputDto {
         this.title = title;
     }
 
-    public PriceStatus getStatus() {
+    public Status getPriceStatus() {
         return priceStatus;
     }
 
-    public void setStatus(PriceStatus priceStatus) {
+    public void setPriceStatus(Status priceStatus) {
         this.priceStatus = priceStatus;
     }
 

@@ -1,7 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.entities.Price;
 
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
-import com.doctork.doctorkonlinecounseling.domain.Enums.PriceStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,7 +27,7 @@ public class PriceEntity {
     private Double cost;
 
     @Column(name = "Status", nullable = false)
-    private PriceStatus priceStatus;
+    private Status priceStatus;
     @Column(name = "state", nullable = false)
     private State state;
 
@@ -47,7 +47,7 @@ public class PriceEntity {
     private LocalDateTime updateDateTime;
 
 
-    public PriceEntity(Long id, Long time, Double cost, PriceStatus priceStatus, State state, String description, PhysicianEntity physician, ServicesEntity service, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
+    public PriceEntity(Long id, Long time, Double cost, Status priceStatus, State state, String description, PhysicianEntity physician, ServicesEntity service, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
         this.id = id;
         this.time = time;
         setCost(cost);
@@ -93,11 +93,11 @@ public class PriceEntity {
         this.cost = cost;
     }
 
-    public PriceStatus getStatus() {
+    public Status getPriceStatus() {
         return priceStatus;
     }
 
-    public void setStatus(PriceStatus priceStatus) {
+    public void setPriceStatus(Status priceStatus) {
         this.priceStatus = priceStatus;
     }
 
@@ -115,15 +115,6 @@ public class PriceEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-
-    public PriceStatus getPriceStatus() {
-        return priceStatus;
-    }
-
-    public void setPriceStatus(PriceStatus priceStatus) {
-        this.priceStatus = priceStatus;
     }
 
     public PhysicianEntity getPhysician() {

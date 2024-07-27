@@ -1,7 +1,6 @@
 package com.doctork.doctorkonlinecounseling.database.entities.CareCenter;
 
-import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.PhysicianSocialMediaEntity;
-import com.doctork.doctorkonlinecounseling.domain.Enums.PriceStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -20,7 +19,7 @@ public class CareCenterTypeEntity {
     private String CenterTitle;
 
     @Column(name = "status" , nullable = false)
-    private PriceStatus status;
+    private Status status;
 
     @Column(name = "descriptions")
     private String descriptions;
@@ -29,7 +28,7 @@ public class CareCenterTypeEntity {
     private Set<CareCenterEntity> careCenters = new HashSet<>();
 
 
-    public CareCenterTypeEntity(Long id, String centerTitle, PriceStatus status, String descriptions, Set<CareCenterEntity> careCenters) {
+    public CareCenterTypeEntity(Long id, String centerTitle, Status status, String descriptions, Set<CareCenterEntity> careCenters) {
         this.id = id;
         CenterTitle = centerTitle;
         this.status = status;
@@ -58,11 +57,11 @@ public class CareCenterTypeEntity {
         CenterTitle = centerTitle;
     }
 
-    public PriceStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(PriceStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

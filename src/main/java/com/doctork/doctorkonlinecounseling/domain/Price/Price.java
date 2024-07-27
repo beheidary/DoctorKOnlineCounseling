@@ -2,7 +2,7 @@ package com.doctork.doctorkonlinecounseling.domain.Price;
 
 import com.doctork.doctorkonlinecounseling.database.entities.Price.ServicesEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
-import com.doctork.doctorkonlinecounseling.domain.Enums.PriceStatus;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 
 public class Price {
@@ -10,14 +10,14 @@ public class Price {
     private Long id;
     private Long time;
     private Double cost;
-    private PriceStatus priceStatus;
+    private Status priceStatus;
     private State state;
     private String description;
     private PhysicianEntity physician;
     private ServicesEntity service;
 
 
-    public Price(Long id, Long time, Double cost, PriceStatus priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service) {
+    public Price(Long id, Long time, Double cost, Status priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service) {
         this.id = id;
         this.time = time;
         this.cost = cost;
@@ -53,11 +53,11 @@ public class Price {
         this.cost = cost;
     }
 
-    public PriceStatus getStatus() {
+    public Status getPriceStatus() {
         return priceStatus;
     }
 
-    public void setStatus(PriceStatus priceStatus) {
+    public void setPriceStatus(Status priceStatus) {
         this.priceStatus = priceStatus;
     }
 
