@@ -11,6 +11,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PriceMapper {
@@ -22,5 +24,10 @@ public interface PriceMapper {
     Price priceDtoToModel (PriceInputDto priceInputDto);
 
     PriceOutputDto priceModelToDto(Price price);
+    List<ServicesOutputDto> servicesModelToDto(List<Services> services);
+
+    List<PriceOutputDto> priceModelToDto (List<Price> prices);
+
+
 
 }

@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PriceEntityMapper {
@@ -20,4 +22,8 @@ public interface PriceEntityMapper {
     Price priceEntityToModel(PriceEntity priceEntity);
 
     PriceEntity priceModelToEntity(Price price);
+
+    List<Services> servicesEntityToModel (List<ServicesEntity> servicesEntities);
+    List<Price> priceEntityToModel (List<PriceEntity> priceEntities);
+
 }

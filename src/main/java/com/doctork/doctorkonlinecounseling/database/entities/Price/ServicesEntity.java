@@ -19,6 +19,13 @@ public class ServicesEntity {
     private String description;
     @Column(name = "title",nullable = false)
     private String title;
+
+    @Column(name = "timeSlot",nullable = false)
+    private Integer timeSlot;
+
+    @Column(name = "SlotCount",nullable = false)
+    private Integer SlotCount;
+
     @CreationTimestamp
     @Column(name = "saveDateTime", nullable = false)
     private LocalDateTime saveDateTime;
@@ -26,22 +33,39 @@ public class ServicesEntity {
     @Column(name = "updateDateTime", nullable = true)
     private LocalDateTime updateDateTime;
     @Column(name = "Status", nullable = false)
-    private Status priceStatus;
+    private Status status;
 
 
-    public ServicesEntity(Long id, String description, String title, LocalDateTime saveDateTime, LocalDateTime updateDateTime, Status priceStatus) {
+    public ServicesEntity(Long id, String description, String title, Integer timeSlot, Integer slotCount, LocalDateTime saveDateTime, LocalDateTime updateDateTime, Status status) {
         this.id = id;
         this.description = description;
         this.title = title;
+        this.timeSlot = timeSlot;
+        SlotCount = slotCount;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
-        this.priceStatus = priceStatus;
+        this.status = status;
     }
 
     public ServicesEntity() {
 
     }
 
+    public Integer getTimeSlot() {
+        return timeSlot;
+    }
+
+    public void setTimeSlot(Integer timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
+    public Integer getSlotCount() {
+        return SlotCount;
+    }
+
+    public void setSlotCount(Integer slotCount) {
+        SlotCount = slotCount;
+    }
 
     public Long getId() {
         return id;
@@ -83,11 +107,11 @@ public class ServicesEntity {
         this.updateDateTime = updateDateTime;
     }
 
-    public Status getPriceStatus() {
-        return priceStatus;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setPriceStatus(Status priceStatus) {
-        this.priceStatus = priceStatus;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

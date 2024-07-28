@@ -5,6 +5,8 @@ import com.doctork.doctorkonlinecounseling.database.entities.Physician.Physician
 import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 
+import java.time.LocalDateTime;
+
 public class Price {
 
     private Long id;
@@ -13,21 +15,20 @@ public class Price {
     private Status priceStatus;
     private State state;
     private String description;
-    private PhysicianEntity physician;
-    private ServicesEntity service;
+    private LocalDateTime saveDateTime;
 
+    private LocalDateTime updateDateTime;
 
-    public Price(Long id, Long time, Double cost, Status priceStatus, State state, String description, PhysicianEntity doctor, ServicesEntity service) {
+    public Price(Long id, Long time, Double cost, Status priceStatus, State state, String description, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
         this.id = id;
         this.time = time;
         this.cost = cost;
         this.priceStatus = priceStatus;
         this.state = state;
         this.description = description;
-        this.physician = doctor;
-        this.service = service;
+        this.saveDateTime = saveDateTime;
+        this.updateDateTime = updateDateTime;
     }
-
 
     public Long getId() {
         return id;
@@ -76,20 +77,19 @@ public class Price {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public PhysicianEntity getPhysician() {
-        return physician;
+    public LocalDateTime getSaveDateTime() {
+        return saveDateTime;
     }
 
-    public void setPhysician(PhysicianEntity physician) {
-        this.physician = physician;
+    public void setSaveDateTime(LocalDateTime saveDateTime) {
+        this.saveDateTime = saveDateTime;
     }
 
-    public ServicesEntity getService() {
-        return service;
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
     }
 
-    public void setService(ServicesEntity service) {
-        this.service = service;
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
     }
 }

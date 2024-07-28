@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.domain.Price;
 
 import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
+import jakarta.persistence.Column;
 
 import java.time.LocalDateTime;
 
@@ -14,16 +15,21 @@ public class Services {
     private LocalDateTime saveDateTime;
 
     private LocalDateTime updateDateTime;
-    private Status priceStatus;
+    private Status Status;
 
+    private Integer timeSlot;
 
-    public Services(Long id, String description, String title, LocalDateTime saveDateTime, LocalDateTime updateDateTime, Status priceStatus) {
+    private Integer SlotCount;
+
+    public Services(Long id, String description, String title, LocalDateTime saveDateTime, LocalDateTime updateDateTime, com.doctork.doctorkonlinecounseling.domain.Enums.Status status, Integer timeSlot, Integer slotCount) {
         this.id = id;
         this.description = description;
         this.title = title;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
-        this.priceStatus = priceStatus;
+        Status = status;
+        this.timeSlot = timeSlot;
+        SlotCount = slotCount;
     }
 
     public Services() {
@@ -71,13 +77,27 @@ public class Services {
         this.updateDateTime = updateDateTime;
     }
 
-    public Status getPriceStatus() {
-        return priceStatus;
+    public com.doctork.doctorkonlinecounseling.domain.Enums.Status getStatus() {
+        return Status;
     }
 
-    public void setPriceStatus(Status priceStatus) {
-        this.priceStatus = priceStatus;
+    public void setStatus(com.doctork.doctorkonlinecounseling.domain.Enums.Status status) {
+        Status = status;
     }
 
+    public Integer getTimeSlot() {
+        return timeSlot;
+    }
 
+    public void setTimeSlot(Integer timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
+    public Integer getSlotCount() {
+        return SlotCount;
+    }
+
+    public void setSlotCount(Integer slotCount) {
+        SlotCount = slotCount;
+    }
 }

@@ -4,6 +4,7 @@ import com.doctork.doctorkonlinecounseling.boundary.exit.Price.PriceRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.price.PriceService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.Price.Price;
 import com.doctork.doctorkonlinecounseling.domain.Price.Services;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,16 +33,26 @@ public class PriceServiceImpl implements PriceService {
     public Price addPrice(Price price, String physicianId, Long servicesId) {
         if(physicianId == null || servicesId == null)
             throw new IdInputException();
-        UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         return priceRepository.addPrice(price , physicianId, servicesId);
     }
 
     @Override
-    public Price editPrice(Long priceId, Price price) {
+    public Price DeActivePrice(String physicianId, Long priceId) {
+        if(priceId == null || physicianId == null)
+            throw new IdInputException();
+        return priceRepository.DeActivePrice(physicianId , priceId);
+    }
+
+    @Override
+    public Price priceAcceptanceDecision(Long priceId, State state) {
         if(priceId == null)
             throw new IdInputException();
-        return priceRepository.editPrice(priceId, price);
+        return priceRepository.priceAcceptanceDecision(priceId,state);
+    }
+
+    @Override
+    public List<Services> AllActiveServices() {
+        return priceRepository.AllActiveServices();
     }
 
     @Override
@@ -49,12 +60,5 @@ public class PriceServiceImpl implements PriceService {
         if(physicianId == null)
             throw new IdInputException();
         return priceRepository.readPrices(physicianId);
-    }
-
-    @Override
-    public Long deletePrice(Long priceId) {
-        if(priceId == null)
-            throw new IdInputException();
-        return priceRepository.deletePrice(priceId);
     }
 }

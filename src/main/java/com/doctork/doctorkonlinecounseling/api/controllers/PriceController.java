@@ -7,6 +7,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.miscellaneous.Serv
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.PriceOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.ServicesOutputDto;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputException;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,9 +27,9 @@ import java.util.List;
 
 @Controller
 @EnableMethodSecurity
-@RequestMapping("/")
+@RequestMapping("/api")
 @SecurityRequirement(name = "security_auth")
-public class PriceController {
+public class PriceController extends BaseController{
 
     private final PriceAdapter priceAdapter;
 
@@ -37,12 +38,11 @@ public class PriceController {
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PostMapping(value = "{servicesId}/addPrice/{physicianId}/")
+    @PostMapping(value = "{servicesId}/addPrice")
     @Operation(summary = "add Physician Price")
     @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PriceOutputDto.class))})
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> addPrice(@PathVariable Long servicesId,
-                                                  @PathVariable String physicianId,
                                                   @RequestBody @Validated PriceInputDto priceInputDto,
                                                   BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -54,7 +54,7 @@ public class PriceController {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        PriceOutputDto priceOutputDto = priceAdapter.addPrice(priceInputDto, physicianId, servicesId);
+        PriceOutputDto priceOutputDto = priceAdapter.addPrice(priceInputDto, getCurrentUser().getId(), servicesId);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceOutputDto));
 
@@ -63,22 +63,15 @@ public class PriceController {
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PutMapping(value = "/editPrice/{priceId}/")
-    @Operation(summary = "edit Physician Price")
+    @PutMapping(value = "/deActivePrice/{priceId}")
+    @Operation(summary = "deActive Physician Price")
     @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PriceOutputDto.class))})
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> editPrice(@PathVariable Long priceId,
-                                               @RequestBody @Validated PriceInputDto priceInputDto,
-                                               BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-
-            throw new InputException(bindingResult.getAllErrors());
-
-        }
+    DeferredResult<ResponseEntity<?>> editPrice(@PathVariable Long priceId){
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        PriceOutputDto priceOutputDto = priceAdapter.editPrice(priceId,priceInputDto);
+        PriceOutputDto priceOutputDto = priceAdapter.DeActivePrice(getCurrentUser().getId(),priceId);
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceOutputDto));
 
@@ -86,9 +79,10 @@ public class PriceController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Physician')")
     @PostMapping(value = "/Services")
     @Operation(summary = "Add Services")
+    // Todo change Authorize To Support Role
     @ApiResponse(content = { @Content(mediaType = "application/json") })
     public @ResponseBody
     DeferredResult<ResponseEntity<?>> addServices(@RequestBody @Validated ServicesInputDto servicesInputDto)
@@ -106,15 +100,15 @@ public class PriceController {
 
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @GetMapping(value = "/allPrice/{physicianId}/")
+    @GetMapping(value = "/allPrice/")
     @Operation(summary = "physician all prices")
     @ApiResponse(content = {@Content(schema = @Schema(implementation = PriceOutputDto.class))})
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> readPrices(@PathVariable String physicianId) {
+    DeferredResult<ResponseEntity<?>> readPrices() {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 
-        List<PriceOutputDto> priceOutputDtos = priceAdapter.readPrices(physicianId);
+        List<PriceOutputDto> priceOutputDtos = priceAdapter.readPrices(getCurrentUser().getId());
 
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceOutputDtos));
 
@@ -123,20 +117,29 @@ public class PriceController {
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @DeleteMapping(value = "/deletePrice/{priceId}/")
-    @Operation(summary = "delete a prices")
-    @ApiResponse(content = {@Content(schema = @Schema(implementation = PriceOutputDto.class))})
-    public @ResponseBody
-    DeferredResult<ResponseEntity<?>> deletePrice(@PathVariable Long priceId) {
-
+    @PostMapping("/priceAcceptance/{priceId}")
+    // Todo change Authorize To Support Role
+    @Operation(summary = "Decide on Price Acceptance")
+    @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PriceOutputDto.class))})
+    public @ResponseBody DeferredResult<ResponseEntity<?>> priceAcceptanceDecision(@PathVariable Long priceId,
+                                                                                   @RequestParam State state) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
-
-        priceId = priceAdapter.deletePrice(priceId);
-
-        result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceId));
+        PriceOutputDto priceOutputDto = priceAdapter.priceAcceptanceDecision(priceId, state);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(priceOutputDto));
 
         return result;
+    }
 
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping("/activeServices")
+    @Operation(summary = "List All Active Services")
+    @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ServicesOutputDto.class))})
+    public @ResponseBody DeferredResult<ResponseEntity<?>> allActiveServices() {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<ServicesOutputDto> servicesOutputDtos = priceAdapter.AllActiveServices();
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(servicesOutputDtos));
+
+        return result;
     }
 
 }

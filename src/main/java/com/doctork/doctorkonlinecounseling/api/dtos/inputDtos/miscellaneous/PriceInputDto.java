@@ -7,17 +7,13 @@ public class PriceInputDto {
 
     private Long time;
     private Double cost;
-    private Status priceStatus;
-    private State state;
     private String description;
 
 
 
-    public PriceInputDto(Long time, Double cost, Status priceStatus, State state, String description) {
+    public PriceInputDto(Long time, Double cost, String description) {
         this.time = time;
         this.cost = cost;
-        this.priceStatus = priceStatus;
-        this.state = state;
         this.description = description;
     }
 
@@ -36,22 +32,6 @@ public class PriceInputDto {
 
     public void setCost(Double cost) {
         this.cost = cost;
-    }
-
-    public Status getPriceStatus() {
-        return priceStatus;
-    }
-
-    public void setPriceStatus(Status priceStatus) {
-        this.priceStatus = priceStatus;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public String getDescription() {

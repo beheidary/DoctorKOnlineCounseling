@@ -2,11 +2,14 @@ package com.doctork.doctorkonlinecounseling.database.repositories;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.Price.PriceRepository;
 import com.doctork.doctorkonlinecounseling.common.exceptions.BaseException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.Duplicate.DuplicateActivePriceException;
+import com.doctork.doctorkonlinecounseling.common.exceptions.Duplicate.DuplicateExpertiseException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PhysicianNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.notFound.PriceNotFoundException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
+import com.doctork.doctorkonlinecounseling.database.entities.CareCenter.CareCenterEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Price.PriceEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Price.ServicesEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
@@ -15,12 +18,12 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PhysicianMyS
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.PriceMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ServicesMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.PriceEntityMapper;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import com.doctork.doctorkonlinecounseling.domain.Price.Price;
 import com.doctork.doctorkonlinecounseling.domain.Price.Services;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
@@ -30,6 +33,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Component
 public class PriceRepositoryImpl implements PriceRepository {
 
@@ -88,62 +93,60 @@ public class PriceRepositoryImpl implements PriceRepository {
 
     @Override
     public Price addPrice(Price price, String physicianId, Long servicesId) {
-
-
-
-
-        try{
+        try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findPhysicianEntityByNationalCode(physicianId);
             ServicesEntity servicesEntity = servicesMySqlRepository.findServicesEntityById(servicesId);
 
-            if(physicianEntity != null){
+            if (physicianEntity != null && servicesEntity != null) {
+                Optional<PriceEntity> existingActivePrice = priceMySqlRepository.findByServiceIdAndTimeAndPriceStatus(
+                        servicesEntity.getId(), price.getTime(), Status.Active);
+
+                if (existingActivePrice.isPresent()) {
+                    throw new DuplicateActivePriceException(43,"An active price with the same time already exists for this service.",HttpStatus.BAD_REQUEST);
+                }
+                if (!isValidTime(price.getTime(), servicesEntity.getTimeSlot(), servicesEntity.getSlotCount())) {
+                    throw new InvalidDataException();
+                }
 
                 PriceEntity newPrice = priceEntityMapper.priceModelToEntity(price);
                 newPrice.setPhysician(physicianEntity);
                 newPrice.setService(servicesEntity);
-                return  priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(newPrice));
-
-            }else {
-                throw  new PhysicianNotFoundException();
+                return priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(newPrice));
+            } else {
+                throw new PhysicianNotFoundException();
             }
-        }catch (QueryTimeoutException ex){
-
+        } catch (QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();
-
-        }
-        catch (DataIntegrityViolationException ex){
-
+        } catch (DataIntegrityViolationException ex) {
             throw new InvalidDataException();
-
-        }
-        catch (Exception ex){
-            if(ex instanceof BaseException)
+        } catch (Exception ex) {
+            if (ex instanceof BaseException)
                 throw ex;
-            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-            
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
+    }
+    private boolean isValidTime(Long time, Integer timeSlot, Integer slotCount) {
+        for (int i = 1; i <= slotCount; i++) {
+            if (time == (long) i * timeSlot) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
-    public Price editPrice(Long id , Price price) {
-
+    public Price DeActivePrice(String physicianId, Long priceId) {
         try{
 
-            PriceEntity priceEntity = priceMySqlRepository.findById(id).orElseThrow(PriceNotFoundException::new);
+            PriceEntity priceEntity = priceMySqlRepository.findById(priceId).orElseThrow(PriceNotFoundException::new);
 
-
-
-                String tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
-                if (!priceEntity.getPhysician().getNationalCode().equals(tokenNationalCode))
-                    throw new AccessDeniedException("You do not have the required access");
-                priceEntity.setCost(price.getCost());
-                priceEntity.setState(price.getState());
-                priceEntity.setPriceStatus(price.getPriceStatus());
-                priceEntity.setTime(price.getTime());
+            if (!priceEntity.getPhysician().getNationalCode().equals(physicianId))
+                throw new AccessDeniedException("You do not have the required access");
+            if (priceEntity.getPriceStatus() == Status.Active){
+                priceEntity.setPriceStatus(Status.DeActive);
                 return  priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(priceEntity));
-
-
+            }else
+                throw new InvalidDataException();
         }catch (QueryTimeoutException ex){
 
             throw new DatabaseTimeOutException();
@@ -158,48 +161,97 @@ public class PriceRepositoryImpl implements PriceRepository {
             if(ex instanceof BaseException)
                 throw ex;
             throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-            
+
         }
     }
+
+    @Override
+    public Price priceAcceptanceDecision(Long priceId, State state) {
+        try {
+            PriceEntity priceEntity = priceMySqlRepository.findById(priceId).orElseThrow(PriceNotFoundException::new);
+            if (priceEntity.getState() == State.Waiting && (state == State.Approved || state == State.Rejected)) {
+                priceEntity.setState(state);
+                if(state == State.Rejected)
+                    priceEntity.setPriceStatus(Status.DeActive);
+                return priceEntityMapper.priceEntityToModel(priceMySqlRepository.save(priceEntity));
+            }else
+                throw new InvalidDataException();
+        } catch (
+                QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (DataIntegrityViolationException ex) {
+
+            throw new DuplicateExpertiseException();
+
+        }catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Override
+    public List<Services> AllActiveServices() {
+        try {
+
+            return priceEntityMapper.servicesEntityToModel(servicesMySqlRepository.findAllByStatus(Status.Active));
+
+        } catch (
+                QueryTimeoutException ex) {
+
+            throw new DatabaseTimeOutException();
+
+        } catch (DataIntegrityViolationException ex) {
+
+            throw new DuplicateExpertiseException();
+
+        }catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
 
     @Override
     public List<Price> readPrices(String physicianId) {
-
         try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<PriceEntity> cq = cb.createQuery(PriceEntity.class);
+            Root<PriceEntity> root = cq.from(PriceEntity.class);
 
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<PriceEntity> criteriaQuery = criteriaBuilder.createQuery(PriceEntity.class);
-            Root<PriceEntity> root = criteriaQuery.from(PriceEntity.class);
+            Predicate statusCondition = cb.equal(root.get("priceStatus"), Status.Active);
+            Predicate stateCondition = root.get("state").in(State.Waiting, State.Approved);
 
-            criteriaQuery.select(root)
-                    .where(criteriaBuilder.equal(root.get("doctor").get("id"), physicianId));
-            List<PriceEntity> priceEntities = entityManager.createQuery(criteriaQuery).getResultList();
-            if (priceEntities.size() > 0 ){
+            Predicate combinedCondition = cb.and(statusCondition, stateCondition);
 
-                List<Price> prices = new ArrayList<>();
-                for (PriceEntity priceEntity : priceEntities)
-                    prices.add(priceEntityMapper.priceEntityToModel(priceEntity));
-                return prices;
-                // Todo physician Entity just moved to model
+            Predicate physicianCondition = cb.equal(root.get("physician").get("id"), physicianId);
+
+            cq.select(root).where(cb.and(combinedCondition, physicianCondition));
+
+            Order approvedFirst = cb.desc(cb.equal(root.get("state"), State.Approved));
+            Order waitingNext = cb.desc(cb.equal(root.get("state"), State.Waiting));
+            cq.orderBy(approvedFirst, waitingNext);
+
+            List<PriceEntity> priceEntities = entityManager.createQuery(cq).getResultList();
+
+            if (!priceEntities.isEmpty()) {
+                return priceEntityMapper.priceEntityToModel(priceEntities);
             }
-            throw new PhysicianNotFoundException();
+            return new ArrayList<>();
 
-
-        }catch (QueryTimeoutException ex){
-
+        } catch (QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();
-
-        }
-        catch (DataIntegrityViolationException ex){
-
+        } catch (DataIntegrityViolationException ex) {
             throw new InvalidDataException();
-
-        }
-        catch (Exception ex){
-            if(ex instanceof BaseException)
+        } catch (Exception ex) {
+            if (ex instanceof BaseException)
                 throw ex;
-            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-            
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -232,36 +284,4 @@ public class PriceRepositoryImpl implements PriceRepository {
 
 
     }
-
-    @Override
-    public Long deletePrice(Long priceId) {
-        try {
-
-            PriceEntity priceEntity = priceMySqlRepository.findById(priceId).orElseThrow(PriceNotFoundException::new);
-
-            String tokenNationalCode =((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
-            if (!priceEntity.getPhysician().getNationalCode().equals(tokenNationalCode))
-                throw new AccessDeniedException("You do not have the required access");
-            priceMySqlRepository.delete(priceEntity);
-            return priceId;
-
-
-        }catch (QueryTimeoutException ex){
-
-            throw new DatabaseTimeOutException();
-
-        }
-        catch (DataIntegrityViolationException ex){
-
-            throw new InvalidDataException();
-
-        }
-        catch (Exception ex){
-            if(ex instanceof BaseException)
-                throw ex;
-            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-            
-        }
-    }
-
 }

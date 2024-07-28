@@ -11,15 +11,17 @@ public class ServicesInputDto {
 
     @NotNull
     private String title;
+    @NotNull
+    private Integer timeSlot;
 
     @NotNull
-    private Status priceStatus;
+    private Integer SlotCount;
 
-
-    public ServicesInputDto( String description, String title, Status priceStatus) {
+    public ServicesInputDto(String description, String title, Integer timeSlot, Integer slotCount) {
         this.description = description;
         this.title = title;
-        this.priceStatus = priceStatus;
+        this.timeSlot = timeSlot;
+        SlotCount = slotCount;
     }
 
     public ServicesInputDto() {
@@ -44,14 +46,20 @@ public class ServicesInputDto {
         this.title = title;
     }
 
-    public Status getPriceStatus() {
-        return priceStatus;
+
+    public Integer getTimeSlot() {
+        return timeSlot;
     }
 
-    public void setPriceStatus(Status priceStatus) {
-        this.priceStatus = priceStatus;
+    public void setTimeSlot(Integer timeSlot) {
+        this.timeSlot = timeSlot;
     }
 
+    public Integer getSlotCount() {
+        return SlotCount;
+    }
 
-
+    public void setSlotCount(Integer slotCount) {
+        SlotCount = slotCount;
+    }
 }
