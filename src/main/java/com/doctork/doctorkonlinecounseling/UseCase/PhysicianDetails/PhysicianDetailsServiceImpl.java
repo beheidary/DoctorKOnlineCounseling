@@ -200,4 +200,18 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
 
     }
 
+    @Override
+    public PhysicianBankInfo storeBankInfo(String physicianId, PhysicianBankInfo physicianBankInfo) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.storeBankInfo(physicianId,physicianBankInfo);
+    }
+
+    @Override
+    public PhysicianBankInfo getBankInfo(String physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.getBankInfo(physicianId);
+    }
+
 }

@@ -98,12 +98,7 @@ public class PhysicianEntity {
     @Column(name = "mainImage")
     private String mainImage;
 
-    @Column(name = "bankAccountNumber")
-    private String bankAccountNumber;
-    @Column(name = "bankCardNumber")
-    private String bankCardNumber;
-    @Column(name = "bankShebaNumber")
-    private String bankShebaNumber;
+
 
 
 
@@ -113,7 +108,7 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage,Set<GalleryImageEntity> galleryImages , String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage,Set<GalleryImageEntity> galleryImages) {
         this.nationalCode = nationalCode;
         this.galleryImages = galleryImages;
         this.awardsAndHonors = awardsAndHonors;
@@ -136,9 +131,6 @@ public class PhysicianEntity {
         this.state = state;
         this.user = user;
         this.mainImage = mainImage;
-        this.bankAccountNumber = bankAccountNumber;
-        this.bankCardNumber = bankCardNumber;
-        this.bankShebaNumber = bankShebaNumber;
     }
 
     public PhysicianEntity() {
@@ -175,30 +167,6 @@ public class PhysicianEntity {
 
     public void setSicknesses(Set<SicknessEntity> sicknesses) {
         this.sicknesses = sicknesses;
-    }
-
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
-    }
-
-    public void setBankAccountNumber(String bankAccountNumber) {
-        this.bankAccountNumber = bankAccountNumber;
-    }
-
-    public String getBankCardNumber() {
-        return bankCardNumber;
-    }
-
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
-    }
-
-    public String getBankShebaNumber() {
-        return bankShebaNumber;
-    }
-
-    public void setBankShebaNumber(String bankShebaNumber) {
-        this.bankShebaNumber = bankShebaNumber;
     }
 
     public String getPhysicianSystemCode() {

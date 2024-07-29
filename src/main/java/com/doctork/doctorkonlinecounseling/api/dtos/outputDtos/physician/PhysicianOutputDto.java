@@ -24,18 +24,9 @@ public class PhysicianOutputDto {
 
     private Boolean profileNecessaryInfoInserted;
 
-    private String bankAccountNumber;
-    private String bankCardNumber;
-    private String bankShebaNumber;
 
 
-
-
-//    private List<AddressOutputDTO> addresses;
-//    private UUID userId;
-
-
-    public PhysicianOutputDto(String firstName, String lastName, String description, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, String nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianOutputDto(String firstName, String lastName, String description, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, String nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
@@ -47,9 +38,6 @@ public class PhysicianOutputDto {
         this.state = state;
         this.mainImage = mainImage;
         this.profileNecessaryInfoInserted = Boolean.TRUE;
-        this.bankAccountNumber = bankAccountNumber;
-        this.bankCardNumber = bankCardNumber;
-        this.bankShebaNumber = bankShebaNumber;
     }
 
     public String getFirstName() {
@@ -123,23 +111,6 @@ public class PhysicianOutputDto {
     public void setUpdated_At(LocalDateTime updated_At) {
         this.updated_At = updated_At;
     }
-
-    //    public List<AddressOutputDTO> getAddresses() {
-//        return addresses;
-//    }
-
-//    public void setAddresses(List<AddressOutputDTO> addresses) {
-//        this.addresses = addresses;
-//    }
-
-//    public UUID getUserId() {
-//        return userId;
-//    }
-
-//    public void setUserId(UUID userId) {
-//        this.userId = userId;
-//    }
-
 
     public PhysicianStatus getStatus() {
         return status;

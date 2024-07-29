@@ -1,0 +1,53 @@
+package com.doctork.doctorkonlinecounseling.domain.PhysicianDetails;
+
+import jakarta.persistence.Column;
+
+public class PhysicianBankInfo {
+
+    private Long id;
+    private String bankAccountNumber;
+    private String bankCardNumber;
+    private String bankShebaNumber;
+
+    public PhysicianBankInfo(Long id, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+        this.id = id;
+        this.bankAccountNumber = bankAccountNumber;
+        this.bankCardNumber = bankCardNumber;
+        this.bankShebaNumber = bankShebaNumber;
+    }
+
+    public PhysicianBankInfo() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankShebaNumber() {
+        return bankShebaNumber;
+    }
+
+    public void setBankShebaNumber(String bankShebaNumber) {
+        this.bankShebaNumber = bankShebaNumber;
+    }
+}

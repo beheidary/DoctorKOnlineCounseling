@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -339,6 +340,27 @@ public class PhysicianDetailsController extends BaseController {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         List<GalleryImageOutputDto> galleryImageOutputDtos = physicianDetailsAdapter.allPhysicianGalleryImages(getCurrentUser().getId());
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(galleryImageOutputDtos));
+        return result;
+    }
+
+    @Operation(summary = "Get Physician Bank Information")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping("/bankInfo/get")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianBankInfoOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> getPhysicianBankInfo(){
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        PhysicianBankInfoOutputDto physicianBankInfoOutputDto = physicianDetailsAdapter.getBankInfo(getCurrentUser().getId());
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(physicianBankInfoOutputDto));
+        return result;
+    }
+
+    @Operation(summary = "Store Physician Bank Information")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PostMapping("/bankInfo/store")
+    public DeferredResult<ResponseEntity<?>> storePhysicianBankInfo(@RequestBody @Validated PhysicianBankInfoInputDto physicianBankInfoInputDto) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        PhysicianBankInfoOutputDto physicianBankInfoOutputDto =  physicianDetailsAdapter.storeBankInfo(getCurrentUser().getId(), physicianBankInfoInputDto);
+        result.setResult(ResponseEntity.status(HttpStatus.CREATED).body(physicianBankInfoOutputDto));
         return result;
     }
 

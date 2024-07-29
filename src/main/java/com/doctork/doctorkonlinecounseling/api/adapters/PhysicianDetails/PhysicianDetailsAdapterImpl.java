@@ -8,10 +8,7 @@ import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.Physicia
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.GalleryImage;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
-import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import org.springframework.stereotype.Component;
 
@@ -254,6 +251,25 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         userEntity.setId(userId);
         Physician physician = physicianService.fetchPhysician(userEntity);
         physicianDetailsService.deActiveGalleryImage(physician.getNationalCode(),imageId);
+    }
+
+    @Override
+    public PhysicianBankInfoOutputDto storeBankInfo(UUID userId, PhysicianBankInfoInputDto bankInfoInputDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        PhysicianBankInfo physicianBankInfo = physicianDetailsMapper.bankInfoDtoToModel(bankInfoInputDto);
+
+        return physicianDetailsMapper.bankInfoModelToDto(physicianDetailsService.storeBankInfo(physician.getNationalCode(),physicianBankInfo));
+    }
+
+    @Override
+    public PhysicianBankInfoOutputDto getBankInfo(UUID userId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+
+        return physicianDetailsMapper.bankInfoModelToDto(physicianDetailsService.getBankInfo(physician.getNationalCode()));
     }
 
 }

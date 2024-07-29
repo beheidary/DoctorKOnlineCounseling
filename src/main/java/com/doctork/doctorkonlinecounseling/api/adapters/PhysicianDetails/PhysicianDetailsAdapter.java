@@ -5,6 +5,7 @@ import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.GalleryImage;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianBankInfo;
 
 import java.util.List;
 import java.util.Set;
@@ -66,5 +67,8 @@ public interface PhysicianDetailsAdapter {
     List<GalleryImageOutputDto> allPhysicianGalleryImages(UUID userId);
     void addGalleryImage (UUID userId, String imageName);
     void deActiveGalleryImage (UUID userId, Long imageId);
+
+    PhysicianBankInfoOutputDto storeBankInfo (UUID userId, PhysicianBankInfoInputDto bankInfoInputDto);
+    PhysicianBankInfoOutputDto getBankInfo (UUID userId);
 
 }

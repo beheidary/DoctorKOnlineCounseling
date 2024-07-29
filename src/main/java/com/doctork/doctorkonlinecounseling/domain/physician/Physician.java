@@ -34,11 +34,8 @@ public class Physician {
     private String mainImage;
 
     private Gender gender;
-    private String bankAccountNumber;
-    private String bankCardNumber;
-    private String bankShebaNumber;
 
-    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, LocalDateTime updated_At, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, LocalDateTime updated_At, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender) {
         this.nationalCode = nationalCode;
         this.firstName = firstName;
         this.description = description;
@@ -52,9 +49,6 @@ public class Physician {
         this.user = user;
         this.mainImage = mainImage;
         this.gender = gender;
-        this.bankAccountNumber = bankAccountNumber;
-        this.bankCardNumber = bankCardNumber;
-        this.bankShebaNumber = bankShebaNumber;
     }
 
     public Physician(){
@@ -165,27 +159,4 @@ public class Physician {
         this.businessWeight = businessWeight;
     }
 
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
-    }
-
-    public void setBankAccountNumber(String bankAccountNumber) {
-        this.bankAccountNumber = bankAccountNumber;
-    }
-
-    public String getBankCardNumber() {
-        return bankCardNumber;
-    }
-
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
-    }
-
-    public String getBankShebaNumber() {
-        return bankShebaNumber;
-    }
-
-    public void setBankShebaNumber(String bankShebaNumber) {
-        this.bankShebaNumber = bankShebaNumber;
-    }
 }

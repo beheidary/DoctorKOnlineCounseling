@@ -141,22 +141,22 @@ public class CareCenterController extends BaseController{
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(responseDto));
         return result;
     }
-    @PostMapping("careCenter/editPhysicianDays")
+    @PostMapping("careCenter/editPhysicianDays/{careCenterId}")
     @Operation(summary = "Edit Physician's Working Days in a Care Center")
     @PreAuthorize("hasRole('ROLE_Physician')")
     @SecurityRequirement(name = "security_auth")
-    public DeferredResult<ResponseEntity<?>> editPhysicianWorkingDaysWithCareCenter( @RequestParam Long careCenterId, @RequestParam Set<WeekDay> days) {
+    public DeferredResult<ResponseEntity<?>> editPhysicianWorkingDaysWithCareCenter( @PathVariable Long careCenterId, @RequestParam Set<WeekDay> days) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         PhysicianCareCenterOutputDto responseDto = careCenterAdapter.editPhysicianWorkingDaysWithCareCenter(getCurrentUser().getId(), careCenterId, days);
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(responseDto));
         return result;
     }
 
-    @DeleteMapping("careCenter/terminateCooperation")
+    @DeleteMapping("careCenter/terminateCooperation/{careCenterId}")
     @Operation(summary = "Terminate Cooperation between Physician and Care Center")
     @PreAuthorize("hasRole('ROLE_Physician')")
     @SecurityRequirement(name = "security_auth")
-    public ResponseEntity<Void> terminationOfCooperationPhysicianWithCareCenter( @RequestParam Long careCenterId) {
+    public ResponseEntity<Void> terminationOfCooperationPhysicianWithCareCenter( @PathVariable Long careCenterId) {
         careCenterAdapter.terminationOfCooperationPhysicianWithCareCenter(getCurrentUser().getId(), careCenterId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

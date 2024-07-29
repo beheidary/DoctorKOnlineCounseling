@@ -28,31 +28,19 @@ public class PhysicianInputDto {
 
 
     private String description;
-
-
     private LocalDate dateOfBirth;
-
-
-
-
     @NotNull
     private String physicianSystemCode;
-
-
     private Gender gender;
 
     private String mainImage;
-
-    private String bankAccountNumber;
-    private String bankCardNumber;
-    private String bankShebaNumber;
 
 
     public PhysicianInputDto() {
     }
 
 
-    public PhysicianInputDto(String firstName, String lastName, String nationalCode, String description, LocalDate dateOfBirth, String physicianSystemCode, Gender gender, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianInputDto(String firstName, String lastName, String nationalCode, String description, LocalDate dateOfBirth, String physicianSystemCode, Gender gender, String mainImage) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
@@ -61,9 +49,6 @@ public class PhysicianInputDto {
         this.physicianSystemCode = physicianSystemCode;
         this.gender = gender;
         this.mainImage = mainImage;
-        this.bankAccountNumber = bankAccountNumber;
-        this.bankCardNumber = bankCardNumber;
-        this.bankShebaNumber = bankShebaNumber;
     }
 
     public PhysicianInputDto(String nationalCode, String firstName, String lastName, String physicianSystemCode) {
@@ -71,30 +56,6 @@ public class PhysicianInputDto {
         this.lastName = lastName;
         this.nationalCode = nationalCode;
         this.physicianSystemCode = physicianSystemCode;
-    }
-
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
-    }
-
-    public void setBankAccountNumber(String bankAccountNumber) {
-        this.bankAccountNumber = bankAccountNumber;
-    }
-
-    public String getBankCardNumber() {
-        return bankCardNumber;
-    }
-
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
-    }
-
-    public String getBankShebaNumber() {
-        return bankShebaNumber;
-    }
-
-    public void setBankShebaNumber(String bankShebaNumber) {
-        this.bankShebaNumber = bankShebaNumber;
     }
 
     public String getFirstName() {

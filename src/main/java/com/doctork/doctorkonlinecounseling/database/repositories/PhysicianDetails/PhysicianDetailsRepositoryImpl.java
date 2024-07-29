@@ -26,10 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -45,13 +42,15 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     private final AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository;
 
     private final PhysicianEntityMapper physicianEntityMapper;
+    private final PhysicianBankInfoMySqlRepository physicianBankInfoMySqlRepository;
 
     private final EducationMySqlRepository educationMySqlRepository;
     private final ExperiencesMySqlRepository experiencesMySqlRepository;
     private final MembershipMySqlRepository membershipMySqlRepository;
 
-    public PhysicianDetailsRepositoryImpl(GalleryImageMySqlRepository galleryImageMySqlRepository,AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository,MembershipMySqlRepository membershipMySqlRepository,PhysicianEntityMapper physicianEntityMapper,ExperiencesMySqlRepository experiencesMySqlRepository , EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
+    public PhysicianDetailsRepositoryImpl(PhysicianBankInfoMySqlRepository physicianBankInfoMySqlRepository,GalleryImageMySqlRepository galleryImageMySqlRepository,AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository,MembershipMySqlRepository membershipMySqlRepository,PhysicianEntityMapper physicianEntityMapper,ExperiencesMySqlRepository experiencesMySqlRepository , EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
         this.physicianDetailsEntityMapper = physicianDetailsEntityMapper;
+        this.physicianBankInfoMySqlRepository = physicianBankInfoMySqlRepository;
         this.galleryImageMySqlRepository = galleryImageMySqlRepository;
         this.awardsAndHonorsMySqlRepository = awardsAndHonorsMySqlRepository;
         this.physicianEntityMapper = physicianEntityMapper;
@@ -705,6 +704,63 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
         }
 
 
+    }
+
+    @Override
+    public PhysicianBankInfo storeBankInfo(String physicianId, PhysicianBankInfo physicianBankInfo) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            Optional<PhysicianBankInfoEntity> bankInfoEntity = physicianBankInfoMySqlRepository.findByPhysician(physicianEntity);
+
+            if (bankInfoEntity.isPresent() && Objects.equals(bankInfoEntity.get().getPhysician().getNationalCode(), physicianEntity.getNationalCode())) {
+                PhysicianBankInfoEntity existBankInfoEntity = bankInfoEntity.get();
+                if (existBankInfoEntity.getBankCardNumber() == null)
+                    existBankInfoEntity.setBankCardNumber(physicianBankInfo.getBankCardNumber());
+                if ((existBankInfoEntity.getBankAccountNumber() == null))
+                    existBankInfoEntity.setBankAccountNumber(physicianBankInfo.getBankAccountNumber());
+                PhysicianBankInfo physicianBankInfo1 = physicianDetailsEntityMapper.bankInfoEntityToModel(physicianBankInfoMySqlRepository.save(existBankInfoEntity));
+                return physicianBankInfo1;
+            }
+            else{
+                PhysicianBankInfoEntity newBankInfo = physicianDetailsEntityMapper.bankInfoModelToEntity(physicianBankInfo);
+                newBankInfo.setPhysician(physicianEntity);
+                return physicianDetailsEntityMapper.bankInfoEntityToModel(physicianBankInfoMySqlRepository.save(newBankInfo));
+            }
+
+
+
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @Override
+    public PhysicianBankInfo getBankInfo(String physicianId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            Optional<PhysicianBankInfoEntity> bankInfoEntity = physicianBankInfoMySqlRepository.findByPhysician(physicianEntity);
+
+            if (bankInfoEntity.isPresent())
+                return physicianDetailsEntityMapper.bankInfoEntityToModel(bankInfoEntity.get());
+            else
+                return new PhysicianBankInfo();
+
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 

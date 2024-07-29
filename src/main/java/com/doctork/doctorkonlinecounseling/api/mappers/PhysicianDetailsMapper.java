@@ -50,4 +50,8 @@ public interface PhysicianDetailsMapper {
 
     List<GalleryImageOutputDto> galleryImageModelToDto (List<GalleryImage> galleryImages);
 
+    PhysicianBankInfo bankInfoDtoToModel (PhysicianBankInfoInputDto physicianBankInfoInputDto);
+
+    PhysicianBankInfoOutputDto bankInfoModelToDto (PhysicianBankInfo physicianBankInfo);
+
 }

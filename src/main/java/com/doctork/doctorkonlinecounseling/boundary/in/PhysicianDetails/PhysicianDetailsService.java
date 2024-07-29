@@ -63,6 +63,10 @@ public interface PhysicianDetailsService {
     void addGalleryImage (String physicianId, GalleryImage galleryImage);
     void deActiveGalleryImage (String physicianId, Long imageId);
 
+    PhysicianBankInfo storeBankInfo (String physicianId,PhysicianBankInfo physicianBankInfo);
+    PhysicianBankInfo getBankInfo (String physicianId);
+
+
 
 
 }
