@@ -7,6 +7,8 @@ import com.doctork.doctorkonlinecounseling.boundary.in.Physician.PhysicianServic
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.GalleryImage;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianSocialMedia;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Sickness;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.SocialMedia;
@@ -229,8 +231,29 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         return physicianDetailsMapper.awardsAndHonorsModelToDto(physicianDetailsService.allPhysicianAwardsAndHonors(physician.getNationalCode()));
     }
 
+    @Override
+    public List<GalleryImageOutputDto> allPhysicianGalleryImages(UUID userId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsMapper.galleryImageModelToDto(physicianDetailsService.allPhysicianGalleryImages(physician.getNationalCode()));
+    }
 
+    @Override
+    public void addGalleryImage(UUID userId, String imageName) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        GalleryImage galleryImage = new GalleryImage(imageName,State.Approved, Status.Active);
+        physicianDetailsService.addGalleryImage(physician.getNationalCode(),galleryImage);
+    }
 
-
+    @Override
+    public void deActiveGalleryImage(UUID userId, Long imageId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.deActiveGalleryImage(physician.getNationalCode(),imageId);
+    }
 
 }

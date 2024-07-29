@@ -315,4 +315,32 @@ public class PhysicianDetailsController extends BaseController {
     }
 
 
+    @Operation(summary = "Add Gallery Image")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PostMapping("galleryImage/add")
+    public ResponseEntity<Void> addGalleryImage(@RequestParam String imageName) {
+        physicianDetailsAdapter.addGalleryImage(getCurrentUser().getId(), imageName);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Delete Gallery Image")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @DeleteMapping("galleryImage/{imageId}")
+    public ResponseEntity<Void> deleteGalleryImage(@PathVariable Long imageId) {
+        physicianDetailsAdapter.deActiveGalleryImage(getCurrentUser().getId(), imageId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "All Physician Gallery Images")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping("galleryImage/all")
+    @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GalleryImageOutputDto.class)) })
+    public DeferredResult<ResponseEntity<?>> allPhysicianGalleryImages(){
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<GalleryImageOutputDto> galleryImageOutputDtos = physicianDetailsAdapter.allPhysicianGalleryImages(getCurrentUser().getId());
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(galleryImageOutputDtos));
+        return result;
+    }
+
+
 }

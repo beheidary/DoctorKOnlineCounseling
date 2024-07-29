@@ -59,8 +59,9 @@ public interface PhysicianDetailsService {
 
     List<AwardsAndHonors> allPhysicianAwardsAndHonors(String physicianId);
 
-
-
+    List<GalleryImage> allPhysicianGalleryImages(String physicianId);
+    void addGalleryImage (String physicianId, GalleryImage galleryImage);
+    void deActiveGalleryImage (String physicianId, Long imageId);
 
 
 

@@ -12,6 +12,7 @@ import com.doctork.doctorkonlinecounseling.database.jpaRepositories.*;
 import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianDetailsEntityMapper;
 import com.doctork.doctorkonlinecounseling.database.mappers.PhysicianEntityMapper;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import jakarta.persistence.EntityManager;
@@ -25,7 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,7 +41,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     private final SicknessMySqlRepository sicknessMySqlRepository;
     private final PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository;
     private final SocialMediaMySqlRepository socialMediaMySqlRepository;
-
+    private final GalleryImageMySqlRepository galleryImageMySqlRepository;
     private final AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository;
 
     private final PhysicianEntityMapper physicianEntityMapper;
@@ -47,8 +50,9 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     private final ExperiencesMySqlRepository experiencesMySqlRepository;
     private final MembershipMySqlRepository membershipMySqlRepository;
 
-    public PhysicianDetailsRepositoryImpl(AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository,MembershipMySqlRepository membershipMySqlRepository,PhysicianEntityMapper physicianEntityMapper,ExperiencesMySqlRepository experiencesMySqlRepository , EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
+    public PhysicianDetailsRepositoryImpl(GalleryImageMySqlRepository galleryImageMySqlRepository,AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository,MembershipMySqlRepository membershipMySqlRepository,PhysicianEntityMapper physicianEntityMapper,ExperiencesMySqlRepository experiencesMySqlRepository , EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
         this.physicianDetailsEntityMapper = physicianDetailsEntityMapper;
+        this.galleryImageMySqlRepository = galleryImageMySqlRepository;
         this.awardsAndHonorsMySqlRepository = awardsAndHonorsMySqlRepository;
         this.physicianEntityMapper = physicianEntityMapper;
         this.membershipMySqlRepository = membershipMySqlRepository;
@@ -639,6 +643,68 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
                 throw ex;
             throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public List<GalleryImage> allPhysicianGalleryImages(String physicianId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            Optional<List<GalleryImageEntity>> galleryImageEntities = galleryImageMySqlRepository.findAllByPhysicianAndAndStatus(physicianEntity,Status.Active);
+            if (galleryImageEntities.isPresent())
+                return physicianDetailsEntityMapper.galleryImageEntityToModel(galleryImageEntities.get());
+            else return new ArrayList<>();
+
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public void addGalleryImage(String physicianId, GalleryImage galleryImage) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            GalleryImageEntity galleryImageEntity = physicianDetailsEntityMapper.galleryImageModelToEntity(galleryImage);
+            galleryImageEntity.setPhysician(physicianEntity);
+            galleryImageEntity = galleryImageMySqlRepository.save(galleryImageEntity);
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public void deActiveGalleryImage(String physicianId, Long imageId) {
+
+
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            GalleryImageEntity galleryImageEntity = galleryImageMySqlRepository.findById(imageId).orElseThrow(NotFoundException::new);
+            if (galleryImageEntity.getPhysician() == physicianEntity) {
+                galleryImageEntity.setStatus(Status.DeActive);
+                galleryImageEntity = galleryImageMySqlRepository.save(galleryImageEntity);
+            }
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
 

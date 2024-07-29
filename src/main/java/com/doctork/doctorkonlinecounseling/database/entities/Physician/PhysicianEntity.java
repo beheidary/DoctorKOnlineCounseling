@@ -82,8 +82,8 @@ public class PhysicianEntity {
     @OneToMany(mappedBy = "physician", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PhysicianCareCenterEntity> physicianCareCenters = new HashSet<>();;
 
-
-
+    @OneToMany(mappedBy = "physician", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<GalleryImageEntity> galleryImages = new HashSet<>();;
 
     @Column(name = "status", nullable = false)
     private PhysicianStatus status;
@@ -113,8 +113,9 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage, String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
+    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage,Set<GalleryImageEntity> galleryImages , String bankAccountNumber, String bankCardNumber, String bankShebaNumber) {
         this.nationalCode = nationalCode;
+        this.galleryImages = galleryImages;
         this.awardsAndHonors = awardsAndHonors;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -142,6 +143,14 @@ public class PhysicianEntity {
 
     public PhysicianEntity() {
 
+    }
+
+    public Set<GalleryImageEntity> getGalleryImages() {
+        return galleryImages;
+    }
+
+    public void setGalleryImages(Set<GalleryImageEntity> galleryImages) {
+        this.galleryImages = galleryImages;
     }
 
     public List<EducationEntity> getEducations() {

@@ -177,4 +177,27 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
         return physicianDetailsRepository.allPhysicianAwardsAndHonors(physicianId);
     }
 
+    @Override
+    public List<GalleryImage> allPhysicianGalleryImages(String physicianId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allPhysicianGalleryImages(physicianId);
+    }
+
+    @Override
+    public void addGalleryImage(String physicianId, GalleryImage galleryImage) {
+        if (physicianId == null)
+            throw new IdInputException();
+        physicianDetailsRepository.addGalleryImage(physicianId,galleryImage);
+
+    }
+
+    @Override
+    public void deActiveGalleryImage(String physicianId, Long imageId) {
+        if (physicianId == null)
+            throw new IdInputException();
+        physicianDetailsRepository.deActiveGalleryImage(physicianId,imageId);
+
+    }
+
 }

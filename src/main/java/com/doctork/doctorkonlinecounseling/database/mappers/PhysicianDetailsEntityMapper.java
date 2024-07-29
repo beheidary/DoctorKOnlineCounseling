@@ -1,6 +1,7 @@
 package com.doctork.doctorkonlinecounseling.database.mappers;
 
 
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.GalleryImageOutputDto;
 import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
 import org.mapstruct.Mapper;
@@ -53,6 +54,11 @@ public interface PhysicianDetailsEntityMapper {
 
     AwardsAndHonorsEntity awardsAndHonorsModelToEntity(AwardsAndHonors awardsAndHonors);
 
+    List<GalleryImage> galleryImageEntityToModel (List<GalleryImageEntity> galleryImageEntities);
+
+    //GalleryImage galleryImageEntityToModel (GalleryImageEntity galleryImageEntity);
+
+    GalleryImageEntity galleryImageModelToEntity (GalleryImage galleryImage);
 
 
 

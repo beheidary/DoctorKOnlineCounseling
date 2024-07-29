@@ -48,4 +48,6 @@ public interface PhysicianDetailsMapper {
 
     List<AwardsAndHonorsOutputDto> awardsAndHonorsModelToDto(List<AwardsAndHonors> awardsAndHonors);
 
+    List<GalleryImageOutputDto> galleryImageModelToDto (List<GalleryImage> galleryImages);
+
 }
