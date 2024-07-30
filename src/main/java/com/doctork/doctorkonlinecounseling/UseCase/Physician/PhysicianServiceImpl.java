@@ -2,6 +2,7 @@ package com.doctork.doctorkonlinecounseling.UseCase.Physician;
 
 import com.doctork.doctorkonlinecounseling.UseCase.miscellaneous.PhysicianMiscellaneousServiceImpl;
 import com.doctork.doctorkonlinecounseling.boundary.exit.Physician.PhysicianRepository;
+import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.PhysicianDetailsRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.Physician.PhysicianService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.InputException;
@@ -10,6 +11,8 @@ import com.doctork.doctorkonlinecounseling.database.entities.user.UserEntity;
 import com.doctork.doctorkonlinecounseling.database.mongoRepositories.PhysicianMongoRepository;
 import com.doctork.doctorkonlinecounseling.domain.Enums.MessageType;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.Enums.Status;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.GalleryImage;
 import com.doctork.doctorkonlinecounseling.domain.RabbitMqMessages.CostumeMessage;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
 import com.doctork.doctorkonlinecounseling.domain.Enums.PhysicianStatus;
@@ -19,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PhysicianServiceImpl implements PhysicianService {
@@ -27,11 +31,14 @@ public class PhysicianServiceImpl implements PhysicianService {
 
     private RabbitTemplate rabbitTemplate;
     private final PhysicianMiscellaneousServiceImpl doctorMiscellaneousService;
+
+    private final PhysicianDetailsRepository physicianDetailsRepository;
     private final PhysicianMongoRepository physicianMongoRepository;
 
 
-    public PhysicianServiceImpl(RabbitTemplate rabbitTemplate, PhysicianMiscellaneousServiceImpl doctorMiscellaneousService, PhysicianRepository physicianRepository, PhysicianMongoRepository physicianMongoRepository) {
+    public PhysicianServiceImpl(PhysicianDetailsRepository physicianDetailsRepository,RabbitTemplate rabbitTemplate, PhysicianMiscellaneousServiceImpl doctorMiscellaneousService, PhysicianRepository physicianRepository, PhysicianMongoRepository physicianMongoRepository) {
         this.physicianRepository = physicianRepository;
+        this.physicianDetailsRepository = physicianDetailsRepository;
         this.rabbitTemplate = rabbitTemplate;
         this.doctorMiscellaneousService = doctorMiscellaneousService;
         this.physicianMongoRepository = physicianMongoRepository;
@@ -67,7 +74,14 @@ public class PhysicianServiceImpl implements PhysicianService {
         String tokenNationalCode =((UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNationalCode();
         if (!physician.getNationalCode().equals(tokenNationalCode))
             throw new AccessDeniedException("You do not have the required access");
+        Physician chwckingPhysician = physicianRepository.findPhysicianById(physician.getNationalCode());
+
         physician = physicianRepository.PhysicianEditProfile(physician);
+        // add removed image to physician gallery
+        if (chwckingPhysician.getMainImage() != null && !Objects.equals(chwckingPhysician.getMainImage(), physician.getMainImage())){
+            GalleryImage galleryImage = new GalleryImage(chwckingPhysician.getMainImage(),State.Approved, Status.DeActive);
+            physicianDetailsRepository.addGalleryImage(physician.getNationalCode(),galleryImage);
+        }
 
 //        Todo add message for change properties
 //        CostumeMessage message = new CostumeMessage(MessageType.changeStatus,nationalCode,System.currentTimeMillis(),status);

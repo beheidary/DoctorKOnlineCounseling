@@ -26,6 +26,7 @@ public class ApplicationConfiguration {
 
     @Bean
     UserDetailsService userDetailsService() {
+        int i=0;
         return username -> userMySqlRepository.findByEmail(username)
                 .orElseGet(() -> userMySqlRepository.findByMobileNumber(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
     }

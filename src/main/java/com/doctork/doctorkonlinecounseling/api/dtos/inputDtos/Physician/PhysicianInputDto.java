@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.doctork.doctorkonlinecounseling.domain.Enums.EducationLevel;
 import com.doctork.doctorkonlinecounseling.domain.Enums.Gender;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mongodb.lang.Nullable;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,25 +27,27 @@ public class PhysicianInputDto {
     @NotBlank
     private String nationalCode;
 
-
     private String description;
     private LocalDate dateOfBirth;
     @NotNull
     private String physicianSystemCode;
     private Gender gender;
-
     private String mainImage;
+    private Boolean supplementaryHealthInsurance;
+    @Nullable
+    private String email;
 
 
     public PhysicianInputDto() {
     }
 
 
-    public PhysicianInputDto(String firstName, String lastName, String nationalCode, String description, LocalDate dateOfBirth, String physicianSystemCode, Gender gender, String mainImage) {
+    public PhysicianInputDto(@Nullable String email, String firstName, Boolean supplementaryHealthInsurance, String lastName, String nationalCode, LocalDate dateOfBirth, String physicianSystemCode, Gender gender, String mainImage) {
         this.firstName = firstName;
+        this.email = email;
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
-        this.description = description;
         this.dateOfBirth = dateOfBirth;
         this.physicianSystemCode = physicianSystemCode;
         this.gender = gender;
@@ -58,9 +61,27 @@ public class PhysicianInputDto {
         this.physicianSystemCode = physicianSystemCode;
     }
 
+    public Boolean getSupplementaryHealthInsurance() {
+        return supplementaryHealthInsurance;
+    }
+
+    @Nullable
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@Nullable String email) {
+        this.email = email;
+    }
+
+    public void setSupplementaryHealthInsurance(Boolean supplementaryHealthInsurance) {
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
+    }
+
     public String getFirstName() {
         return firstName;
     }
+
 
     public String getDescription() {
         return description;

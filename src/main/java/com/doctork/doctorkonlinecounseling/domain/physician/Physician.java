@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class Physician {
@@ -32,11 +33,19 @@ public class Physician {
     private User user;
 
     private String mainImage;
+    private String email;
+
+    private String mobileNumber;
+
+    Boolean supplementaryHealthInsurance;
 
     private Gender gender;
 
-    public Physician(String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, LocalDateTime updated_At, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender) {
+    public Physician(Boolean supplementaryHealthInsurance,String nationalCode, String firstName, String description, String lastName, State state, LocalDate dateOfBirth, LocalDateTime updated_At, String physicianSystemCode, Double businessWeight, PhysicianStatus status, User user, String mainImage, Gender gender) {
         this.nationalCode = nationalCode;
+        this.email = user.getEmail();
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
+        this.mobileNumber = user.getMobileNumber();
         this.firstName = firstName;
         this.description = description;
         this.lastName = lastName;
@@ -62,6 +71,30 @@ public class Physician {
     }
     public String getMainImage() {
         return mainImage;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public Boolean getSupplementaryHealthInsurance() {
+        return supplementaryHealthInsurance;
+    }
+
+    public void setSupplementaryHealthInsurance(Boolean supplementaryHealthInsurance) {
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
     }
 
     public void setMainImage(String mainImage) {
@@ -148,6 +181,9 @@ public class Physician {
     }
 
     public void setUser(User user) {
+        if (!Objects.equals(user.getEmail(), user.getMobileNumber()))
+            setEmail(user.getEmail());
+        setMobileNumber(user.getMobileNumber());
         this.user = user;
     }
 

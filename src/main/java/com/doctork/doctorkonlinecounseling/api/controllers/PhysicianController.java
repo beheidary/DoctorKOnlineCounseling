@@ -81,7 +81,7 @@ public class PhysicianController extends BaseController {
     @Operation(summary = "Complete Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json") })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> PhysicianCop(@RequestBody PhysicianInputDto physicianInputDto)
+    DeferredResult<ResponseEntity<?>> PhysicianCompleteProfile(@RequestBody PhysicianInputDto physicianInputDto)
     {
 
 
@@ -100,7 +100,7 @@ public class PhysicianController extends BaseController {
     @Operation(summary = "Edit Physician Profile")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianOutputDto.class)) })
     public @ResponseBody
-    DeferredResult<ResponseEntity<?>> PhysicianEp( @RequestBody @Validated PhysicianInputDto physicianInputDto)
+    DeferredResult<ResponseEntity<?>> PhysicianEditProfile( @RequestBody @Validated PhysicianInputDto physicianInputDto)
     {
 
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();

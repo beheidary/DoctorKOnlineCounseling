@@ -174,16 +174,16 @@ public class PhysicianDetailsController extends BaseController {
 
     @Operation(summary = "edit Education")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PutMapping(value = "education/edit")
-    public ResponseEntity<Void> editEducation(@RequestParam Long educationId, @RequestBody EducationInputDto educationInputDto) {
+    @PutMapping(value = "education/edit/{educationId}")
+    public ResponseEntity<Void> editEducation(@PathVariable Long educationId, @RequestBody EducationInputDto educationInputDto) {
         physicianDetailsAdapter.editEducation(getCurrentUser().getId(),educationInputDto,educationId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "delete Education")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @DeleteMapping(value = "education/delete")
-    public DeferredResult<ResponseEntity<?>> deleteEducation(@RequestParam Long educationId) {
+    @DeleteMapping(value = "education/delete/{educationId}")
+    public DeferredResult<ResponseEntity<?>> deleteEducation(@PathVariable Long educationId) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         educationId = physicianDetailsAdapter.deleteEducation(getCurrentUser().getId(),educationId);
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(educationId));
@@ -220,8 +220,8 @@ public class PhysicianDetailsController extends BaseController {
 
     @Operation(summary = "Delete Experiences")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @DeleteMapping("experiences/delete")
-    public DeferredResult<ResponseEntity<?>> deleteExperiences(@RequestParam Long experiencesId) {
+    @DeleteMapping("experiences/delete/{experiencesId}")
+    public DeferredResult<ResponseEntity<?>> deleteExperiences(@PathVariable Long experiencesId) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         experiencesId = physicianDetailsAdapter.deleteExperiences(getCurrentUser().getId(), experiencesId);
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(experiencesId));
@@ -251,16 +251,16 @@ public class PhysicianDetailsController extends BaseController {
 
     @Operation(summary = "Edit Membership")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PutMapping("membership/edit")
-    public ResponseEntity<Void> editMembership(@RequestParam Long membershipId, @RequestBody MembershipInputDto membershipInputDto) {
+    @PutMapping("membership/edit/{membershipId}")
+    public ResponseEntity<Void> editMembership(@PathVariable Long membershipId, @RequestBody MembershipInputDto membershipInputDto) {
         physicianDetailsAdapter.editMembership(getCurrentUser().getId(), membershipInputDto, membershipId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Delete Membership")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @DeleteMapping("membership/delete")
-    public DeferredResult<ResponseEntity<?>> deleteMembership(@RequestParam Long membershipId) {
+    @DeleteMapping("membership/delete/{membershipId}")
+    public DeferredResult<ResponseEntity<?>> deleteMembership(@PathVariable Long membershipId) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         membershipId = physicianDetailsAdapter.deleteMembership(getCurrentUser().getId(), membershipId);
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(membershipId));
@@ -288,16 +288,16 @@ public class PhysicianDetailsController extends BaseController {
 
     @Operation(summary = "Edit Award or Honor")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PutMapping("awardsAndHonors/edit")
-    public ResponseEntity<Void> editAwardOrHonor(@RequestParam Long awardOrHonorId, @RequestBody AwardsAndHonorsInputDto awardsAndHonorsInputDto) {
+    @PutMapping("awardsAndHonors/edit/{awardOrHonorId}")
+    public ResponseEntity<Void> editAwardOrHonor(@PathVariable Long awardOrHonorId, @RequestBody AwardsAndHonorsInputDto awardsAndHonorsInputDto) {
         physicianDetailsAdapter.editAwardOrHonor(getCurrentUser().getId(), awardsAndHonorsInputDto, awardOrHonorId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Delete Award or Honor")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @DeleteMapping("awardsAndHonors/delete")
-    public DeferredResult<ResponseEntity<?>> deleteAwardOrHonor(@RequestParam Long awardOrHonorId) {
+    @DeleteMapping("awardsAndHonors/delete/{awardOrHonorId}")
+    public DeferredResult<ResponseEntity<?>> deleteAwardOrHonor(@PathVariable Long awardOrHonorId) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         awardOrHonorId = physicianDetailsAdapter.deleteAwardOrHonor(getCurrentUser().getId(), awardOrHonorId);
         result.setResult(ResponseEntity.status(HttpStatus.OK).body(awardOrHonorId));

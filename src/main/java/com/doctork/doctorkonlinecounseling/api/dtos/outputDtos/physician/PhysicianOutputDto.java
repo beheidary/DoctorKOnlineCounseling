@@ -21,13 +21,18 @@ public class PhysicianOutputDto {
     private Gender gender;
     private State state;
     private String mainImage;
-
+    private String email;
+    private String mobileNumber;
+    private Boolean supplementaryHealthInsurance;
     private Boolean profileNecessaryInfoInserted;
 
 
 
-    public PhysicianOutputDto(String firstName, String lastName, String description, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, String nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted) {
+    public PhysicianOutputDto(String email,String mobileNumber,Boolean supplementaryHealthInsurance,String firstName, String lastName, String description, String physicianSystemCode, LocalDateTime updated_At, PhysicianStatus status, String nationalCode, Gender gender, State state, String mainImage, Boolean profileNecessaryInfoInserted) {
         this.firstName = firstName;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
         this.lastName = lastName;
         this.description = description;
         this.physicianSystemCode = physicianSystemCode;
@@ -46,6 +51,30 @@ public class PhysicianOutputDto {
 
     public String getMainImage() {
         return mainImage;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public Boolean getSupplementaryHealthInsurance() {
+        return supplementaryHealthInsurance;
+    }
+
+    public void setSupplementaryHealthInsurance(Boolean supplementaryHealthInsurance) {
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
     }
 
     public void setMainImage(String mainImage) {

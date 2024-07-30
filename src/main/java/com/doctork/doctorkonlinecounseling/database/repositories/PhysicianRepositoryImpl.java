@@ -131,14 +131,21 @@ public class PhysicianRepositoryImpl implements PhysicianRepository {
 
         try{
 
+
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physician.getNationalCode()).orElseThrow(PhysicianNotFoundException::new);
+            UserEntity userEntity = userMySqlRepository.findUserEntityById(physicianEntity.getUser().getId());
+            if (physician.getEmail() != null && Objects.equals(userEntity.getMobileNumber(), userEntity.getEmail())){
+             userEntity.setEmail(physician.getEmail());
+             userMySqlRepository.save(userEntity);
+            }
 
+            physicianEntity.setDateOfBirth(physician.getDateOfBirth());
+            physicianEntity.setMainImage(physician.getMainImage());
+            physicianEntity.setGender(physician.getGender());
+            physicianEntity.setSupplementaryHealthInsurance(physician.getSupplementaryHealthInsurance());
+            physicianEntity = physicianMySqlRepository.save(physicianEntity);
 
-                physicianEntity.setDateOfBirth(physician.getDateOfBirth());
-                physicianEntity.setMainImage(physician.getMainImage());
-                physicianEntity = physicianMySqlRepository.save(physicianEntity);
-
-                return physicianEntityMapper.entityToModel(physicianEntity);
+            return physicianEntityMapper.entityToModel(physicianEntity);
 
 
         }catch (QueryTimeoutException ex){

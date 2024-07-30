@@ -98,6 +98,10 @@ public class PhysicianEntity {
     @Column(name = "mainImage")
     private String mainImage;
 
+    @Column (name = "supplementaryHealthInsurance")
+    private Boolean supplementaryHealthInsurance;
+
+
 
 
 
@@ -108,8 +112,9 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode,List<ExperiencesEntity> experiences,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage,Set<GalleryImageEntity> galleryImages) {
+    public PhysicianEntity(String nationalCode,Boolean supplementaryHealthInsurance,List<ExperiencesEntity> experiences,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage,Set<GalleryImageEntity> galleryImages) {
         this.nationalCode = nationalCode;
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
         this.galleryImages = galleryImages;
         this.awardsAndHonors = awardsAndHonors;
         this.firstName = firstName;
@@ -135,6 +140,14 @@ public class PhysicianEntity {
 
     public PhysicianEntity() {
 
+    }
+
+    public Boolean getSupplementaryHealthInsurance() {
+        return supplementaryHealthInsurance;
+    }
+
+    public void setSupplementaryHealthInsurance(Boolean supplementaryHealthInsurance) {
+        this.supplementaryHealthInsurance = supplementaryHealthInsurance;
     }
 
     public Set<GalleryImageEntity> getGalleryImages() {

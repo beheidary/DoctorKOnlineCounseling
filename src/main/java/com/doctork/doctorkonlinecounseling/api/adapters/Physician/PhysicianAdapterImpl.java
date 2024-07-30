@@ -36,6 +36,7 @@ public class PhysicianAdapterImpl implements PhysicianAdapter {
         physician.setBusinessWeight(0.01);
         physician.setStatus(PhysicianStatus.Offline);
         physician.setState(State.Waiting);
+        physician.setSupplementaryHealthInsurance(Boolean.FALSE);
 
         physician = physicianService.PhysicianCompleteProfile(physician);
 
