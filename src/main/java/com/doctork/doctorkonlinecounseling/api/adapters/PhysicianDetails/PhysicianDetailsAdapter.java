@@ -3,6 +3,7 @@ package com.doctork.doctorkonlinecounseling.api.adapters.PhysicianDetails;
 import com.doctork.doctorkonlinecounseling.api.dtos.inputDtos.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Article;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Education;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.GalleryImage;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.PhysicianBankInfo;
@@ -70,5 +71,13 @@ public interface PhysicianDetailsAdapter {
 
     PhysicianBankInfoOutputDto storeBankInfo (UUID userId, PhysicianBankInfoInputDto bankInfoInputDto);
     PhysicianBankInfoOutputDto getBankInfo (UUID userId);
+
+    ArticleOutputDto addArticle(UUID userId , ArticleInputDto articleInputDto);
+    ArticleOutputDto editArticle(UUID userId , ArticleInputDto articleInputDto , Long articleId) throws Exception;
+    List<ArticleOutputDto> allPhysicianArticles(UUID userId);
+    List<ArticleOutputDto> allArticles(UUID userId , State state);
+    Long deleteArticle(UUID userId , Long articleId) throws Exception;
+    void changeArticleImage(String imageName , UUID userId , Long articleId);
+    ArticleOutputDto changeArticleState(Long articleId , State state);
 
 }

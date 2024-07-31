@@ -272,4 +272,60 @@ public class PhysicianDetailsAdapterImpl implements PhysicianDetailsAdapter {
         return physicianDetailsMapper.bankInfoModelToDto(physicianDetailsService.getBankInfo(physician.getNationalCode()));
     }
 
+    @Override
+    public ArticleOutputDto addArticle(UUID userId, ArticleInputDto articleInputDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        Article article = physicianDetailsMapper.articleDtoToModel(articleInputDto);
+        article.setState(State.Waiting);
+        return physicianDetailsMapper.articleModelToDto(physicianDetailsService.addArticle(physician.getNationalCode(),article));
+    }
+
+    @Override
+    public ArticleOutputDto editArticle(UUID userId, ArticleInputDto articleInputDto, Long articleId) throws Exception {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        Article article = physicianDetailsMapper.articleDtoToModel(articleInputDto);
+        article.setState(State.Waiting);
+        return physicianDetailsMapper.articleModelToDto(physicianDetailsService.editArticle(physician.getNationalCode(),article,articleId));
+    }
+
+    @Override
+    public List<ArticleOutputDto> allPhysicianArticles(UUID userId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsMapper.articleModelToDto(physicianDetailsService.allPhysicianArticles(physician.getNationalCode() , State.Approved));
+    }
+    @Override
+    public List<ArticleOutputDto> allArticles(UUID userId , State state) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsMapper.articleModelToDto(physicianDetailsService.allArticles(physician.getNationalCode() , state));
+    }
+
+    @Override
+    public Long deleteArticle(UUID userId, Long articleId) throws Exception {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        return physicianDetailsService.deleteArticle(physician.getNationalCode(),articleId);
+    }
+
+    @Override
+    public void changeArticleImage(String imageName, UUID userId, Long articleId) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        Physician physician = physicianService.fetchPhysician(userEntity);
+        physicianDetailsService.changeArticleImage(imageName,physician.getNationalCode(),articleId);
+    }
+
+    @Override
+    public ArticleOutputDto changeArticleState(Long articleId, State state) {
+        return physicianDetailsMapper.articleModelToDto(physicianDetailsService.changeArticleState(articleId,state));
+    }
+
 }

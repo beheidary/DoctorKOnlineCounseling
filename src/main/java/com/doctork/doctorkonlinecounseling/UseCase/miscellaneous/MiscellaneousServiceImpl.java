@@ -2,7 +2,7 @@ package com.doctork.doctorkonlinecounseling.UseCase.miscellaneous;
 
 import com.doctork.doctorkonlinecounseling.boundary.exit.Miscellaneous.MiscellaneousRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.miscellaneous.MiscellaneousService;
-import com.doctork.doctorkonlinecounseling.domain.SpecificModels.Article;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Article;
 import com.doctork.doctorkonlinecounseling.domain.SpecificModels.FAQ;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,10 +47,4 @@ public class MiscellaneousServiceImpl implements MiscellaneousService {
 
         return null;
     }
-
-    @Override
-    public List<Article> getAllArticles() {
-        return miscellaneousRepository.getAllArticles();
-    }
-
 }

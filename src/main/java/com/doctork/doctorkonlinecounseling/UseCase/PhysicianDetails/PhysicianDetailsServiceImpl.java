@@ -1,23 +1,28 @@
 package com.doctork.doctorkonlinecounseling.UseCase.PhysicianDetails;
 
+import com.doctork.doctorkonlinecounseling.Infrastructure.FileManagement.MinioService.MinioService;
 import com.doctork.doctorkonlinecounseling.boundary.exit.PhysicianDetails.PhysicianDetailsRepository;
 import com.doctork.doctorkonlinecounseling.boundary.in.PhysicianDetails.PhysicianDetailsService;
 import com.doctork.doctorkonlinecounseling.common.exceptions.input.IdInputException;
 import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.*;
 import com.doctork.doctorkonlinecounseling.domain.physician.Physician;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
 public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
 
     private final PhysicianDetailsRepository physicianDetailsRepository;
+    private final MinioService minioService;
 
-    public PhysicianDetailsServiceImpl(PhysicianDetailsRepository physicianDetailsRepository) {
+    public PhysicianDetailsServiceImpl(MinioService minioService,PhysicianDetailsRepository physicianDetailsRepository) {
         this.physicianDetailsRepository = physicianDetailsRepository;
+        this.minioService = minioService;
     }
 
     @Override
@@ -212,6 +217,68 @@ public class PhysicianDetailsServiceImpl implements PhysicianDetailsService {
         if (physicianId == null)
             throw new IdInputException();
         return physicianDetailsRepository.getBankInfo(physicianId);
+    }
+
+    @Override
+    public Article addArticle(String physicianId, Article article) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.addArticle(physicianId,article);
+    }
+
+    @Override
+    public Article editArticle(String physicianId, Article article, Long articleId) throws Exception {
+        if (physicianId == null || articleId == null)
+            throw new IdInputException();
+        Article oldArticle = physicianDetailsRepository.fetchArticle(articleId);
+        Article newArticle = physicianDetailsRepository.editArticle(physicianId,article,articleId);
+        if (oldArticle.getImageName() != null && !Objects.equals(oldArticle.getImageName(), newArticle.getImageName()))
+            minioService.removeObject(oldArticle.getImageName());
+        if (oldArticle.getFileName() != null && !Objects.equals(oldArticle.getFileName(), newArticle.getFileName()))
+            minioService.removeObject(oldArticle.getFileName());
+        return newArticle;
+    }
+
+    @Override
+    public List<Article> allPhysicianArticles(String physicianId , State state) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allPhysicianArticles(physicianId , state);
+    }
+
+    @Override
+    public List<Article> allArticles(String physicianId, State state) {
+        if (physicianId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.allArticles(physicianId , state);
+    }
+
+    @Override
+    public Long deleteArticle(String physicianId, Long articleId) throws Exception {
+        if (physicianId == null || articleId == null)
+            throw new IdInputException();
+        Article oldArticle = physicianDetailsRepository.fetchArticle(articleId);
+        articleId = physicianDetailsRepository.deleteArticle(physicianId,articleId);
+        if (oldArticle.getImageName() != null)
+            minioService.removeObject(oldArticle.getImageName());
+        if (oldArticle.getFileName() != null)
+            minioService.removeObject(oldArticle.getFileName());
+
+        return articleId;
+    }
+
+    @Override
+    public void changeArticleImage(String imageName, String physicianId, Long articleId) {
+        if (physicianId == null || articleId ==null)
+            throw new IdInputException();
+        physicianDetailsRepository.changeArticleImage(imageName,physicianId,articleId);
+    }
+
+    @Override
+    public Article changeArticleState(Long articleId, State state) {
+        if (articleId == null)
+            throw new IdInputException();
+        return physicianDetailsRepository.changeArticleState(articleId,state);
     }
 
 }

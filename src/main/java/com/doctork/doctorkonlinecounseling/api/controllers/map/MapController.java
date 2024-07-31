@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.async.DeferredResult;
 
 @Controller
-@RequestMapping("/api/map/")
+@RequestMapping("/map/")
 public class MapController {
 
     private final MapAdapter mapAdapter;
@@ -27,7 +27,7 @@ public class MapController {
         this.mapAdapter = mapAdapter;
     }
     @Operation(summary = "Reverse Geocode a Location")
-    @GetMapping("/reverse-geocoding")
+    @GetMapping("reverse-geocoding")
     @ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReverseGeocodingResponse.class)))
     public DeferredResult<ResponseEntity<?>> reverseGeocoding(@RequestParam double lat, @RequestParam double lng) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
@@ -37,7 +37,7 @@ public class MapController {
     }
 
     @Operation(summary = "Search Locations by Term")
-    @GetMapping("/search")
+    @GetMapping("search")
     @ApiResponse(content = @Content(mediaType = "application/json", schema = @Schema(implementation = MapSearchResponse.class)))
     public DeferredResult<ResponseEntity<?>> search(@RequestParam String term, @RequestParam double lat, @RequestParam double lng) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();

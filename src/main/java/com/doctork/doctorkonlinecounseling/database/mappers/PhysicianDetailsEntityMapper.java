@@ -54,16 +54,14 @@ public interface PhysicianDetailsEntityMapper {
     List<AwardsAndHonors> awardsAndHonorsEntityToModel(List<AwardsAndHonorsEntity> awardsAndHonorsEntities);
 
     AwardsAndHonorsEntity awardsAndHonorsModelToEntity(AwardsAndHonors awardsAndHonors);
-
     List<GalleryImage> galleryImageEntityToModel (List<GalleryImageEntity> galleryImageEntities);
-
-    //GalleryImage galleryImageEntityToModel (GalleryImageEntity galleryImageEntity);
-
     GalleryImageEntity galleryImageModelToEntity (GalleryImage galleryImage);
-
     PhysicianBankInfoEntity bankInfoModelToEntity (PhysicianBankInfo physicianBankInfo);
-
     PhysicianBankInfo bankInfoEntityToModel (PhysicianBankInfoEntity physicianBankInfoEntity);
+    List<Article> articleEntityToModel(List<ArticleEntity> articleEntities);
+    Article articleEntityToModel(ArticleEntity articleEntity);
+    ArticleEntity articleModelToEntity (Article article);
+
 
 
 

@@ -1,6 +1,6 @@
 package com.doctork.doctorkonlinecounseling.api.adapters.miscellaneous;
 
-import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.ArticleOutputDto;
+import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.PhysicianDetails.ArticleOutputDto;
 import com.doctork.doctorkonlinecounseling.api.dtos.outputDtos.miscellaneous.FAQOutputDto;
 import com.doctork.doctorkonlinecounseling.api.mappers.MiscellaneousMapper;
 import com.doctork.doctorkonlinecounseling.boundary.in.miscellaneous.MiscellaneousService;
@@ -23,11 +23,6 @@ public class MiscellaneousAdapterImpl implements MiscellaneousAdapter {
     public List<FAQOutputDto> getFaq() {
 
          return miscellaneousMapper.faqModelToDto(miscellaneousService.getFaq());
-    }
-
-    @Override
-    public List<ArticleOutputDto> getAllArticles() {
-        return miscellaneousMapper.articleModelToDto(miscellaneousService.getAllArticles());
     }
 
 }

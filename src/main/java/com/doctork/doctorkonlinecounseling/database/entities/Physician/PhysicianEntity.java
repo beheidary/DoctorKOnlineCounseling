@@ -35,7 +35,7 @@ public class PhysicianEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "dateOfBirth" , nullable = true)
+    @Column(name = "dateOfBirth" )
     private LocalDate dateOfBirth;
 
     @Column(name = "businessWeight" , nullable = false)
@@ -75,6 +75,8 @@ public class PhysicianEntity {
 
     @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<MembershipEntity> memberships ;
+    @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<ArticleEntity> articles;
 
     @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<AwardsAndHonorsEntity> awardsAndHonors ;
@@ -112,7 +114,7 @@ public class PhysicianEntity {
     // Todo complete Addresses and Service Entities
 
 
-    public PhysicianEntity(String nationalCode,Boolean supplementaryHealthInsurance,List<ExperiencesEntity> experiences,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage,Set<GalleryImageEntity> galleryImages) {
+    public PhysicianEntity(String nationalCode,Boolean supplementaryHealthInsurance,List<ExperiencesEntity> experiences,List<ArticleEntity> articles,Set<PhysicianCareCenterEntity> physicianCareCenters ,List<AwardsAndHonorsEntity> awardsAndHonors,List<MembershipEntity> memberships, String firstName, String lastName, String description, LocalDate dateOfBirth, Double businessWeight, Gender gender, LocalDateTime updated_At, Set<ExpertiseEntity> expertises, Set<SicknessEntity> sicknesses, Set<PhysicianSocialMediaEntity> physicianSocialMedia,List<EducationEntity> educations, String physicianSystemCode, PhysicianStatus status, State state, UserEntity user, String mainImage,Set<GalleryImageEntity> galleryImages) {
         this.nationalCode = nationalCode;
         this.supplementaryHealthInsurance = supplementaryHealthInsurance;
         this.galleryImages = galleryImages;
@@ -131,6 +133,7 @@ public class PhysicianEntity {
         this.sicknesses = sicknesses;
         this.physicianCareCenters = physicianCareCenters;
         this.physicianSystemCode = physicianSystemCode;
+        this.articles = articles;
         this.status = status;
         this.physicianSocialMedia = physicianSocialMedia;
         this.state = state;
@@ -148,6 +151,14 @@ public class PhysicianEntity {
 
     public void setSupplementaryHealthInsurance(Boolean supplementaryHealthInsurance) {
         this.supplementaryHealthInsurance = supplementaryHealthInsurance;
+    }
+
+    public List<ArticleEntity> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<ArticleEntity> articles) {
+        this.articles = articles;
     }
 
     public Set<GalleryImageEntity> getGalleryImages() {

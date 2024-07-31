@@ -5,11 +5,11 @@ import com.doctork.doctorkonlinecounseling.common.exceptions.BaseException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.GeneralException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.invalid.InvalidDataException;
 import com.doctork.doctorkonlinecounseling.common.exceptions.temporary.DatabaseTimeOutException;
-import com.doctork.doctorkonlinecounseling.database.entities.Miscellaneous.ArticleEntity;
+import com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails.ArticleEntity;
 import com.doctork.doctorkonlinecounseling.database.entities.user.OtpDetailsEntity;
 import com.doctork.doctorkonlinecounseling.database.jpaRepositories.ArticleMySqlRepository;
 import com.doctork.doctorkonlinecounseling.database.mappers.MiscellaneousEntityMapper;
-import com.doctork.doctorkonlinecounseling.domain.SpecificModels.Article;
+import com.doctork.doctorkonlinecounseling.domain.PhysicianDetails.Article;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -36,37 +36,6 @@ public class MiscellaneousRepositoryImpl implements MiscellaneousRepository {
     public MiscellaneousRepositoryImpl(MiscellaneousEntityMapper miscellaneousEntityMapper, ArticleMySqlRepository articleMySqlRepository) {
         this.articleMySqlRepository = articleMySqlRepository;
         this.miscellaneousEntityMapper = miscellaneousEntityMapper;
-    }
-
-    @Override
-    public List<Article> getAllArticles() {
-
-
-
-        try{
-
-            List<ArticleEntity> articleEntities = articleMySqlRepository.findAll();
-
-           return miscellaneousEntityMapper.entityToModel(articleEntities);
-
-
-        }catch (QueryTimeoutException ex){
-
-            throw new DatabaseTimeOutException();
-
-        }
-        catch (DataIntegrityViolationException ex){
-
-            throw new InvalidDataException();
-
-        }
-        catch (Exception ex){
-            if(ex instanceof BaseException)
-                throw ex;
-            throw  new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
-            
-        }
-
     }
 
     @Override

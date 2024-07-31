@@ -61,16 +61,16 @@ public interface PhysicianDetailsRepository {
     List<GalleryImage> allPhysicianGalleryImages(String physicianId);
 
     void addGalleryImage (String physicianId, GalleryImage galleryImage);
-
     void deActiveGalleryImage (String physicianId, Long imageId);
-
     PhysicianBankInfo storeBankInfo (String physicianId,PhysicianBankInfo physicianBankInfo);
     PhysicianBankInfo getBankInfo (String physicianId);
-
-
-
-
-
-
+    Article addArticle(String physicianId , Article article);
+    Article editArticle(String physicianId , Article article , Long articleId);
+    Article fetchArticle (Long articleId);
+    List<Article> allPhysicianArticles(String physicianId , State state);
+    List<Article> allArticles(String physicianId , State state);
+    Long deleteArticle(String physicianId , Long articleId);
+    void changeArticleImage(String imageName , String physicianId , Long articleId);
+    Article changeArticleState(Long articleId , State state);
 
 }

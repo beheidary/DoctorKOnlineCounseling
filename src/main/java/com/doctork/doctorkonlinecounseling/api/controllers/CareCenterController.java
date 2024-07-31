@@ -27,7 +27,7 @@ import java.util.Set;
 @Controller
 @EnableMethodSecurity
 @SecurityRequirement(name = "security_auth")
-@RequestMapping("/api")
+@RequestMapping("/")
 public class CareCenterController extends BaseController{
 
     // Todo add api for active deActive CareCenter
@@ -115,7 +115,7 @@ public class CareCenterController extends BaseController{
     }
 
 
-    @GetMapping("/support/careCenter/ActiveCenterTypes")
+    @GetMapping("support/careCenter/ActiveCenterTypes")
     @Operation(summary = "Get All Active Center Types")
     //Todo access increase to support role
     @PreAuthorize("hasRole('ROLE_Physician')")

@@ -17,7 +17,7 @@ public class GalleryImage {
 
     public GalleryImage(Long id, String imageName, State state, Status status,LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
         this.id = id;
-        imageName = imageName;
+        this.imageName = imageName;
         this.state = state;
         this.status = status;
         this.saveDateTime = saveDateTime;
@@ -25,7 +25,7 @@ public class GalleryImage {
     }
 
     public GalleryImage(String imageName, State state, Status status){
-        imageName = imageName;
+        this.imageName = imageName;
         this.state = state;
         this.status = status;
 

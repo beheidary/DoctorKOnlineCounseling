@@ -9,7 +9,7 @@ public class GalleryImageOutputDto {
 
     public GalleryImageOutputDto(Long id, String imageName) {
         this.id = id;
-        imageName = imageName;
+        this.imageName = imageName;
     }
 
     public Long getId() {

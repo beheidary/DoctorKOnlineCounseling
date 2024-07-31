@@ -27,7 +27,7 @@ import java.util.List;
 
 @Controller
 @EnableMethodSecurity
-@RequestMapping("/api")
+@RequestMapping("/")
 @SecurityRequirement(name = "security_auth")
 public class PriceController extends BaseController{
 
@@ -63,7 +63,7 @@ public class PriceController extends BaseController{
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PutMapping(value = "/deActivePrice/{priceId}")
+    @PutMapping(value = "deActivePrice/{priceId}")
     @Operation(summary = "deActive Physician Price")
     @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PriceOutputDto.class))})
     public @ResponseBody
@@ -80,7 +80,7 @@ public class PriceController extends BaseController{
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PostMapping(value = "/Services")
+    @PostMapping(value = "Services")
     @Operation(summary = "Add Services")
     // Todo change Authorize To Support Role
     @ApiResponse(content = { @Content(mediaType = "application/json") })
@@ -100,7 +100,7 @@ public class PriceController extends BaseController{
 
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @GetMapping(value = "/allPrice/")
+    @GetMapping(value = "allPrice/")
     @Operation(summary = "physician all prices")
     @ApiResponse(content = {@Content(schema = @Schema(implementation = PriceOutputDto.class))})
     public @ResponseBody
@@ -117,7 +117,7 @@ public class PriceController extends BaseController{
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PostMapping("/priceAcceptance/{priceId}")
+    @PostMapping("priceAcceptance/{priceId}")
     // Todo change Authorize To Support Role
     @Operation(summary = "Decide on Price Acceptance")
     @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PriceOutputDto.class))})
@@ -131,7 +131,7 @@ public class PriceController extends BaseController{
     }
 
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @GetMapping("/activeServices")
+    @GetMapping("activeServices")
     @Operation(summary = "List All Active Services")
     @ApiResponse(content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ServicesOutputDto.class))})
     public @ResponseBody DeferredResult<ResponseEntity<?>> allActiveServices() {

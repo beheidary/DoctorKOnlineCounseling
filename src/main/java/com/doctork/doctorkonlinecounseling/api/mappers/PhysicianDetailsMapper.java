@@ -54,4 +54,9 @@ public interface PhysicianDetailsMapper {
 
     PhysicianBankInfoOutputDto bankInfoModelToDto (PhysicianBankInfo physicianBankInfo);
 
+    List<ArticleOutputDto> articleModelToDto(List<Article> articles);
+    ArticleOutputDto articleModelToDto(Article article);
+    Article articleDtoToModel (ArticleInputDto articleInputDto);
+
+
 }

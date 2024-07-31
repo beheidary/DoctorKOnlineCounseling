@@ -1,5 +1,7 @@
-package com.doctork.doctorkonlinecounseling.database.entities.Miscellaneous;
+package com.doctork.doctorkonlinecounseling.database.entities.PhysicianDetails;
 
+import com.doctork.doctorkonlinecounseling.database.entities.Physician.PhysicianEntity;
+import com.doctork.doctorkonlinecounseling.domain.Enums.State;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,42 +15,56 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "article_group",nullable = false)
+    @Column(name = "article_group")
     private String articleGroup;
-    @Column(name = "title",nullable = false)
+    @Column(name = "title")
     private String title;
     @Column(name = "subject",nullable = false)
     private String subject;
     @Column(name = "publishedDate",nullable = false)
     private String publishedDate;
-    @Column(name = "rate",nullable = false)
+    @Column(name = "rate")
     private Integer rate;
-    @Column(name = "body",nullable = false)
+    @Column(name = "body")
     private String body;
     @Column(name = "summery",nullable = false)
     private String summery;
-    @Column(name = "picture",nullable = false)
-    private String picture;
-    @Column(name = "number",nullable = false)
-    private Integer number;
+    @Column(name = "imageName",nullable = false)
+    private String imageName;
+    @Column(name = "numberOfView")
+    private Integer numberOfView;
+    @Column(name = "link")
+    private String link;
+    @Column(name = "fileName")
+    private String fileName;
+    @Column(name = "state")
+    private State state;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "physicianId")
+    private PhysicianEntity physician;
+
     @CreationTimestamp
     @Column(name = "saveDateTime", nullable = false)
     private LocalDateTime saveDateTime;
     @UpdateTimestamp
-    @Column(name = "updateDateTime", nullable = true)
+    @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
 
-    public ArticleEntity(Long id, String group, String title, String subject, String publishedDate, Integer rate, String body, String summery, String picture, Integer number, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
+    public ArticleEntity(Long id,State state,PhysicianEntity physician, String articleGroup, String title, String subject, String publishedDate, Integer rate, String body, String summery, String imageName, Integer numberOfView, String link, String fileName, LocalDateTime saveDateTime, LocalDateTime updateDateTime) {
         this.id = id;
-        this.articleGroup = group;
+        this.physician = physician;
+        this.articleGroup = articleGroup;
         this.title = title;
         this.subject = subject;
+        this.state = state;
         this.publishedDate = publishedDate;
         this.rate = rate;
         this.body = body;
         this.summery = summery;
-        this.picture = picture;
-        this.number = number;
+        this.imageName = imageName;
+        this.numberOfView = numberOfView;
+        this.link = link;
+        this.fileName = fileName;
         this.saveDateTime = saveDateTime;
         this.updateDateTime = updateDateTime;
     }
@@ -57,6 +73,21 @@ public class ArticleEntity {
 
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public PhysicianEntity getPhysician() {
+        return physician;
+    }
+
+    public void setPhysician(PhysicianEntity physician) {
+        this.physician = physician;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
@@ -122,20 +153,20 @@ public class ArticleEntity {
         this.summery = summery;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getNumberOfView() {
+        return numberOfView;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setNumberOfView(Integer numberOfView) {
+        this.numberOfView = numberOfView;
     }
 
     public LocalDateTime getSaveDateTime() {
@@ -152,6 +183,23 @@ public class ArticleEntity {
 
     public void setUpdateDateTime(LocalDateTime updateDateTime) {
         this.updateDateTime = updateDateTime;
+    }
+
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override

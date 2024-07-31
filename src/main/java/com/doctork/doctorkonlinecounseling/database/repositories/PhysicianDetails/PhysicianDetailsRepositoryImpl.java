@@ -23,6 +23,7 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,7 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     private final SocialMediaMySqlRepository socialMediaMySqlRepository;
     private final GalleryImageMySqlRepository galleryImageMySqlRepository;
     private final AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository;
-
+    private final ArticleMySqlRepository articleMySqlRepository;
     private final PhysicianEntityMapper physicianEntityMapper;
     private final PhysicianBankInfoMySqlRepository physicianBankInfoMySqlRepository;
 
@@ -48,8 +49,9 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
     private final ExperiencesMySqlRepository experiencesMySqlRepository;
     private final MembershipMySqlRepository membershipMySqlRepository;
 
-    public PhysicianDetailsRepositoryImpl(PhysicianBankInfoMySqlRepository physicianBankInfoMySqlRepository,GalleryImageMySqlRepository galleryImageMySqlRepository,AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository,MembershipMySqlRepository membershipMySqlRepository,PhysicianEntityMapper physicianEntityMapper,ExperiencesMySqlRepository experiencesMySqlRepository , EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
+    public PhysicianDetailsRepositoryImpl(PhysicianBankInfoMySqlRepository physicianBankInfoMySqlRepository,ArticleMySqlRepository articleMySqlRepository,GalleryImageMySqlRepository galleryImageMySqlRepository,AwardsAndHonorsMySqlRepository awardsAndHonorsMySqlRepository,MembershipMySqlRepository membershipMySqlRepository,PhysicianEntityMapper physicianEntityMapper,ExperiencesMySqlRepository experiencesMySqlRepository , EducationMySqlRepository educationMySqlRepository, PhysicianSocialMediaMySqlRepository physicianSocialMediaMySqlRepository,EntityManager entityManager,SocialMediaMySqlRepository socialMediaMySqlRepository,PhysicianMySqlRepository physicianMySqlRepository,PhysicianDetailsEntityMapper physicianDetailsEntityMapper,SicknessMySqlRepository sicknessMySqlRepository) {
         this.physicianDetailsEntityMapper = physicianDetailsEntityMapper;
+        this.articleMySqlRepository =articleMySqlRepository;
         this.physicianBankInfoMySqlRepository = physicianBankInfoMySqlRepository;
         this.galleryImageMySqlRepository = galleryImageMySqlRepository;
         this.awardsAndHonorsMySqlRepository = awardsAndHonorsMySqlRepository;
@@ -689,10 +691,11 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
         try {
             PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
             GalleryImageEntity galleryImageEntity = galleryImageMySqlRepository.findById(imageId).orElseThrow(NotFoundException::new);
-            if (galleryImageEntity.getPhysician() == physicianEntity) {
+            if (Objects.equals(galleryImageEntity.getPhysician().getNationalCode(), physicianEntity.getNationalCode())) {
                 galleryImageEntity.setStatus(Status.DeActive);
                 galleryImageEntity = galleryImageMySqlRepository.save(galleryImageEntity);
-            }
+            }else
+                throw new GeneralException(1,"you not have required access",HttpStatus.FORBIDDEN);
         } catch (QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();
         } catch (DataIntegrityViolationException ex) {
@@ -752,6 +755,154 @@ public class PhysicianDetailsRepositoryImpl implements PhysicianDetailsRepositor
             else
                 return new PhysicianBankInfo();
 
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public Article addArticle(String physicianId,Article article) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            ArticleEntity articleEntity = physicianDetailsEntityMapper.articleModelToEntity(article);
+            articleEntity.setPhysician(physicianEntity);
+            return physicianDetailsEntityMapper.articleEntityToModel(articleMySqlRepository.save(articleEntity));
+
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public Article editArticle(String physicianId, Article article , Long articleId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            ArticleEntity articleEntity = articleMySqlRepository.findByIdAndPhysician(articleId,physicianEntity);
+            articleEntity.setLink(article.getLink());
+            articleEntity.setState(article.getState());
+            articleEntity.setFileName(article.getFileName());
+            articleEntity.setImageName(article.getImageName());
+            articleEntity.setPublishedDate(article.getPublishedDate());
+            articleEntity.setSubject(article.getSubject());
+            articleEntity.setSummery(article.getSummery());
+            return physicianDetailsEntityMapper.articleEntityToModel(articleMySqlRepository.save(articleEntity));
+
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public Article fetchArticle(Long articleId) {
+        try {
+            ArticleEntity articleEntity = articleMySqlRepository.findById(articleId).orElseThrow(NotFoundException::new);
+            return physicianDetailsEntityMapper.articleEntityToModel(articleEntity);
+
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Article> allPhysicianArticles(String physicianId , State state) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            return physicianDetailsEntityMapper.articleEntityToModel(articleMySqlRepository.findAllByPhysicianAndState(physicianEntity,state));
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public List<Article> allArticles(String physicianId, State state) {
+        try {
+            return physicianDetailsEntityMapper.articleEntityToModel(articleMySqlRepository.findAllByState(state));
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public Long deleteArticle(String physicianId, Long articleId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            ArticleEntity articleEntity = articleMySqlRepository.findByIdAndPhysician(articleId , physicianEntity);
+            if (articleEntity == null)
+                throw new NotFoundException();
+            articleMySqlRepository.delete(articleEntity);
+            return articleId;
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public void changeArticleImage(String imageName, String physicianId, Long articleId) {
+        try {
+            PhysicianEntity physicianEntity = physicianMySqlRepository.findById(physicianId).orElseThrow(PhysicianNotFoundException::new);
+            ArticleEntity articleEntity = articleMySqlRepository.findByIdAndPhysician(articleId , physicianEntity);
+            articleEntity.setImageName(imageName);
+            articleMySqlRepository.save(articleEntity);
+        } catch (QueryTimeoutException ex) {
+            throw new DatabaseTimeOutException();
+        } catch (DataIntegrityViolationException ex) {
+            throw new InvalidDataException();
+        } catch (Exception ex){
+            if(ex instanceof BaseException)
+                throw ex;
+            throw new GeneralException(1, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public Article changeArticleState(Long articleId, State state) {
+        try {
+            ArticleEntity articleEntity = articleMySqlRepository.findById(articleId).orElseThrow(NotFoundException::new);
+            articleEntity.setState(state);
+            return physicianDetailsEntityMapper.articleEntityToModel(articleMySqlRepository.save(articleEntity));
         } catch (QueryTimeoutException ex) {
             throw new DatabaseTimeOutException();
         } catch (DataIntegrityViolationException ex) {

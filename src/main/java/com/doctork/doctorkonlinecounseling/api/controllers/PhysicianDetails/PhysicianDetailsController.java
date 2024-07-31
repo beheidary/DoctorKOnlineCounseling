@@ -25,7 +25,7 @@ import java.util.Set;
 @RestController
 @EnableMethodSecurity
 @SecurityRequirement(name = "security_auth")
-@RequestMapping("/api/")
+@RequestMapping("/")
 public class PhysicianDetailsController extends BaseController {
 
 
@@ -345,7 +345,7 @@ public class PhysicianDetailsController extends BaseController {
 
     @Operation(summary = "Get Physician Bank Information")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @GetMapping("/bankInfo/get")
+    @GetMapping("bankInfo/get")
     @ApiResponse(content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PhysicianBankInfoOutputDto.class)) })
     public DeferredResult<ResponseEntity<?>> getPhysicianBankInfo(){
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
@@ -356,13 +356,81 @@ public class PhysicianDetailsController extends BaseController {
 
     @Operation(summary = "Store Physician Bank Information")
     @PreAuthorize("hasRole('ROLE_Physician')")
-    @PostMapping("/bankInfo/store")
+    @PostMapping("bankInfo/store")
     public DeferredResult<ResponseEntity<?>> storePhysicianBankInfo(@RequestBody @Validated PhysicianBankInfoInputDto physicianBankInfoInputDto) {
         DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
         PhysicianBankInfoOutputDto physicianBankInfoOutputDto =  physicianDetailsAdapter.storeBankInfo(getCurrentUser().getId(), physicianBankInfoInputDto);
         result.setResult(ResponseEntity.status(HttpStatus.CREATED).body(physicianBankInfoOutputDto));
         return result;
     }
+
+
+    @Operation(summary = "Add Article")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PostMapping("articles/add")
+    public DeferredResult<ResponseEntity<?>> addArticle(@RequestBody ArticleInputDto articleInputDto) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        ArticleOutputDto articleOutputDto = physicianDetailsAdapter.addArticle(getCurrentUser().getId(), articleInputDto);
+        result.setResult(ResponseEntity.status(HttpStatus.CREATED).body(articleOutputDto));
+        return result;
+    }
+
+    @Operation(summary = "Edit Article")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping("articles/edit/{articleId}")
+    public DeferredResult<ResponseEntity<?>> editArticle(@PathVariable Long articleId, @RequestBody ArticleInputDto articleInputDto) throws Exception {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        ArticleOutputDto articleOutputDto = physicianDetailsAdapter.editArticle(getCurrentUser().getId(), articleInputDto, articleId);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(articleOutputDto));
+        return result;
+    }
+
+    @Operation(summary = "Delete Article")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @DeleteMapping("articles/delete/{articleId}")
+    public ResponseEntity<Long> deleteArticle(@PathVariable Long articleId) throws Exception {
+        Long deletedArticleId = physicianDetailsAdapter.deleteArticle(getCurrentUser().getId(), articleId);
+        return new ResponseEntity<>(deletedArticleId, HttpStatus.OK);
+    }
+
+    @Operation(summary = "All Physician Articles")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @GetMapping("articles/all")
+    public DeferredResult<ResponseEntity<?>> allPhysicianArticles() {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<ArticleOutputDto> articles = physicianDetailsAdapter.allPhysicianArticles(getCurrentUser().getId());
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(articles));
+        return result;
+    }
+    @Operation(summary = "All Articles")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    // Todo change Authorize To Support Role
+    @GetMapping("/support/articles/all")
+    public DeferredResult<ResponseEntity<?>> allArticles(@RequestParam State state) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        List<ArticleOutputDto> articles = physicianDetailsAdapter.allArticles(getCurrentUser().getId() , state);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(articles));
+        return result;
+    }
+
+    @Operation(summary = "Change Article Image")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping("articles/changeImage/{articleId}")
+    public ResponseEntity<Void> changeArticleImage(@RequestParam String imageName, @PathVariable Long articleId) {
+        physicianDetailsAdapter.changeArticleImage(imageName, getCurrentUser().getId(), articleId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Change Article State")
+    @PreAuthorize("hasRole('ROLE_Physician')")
+    @PutMapping("articles/changeState/{articleId}")
+    public DeferredResult<ResponseEntity<?>>changeArticleState(@PathVariable Long articleId, @RequestParam State state) {
+        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+        ArticleOutputDto articleOutputDto = physicianDetailsAdapter.changeArticleState(articleId, state);
+        result.setResult(ResponseEntity.status(HttpStatus.OK).body(articleOutputDto));
+        return result;
+    }
+
 
 
 }

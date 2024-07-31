@@ -6,6 +6,7 @@ import com.doctork.doctorkonlinecounseling.configuration.MinioConfig;
 import io.minio.messages.Bucket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,8 @@ import java.util.UUID;
 public class MinioServiceImpl implements MinioService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MinioServiceImpl.class);
-    private final String minioUrl = "https://cc.tazminyadak.com/doctork/";
+    @Value("${minio.url}")
+    private String minioUrl;
 
 
     private final MinioUtil minioUtil;
